@@ -168,10 +168,41 @@ class ShoppingCart {
         // Check if cart widget already exists
         if (document.querySelector('.cart-widget')) return;
 
+        // Find the nav cart container
+        const navCart = document.querySelector('.nav-cart');
+        if (!navCart) {
+            console.warn('Navigation cart container not found, falling back to body');
+            // Fallback for pages that don't have the updated nav structure
+            const cartHTML = `
+                <div class="cart-widget cart-widget-fallback">
+                    <button class="cart-toggle">
+                        🛒 Cart <span class="cart-count">0</span>
+                    </button>
+                    <div class="cart-dropdown">
+                        <div class="cart-header">
+                            <h3>Shopping Cart</h3>
+                        </div>
+                        <div class="cart-items"></div>
+                        <div class="cart-footer">
+                            <div class="cart-total-row">
+                                <strong>Total: <span class="cart-total">$0.00</span></strong>
+                            </div>
+                            <div class="cart-actions">
+                                <button class="btn btn-secondary clear-cart">Clear Cart</button>
+                                <button class="btn btn-primary checkout-btn">Checkout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', cartHTML);
+            return;
+        }
+
         const cartHTML = `
             <div class="cart-widget">
                 <button class="cart-toggle">
-                    🛒 Cart <span class="cart-count">0</span>
+                    🛒 <span class="cart-text">Cart</span> <span class="cart-count">0</span>
                 </button>
                 <div class="cart-dropdown">
                     <div class="cart-header">
@@ -191,7 +222,7 @@ class ShoppingCart {
             </div>
         `;
 
-        document.body.insertAdjacentHTML('beforeend', cartHTML);
+        navCart.innerHTML = cartHTML;
     }
 
     toggleCart() {

@@ -69,6 +69,12 @@ marquee {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.nav-cart {
+    flex-shrink: 0;
 }
 
 .site-title a {
@@ -569,10 +575,15 @@ marquee {
 
 /* Cart Widget */
 .cart-widget {
+    position: relative;
+    z-index: 1000;
+}
+
+/* Fallback for pages without updated nav structure */
+.cart-widget-fallback {
     position: fixed;
     top: var(--spacing-lg);
     right: var(--spacing-lg);
-    z-index: 1000;
 }
 
 .cart-toggle {
@@ -587,6 +598,10 @@ marquee {
     font-weight: 500;
     transition: all 0.2s ease;
     box-shadow: var(--shadow);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
 }
 
 .cart-toggle:hover {
@@ -609,6 +624,7 @@ marquee {
     top: calc(100% + var(--spacing-xs));
     right: 0;
     width: 350px;
+    max-width: 90vw;
     max-height: 500px;
     background: white;
     border-radius: var(--border-radius);
@@ -619,6 +635,7 @@ marquee {
     visibility: hidden;
     transition: all 0.2s ease;
     overflow: hidden;
+    z-index: 1100;
 }
 
 .cart-dropdown.show {
@@ -1278,11 +1295,6 @@ marquee {
         text-align: center;
     }
 
-    .cart-widget {
-        top: var(--spacing-sm);
-        right: var(--spacing-sm);
-    }
-
     .cart-dropdown {
         width: calc(100vw - 2rem);
         right: auto;
@@ -1292,6 +1304,10 @@ marquee {
 
     .cart-dropdown.show {
         transform: translateX(-50%) translateY(0);
+    }
+
+    .cart-text {
+        display: none;
     }
 
     .merch-header {
@@ -1311,14 +1327,62 @@ marquee {
     }
 }
 
+@media (max-width: 600px) {
+    .main-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-links {
+        order: 2;
+        flex-basis: 100%;
+        justify-content: center;
+    }
+
+    .site-title {
+        order: 1;
+    }
+
+    .nav-cart {
+        order: 3;
+    }
+}
+
 @media (max-width: 480px) {
     .main-nav {
         flex-direction: column;
         gap: var(--spacing-sm);
+        align-items: stretch;
     }
 
     .nav-links {
         gap: var(--spacing-sm);
+        justify-content: center;
+    }
+
+    .nav-cart {
+        align-self: center;
+    }
+
+    .cart-toggle {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.9rem;
+    }
+
+    .cart-text {
+        display: none;
+    }
+
+    .cart-dropdown {
+        width: calc(100vw - 1rem);
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%) translateY(-10px);
+        max-height: 70vh;
+    }
+
+    .cart-dropdown.show {
+        transform: translateX(-50%) translateY(0);
     }
 
     .album-grid,
