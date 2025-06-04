@@ -1,0 +1,34 @@
+---
+layout: layouts/base.njk
+permalink: "/artists/"
+title: "Artists"
+---
+
+<h1>Artists</h1>
+
+<div class="artists-grid">
+{% for artist in collections.artists %}
+    <div class="artist-card">
+        <a href="{{ artist.url }}" class="artist-link">
+            {% if artist.data.image %}
+            <img src="{{ artist.data.image }}" alt="{{ artist.data.name }}" class="artist-image-thumb">
+            {% endif %}
+            <div class="artist-card-info">
+                <h2 class="artist-name">{{ artist.data.name }}</h2>
+                {% if artist.data.location %}
+                <p class="artist-location">{{ artist.data.location }}</p>
+                {% endif %}
+                {% if artist.data.genres %}
+                <p class="artist-genres">
+                {% if artist.data.genres is iterable and artist.data.genres is not string %}
+                    {{ artist.data.genres | join(", ") }}
+                {% else %}
+                    {{ artist.data.genres }}
+                {% endif %}
+                </p>
+                {% endif %}
+            </div>
+        </a>
+    </div>
+{% endfor %}
+</div>

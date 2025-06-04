@@ -11,7 +11,16 @@ layout: layouts/base.njk
         <div class="album-info">
             <h1 class="album-title">{{ title }}</h1>
             <p class="shop-subtitle">Official Merchandise</p>
-            {% if artist %}<p class="album-artist">by {{ artist }}</p>{% endif %}
+            {% if artists %}
+                <p class="album-artists">by 
+                {% for artistName in artists %}
+                    {% set artistSlug = artistName | slugify %}
+                    <a href="/artists/{{ artistSlug }}/" class="artist-link">{{ artistName }}</a>{% if not loop.last %}{% if loop.revindex == 2 %} and {% else %}, {% endif %}{% endif %}
+                {% endfor %}
+                </p>
+            {% elif artist %}
+                <p class="album-artist">by {{ artist }}</p>
+            {% endif %}
             {% if releaseDate %}<p class="release-date">Released: {{ releaseDate | date("%B %d, %Y") }}</p>{% endif %}
         </div>
     </header>

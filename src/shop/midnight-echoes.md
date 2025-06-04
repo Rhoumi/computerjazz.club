@@ -2,7 +2,7 @@
 layout: layouts/shop.njk
 permalink: "/shop/midnight-echoes/"
 title: "Midnight Echoes"
-artist: "ComputerJazz Club"
+artists: ["ComputerJazz Club"]
 releaseDate: "2024-12-15"
 genre: ["Electronic Ambient", "Bob"]
 cover: "/assets/images/placeholder-cover.svg"

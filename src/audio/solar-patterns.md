@@ -2,7 +2,7 @@
 layout: layouts/audio.njk
 permalink: "/audio/solar-patterns/"
 title: "Solar Patterns"
-artist: "ComputerJazz Club"
+artists: ["ComputerJazz Club", "Digital Wanderer"]
 releaseDate: "2024-08-22"
 genre: "Ambient Techno"
 cover: "/assets/images/placeholder-cover.svg"

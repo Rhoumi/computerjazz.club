@@ -1,0 +1,40 @@
+---
+layout: layouts/artist.njk
+permalink: "/artists/computerjazz-club/"
+name: "ComputerJazz Club"
+location: "Digital Realm"
+genres: ["Electronic Ambient", "Ambient Techno", "Experimental"]
+image: "/assets/images/artists/computerjazz-club.jpg"
+website: "https://computerjazz.club"
+social:
+  bandcamp: "https://computerjazzclub.bandcamp.com"
+  spotify: "https://open.spotify.com/artist/computerjazzclub"
+tags: ["artists"]
+bio: |
+  ComputerJazz Club is an experimental electronic music project that explores the intersection of algorithmic composition, ambient soundscapes, and urban rhythms. Drawing inspiration from late-night coding sessions and the subtle hum of electronic devices, the project creates immersive sonic environments that blur the line between organic and synthetic.
+  
+  Founded in the digital realm, ComputerJazz Club has been crafting atmospheric electronic music that captures the essence of modern technological life while maintaining a deeply human emotional core.
+---
+
+## Musical Philosophy
+
+ComputerJazz Club's approach to music-making is rooted in the belief that technology and humanity are not opposing forces, but complementary aspects of contemporary existence. Each release is carefully crafted to provide a soundtrack for both active listening and ambient atmosphere.
+
+### Creative Process
+
+The creative process typically begins with field recordings from urban environments, which are then processed through various analog and digital systems. This hybrid approach ensures that each track maintains both warmth and precision, creating a unique sonic signature that has become synonymous with the ComputerJazz Club sound.
+
+### Technical Setup
+
+- **Primary DAW**: Ableton Live
+- **Hardware**: Various analog synthesizers, field recording equipment
+- **Processing**: Custom Max/MSP patches, vintage analog effects
+- **Monitoring**: High-quality studio monitors for precise mixing
+
+### Influences
+
+Drawing from a wide range of sources including:
+- Ambient pioneers like Brian Eno and Tim Hecker
+- Electronic innovators such as Aphex Twin and Boards of Canada
+- Urban soundscape artists
+- The rhythm and pulse of modern city life
