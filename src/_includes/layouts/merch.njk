@@ -17,22 +17,22 @@ layout: layouts/base.njk
             </div>
             {% endif %}
             
-            {% if sizes %}
+            {% if item.sizes %}
             <div class="merch-options">
                 <label>Size:</label>
                 <div class="size-options">
-                {% for size in sizes %}
+                {% for size in item.sizes %}
                     <span class="size-option">{{ size }}</span>
                 {% endfor %}
                 </div>
             </div>
             {% endif %}
 
-            {% if variants %}
+            {% if item.variants %}
             <div class="merch-options">
                 <label>Variant:</label>
                 <div class="variant-options">
-                {% for variant in variants %}
+                {% for variant in item.variants %}
                     <span class="variant-option">{{ variant }}</span>
                 {% endfor %}
                 </div>

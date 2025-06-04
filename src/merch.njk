@@ -15,8 +15,6 @@ eleventyComputed:
   currency: "{{ item.currency }}"
   image: "{{ item.image }}"
   description: "{{ item.description }}"
-  sizes: "{{ item.sizes }}"
-  variants: "{{ item.variants }}"
   available: "{{ item.available }}"
   limited: "{{ item.limited }}"
   quantity: "{{ item.quantity }}"
@@ -25,6 +23,7 @@ tags:
   - merchandise
 ---
 
+{% set careInstructions %}
 {% if item.type == "apparel" %}
 ## Care Instructions
 
@@ -52,3 +51,6 @@ High-quality materials and construction ensure this item will last. All accessor
 - **Free shipping** on orders over $50
 
 All merchandise is shipped from our fulfillment center with tracking information provided.
+{% endset %}
+
+{{ careInstructions | markdown | safe }}

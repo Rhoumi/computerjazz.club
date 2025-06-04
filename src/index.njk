@@ -4,8 +4,8 @@ title: Home
 ---
 
 <section class="hero">
-    <h1>Welcome to {{ site.name }}</h1>
-    <p>Discover amazing music and audio tracks</p>
+    <h1>{{ site.other_name }}</h1>
+    <p></p>
 </section>
 
 <section class="featured-audio">
@@ -24,7 +24,7 @@ title: Home
             <div class="album-card-info">
                 <h3><a href="{{ audio.url }}">{{ audio.data.title }}</a></h3>
                 {% if audio.data.artists %}
-                    <p class="artist">by 
+                    <p class="artist">by
                     {% for artistName in audio.data.artists %}
                         {% set artistSlug = artistName | slugify %}
                         <a href="/artists/{{ artistSlug }}/" class="artist-link">{{ artistName }}</a>{% if not loop.last %}{% if loop.revindex == 2 %} and {% else %}, {% endif %}{% endif %}
