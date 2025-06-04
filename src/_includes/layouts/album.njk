@@ -1,0 +1,54 @@
+---
+layout: layouts/base.njk
+---
+<article class="album">
+    <header class="album-header">
+        {% if cover %}
+        <div class="album-cover-container">
+            <img src="{{ cover }}" alt="{{ title }} cover" class="album-cover">
+        </div>
+        {% endif %}
+        <div class="album-info">
+            <h1 class="album-title">{{ title }}</h1>
+            {% if artist %}<p class="album-artist">by {{ artist }}</p>{% endif %}
+            {% if releaseDate %}<p class="release-date">Released: {{ releaseDate | date("%B %d, %Y") }}</p>{% endif %}
+            {% if genre %}<p class="genre">Genre: {{ genre }}</p>{% endif %}
+        </div>
+    </header>
+
+    {% if description %}
+    <div class="album-description">
+        {{ description | markdown | safe }}
+    </div>
+    {% endif %}
+
+    {% if tracks %}
+    <section class="tracklist">
+        <h2>Tracks</h2>
+        <ol class="tracks">
+        {% for track in tracks %}
+            <li class="track" data-track="{{ loop.index }}">
+                <div class="track-info">
+                    <span class="track-number">{{ loop.index }}.</span>
+                    <span class="track-title">{{ track.title }}</span>
+                    {% if track.duration %}<span class="track-duration">{{ track.duration }}</span>{% endif %}
+                </div>
+                {% if track.file %}
+                <div class="track-controls">
+                    <audio controls class="track-player" preload="metadata">
+                        <source src="{{ track.file }}" type="audio/mpeg">
+                        <source src="{{ track.file | replace('.mp3', '.ogg') }}" type="audio/ogg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ol>
+    </section>
+    {% endif %}
+
+    <div class="album-content">
+        {{ content | safe }}
+    </div>
+</article>

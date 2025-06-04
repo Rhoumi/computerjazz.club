@@ -1,0 +1,36 @@
+---
+layout: 'layouts/base.njk'
+title: Home
+---
+
+<section class="hero">
+    <h1>Welcome to {{ site.name }}</h1>
+    <p>Discover amazing music albums and tracks</p>
+</section>
+
+<section class="featured-albums">
+    <h2>Latest Releases</h2>
+    <div class="album-grid">
+    {% for album in collections.albums.slice(0, 6) %}
+        <div class="album-card">
+            {% if album.data.cover %}
+            <div class="album-card-cover">
+                <img src="{{ album.data.cover }}" alt="{{ album.data.title }} cover">
+                <div class="album-card-overlay">
+                    <a href="{{ album.url }}" class="view-album-btn">View Album</a>
+                </div>
+            </div>
+            {% endif %}
+            <div class="album-card-info">
+                <h3><a href="{{ album.url }}">{{ album.data.title }}</a></h3>
+                {% if album.data.artist %}<p class="artist">{{ album.data.artist }}</p>{% endif %}
+                {% if album.data.releaseDate %}<p class="release-date">{{ album.data.releaseDate | date("%Y") }}</p>{% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <div class="view-all-albums">
+        <a href="/albums/" class="btn btn-primary">View All Albums</a>
+    </div>
+</section>

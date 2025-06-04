@@ -1,0 +1,25 @@
+{
+  "name": "ComputerJazz",
+  "version": "1.0.0",
+  "description": "Music album site built with 11ty",
+  "main": "index.js",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "start": "eleventy --serve",
+    "clean": "rm -rf _site",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "music",
+    "albums",
+    "11ty",
+    "static-site"
+  ],
+  "author": "ComputerJazzClub",
+  "license": "ISC",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.1",
+    "markdown-it": "^14.1.0"
+  }
+}

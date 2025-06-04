@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if title %}{{ title }} | {% endif %}{{ site.name }}</title>
+    <meta name="description" content="{% if description %}{{ description }}{% else %}{{ site.description }}{% endif %}">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="main-nav">
+            <h1 class="site-title"><a href="/">{{ site.name }}</a></h1>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/albums/">Audio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        {{ content | safe }}
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; {{ site.name }} {{ "now" | date("%Y") }}</p>
+    </footer>
+
+    <script src="/assets/js/player.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+---
+title: Albums
+---
+
+<h1>All Albums</h1>
+
+<div class="albums-list">
+{% for album in collections.albums %}
+    <article class="album-preview">
+        {% if album.data.cover %}
+        <div class="album-preview-cover">
+            <img src="{{ album.data.cover }}" alt="{{ album.data.title }} cover">
+        </div>
+        {% endif %}
+        <div class="album-preview-details">
+            <h2><a href="{{ album.url }}">{{ album.data.title }}</a></h2>
+            {% if album.data.artist %}<p class="artist">{{ album.data.artist }}</p>{% endif %}
+            {% if album.data.releaseDate %}<p class="release-date">Released: {{ album.data.releaseDate | date("%B %d, %Y") }}</p>{% endif %}
+            {% if album.data.genre %}<p class="genre">Genre: {{ album.data.genre }}</p>{% endif %}
+            {% if album.data.description %}
+            <p class="description">{{ album.data.description | truncate(200) }}</p>
+            {% endif %}
+            {% if album.data.tracks %}
+            <p class="track-count">{{ album.data.tracks | length }} tracks</p>
+            {% endif %}
+        </div>
+    </article>
+{% endfor %}
+</div>
