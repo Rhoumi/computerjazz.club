@@ -7,8 +7,8 @@ class ShoppingCart {
 
     init() {
         this.bindEvents();
-        this.updateCartDisplay();
         this.createCartWidget();
+        this.updateCartDisplay();
     }
 
     bindEvents() {
@@ -267,11 +267,11 @@ class ShoppingCart {
 
 // Initialize cart when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize cart on all shop pages (any URL starting with /shop/)
-    const isShopPage = window.location.pathname.startsWith('/shop/') || window.location.pathname === '/shop';
-    const hasMerchElements = document.querySelector('.merch-item') || document.querySelector('.shop-page') || document.querySelector('.shop-index') || document.querySelector('.merch-page');
+    // Only initialize cart on shop-related pages
+    const isShopPage = window.location.pathname.includes('/shop/') || 
+                      document.querySelector('.merch-item, .merch-info');
     
-    if (isShopPage || hasMerchElements) {
+    if (isShopPage) {
         new ShoppingCart();
     }
 });
