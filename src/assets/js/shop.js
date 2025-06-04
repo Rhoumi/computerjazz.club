@@ -53,13 +53,28 @@ class ShoppingCart {
     }
 
     addToCart(button) {
-        const merchItem = button.closest('.merch-item');
+        // Find the container - could be .merch-item (shop pages) or .merch-info (individual merch pages)
+        const merchContainer = button.closest('.merch-item') || button.closest('.merch-info');
+        if (!merchContainer) {
+            console.error('Could not find merchandise container');
+            return;
+        }
+        
         const itemName = button.dataset.item;
         const itemPrice = parseFloat(button.dataset.price);
         
         // Get selected options
-        const selectedSize = merchItem.querySelector('.size-option.selected')?.textContent;
-        const selectedVariant = merchItem.querySelector('.variant-option.selected')?.textContent;
+        const selectedSize = merchContainer.querySelector('.size-option.selected')?.textContent;
+        const selectedVariant = merchContainer.querySelector('.variant-option.selected')?.textContent;
+        
+        // Find the image - different locations in different layouts
+        let imageElement = merchContainer.querySelector('.merch-image img');
+        if (!imageElement) {
+            // Try alternative locations for image
+            imageElement = document.querySelector('.merch-image-large') || 
+                          document.querySelector('.album-cover') ||
+                          merchContainer.querySelector('img');
+        }
         
         // Create item object
         const item = {
@@ -68,7 +83,7 @@ class ShoppingCart {
             price: itemPrice,
             size: selectedSize,
             variant: selectedVariant,
-            image: merchItem.querySelector('.merch-image img').src,
+            image: imageElement ? imageElement.src : '/assets/images/default-merch.jpg',
             quantity: 1
         };
 
@@ -222,7 +237,7 @@ class ShoppingCart {
 // Initialize cart when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Only initialize cart on shop pages or pages with merchandise
-    if (document.querySelector('.merch-item') || document.querySelector('.shop-page') || document.querySelector('.shop-index')) {
+    if (document.querySelector('.merch-item') || document.querySelector('.shop-page') || document.querySelector('.shop-index') || document.querySelector('.merch-page')) {
         new ShoppingCart();
     }
 });

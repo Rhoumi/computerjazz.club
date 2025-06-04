@@ -55,17 +55,6 @@ ComputerJazzClub believes in accessible digital music:
 **Build System:** Node.js with pnpm package management  
 **Hosting:** Static file hosting with CDN distribution  
 
-### Browser Compatibility
-
-This website is designed to work across modern browsers:
-
-- **Chrome/Chromium** 90+ (recommended)
-- **Firefox** 88+
-- **Safari** 14+
-- **Edge** 90+
-
-**Audio Support:** HTML5 audio with fallback formats (MP3, OGG Vorbis)
-
 ### Accessibility Features
 
 - **Semantic HTML** structure for screen readers
@@ -73,14 +62,6 @@ This website is designed to work across modern browsers:
 - **High contrast** design elements
 - **Scalable typography** with system font fallbacks
 - **Alternative text** for all images
-
-### Performance Optimization
-
-- **Lazy loading** for images and audio content
-- **Minified CSS** and optimized assets
-- **Responsive images** with appropriate sizing
-- **Efficient caching** headers for static content
-- **Progressive enhancement** for JavaScript features
 
 ### Source Code
 
@@ -114,10 +95,5 @@ For technical issues, licensing inquiries, or other questions:
 **Fonts:** JGS font family (included with appropriate licensing)  
 **Dependencies:** All npm packages listed in package.json with compatible licenses  
 **External Services:** None - fully self-contained static website  
-
----
-
-*Last updated: {{ "now" | date("%B %d, %Y") }}*  
-*Website version: 1.0.0*
 
 </div>

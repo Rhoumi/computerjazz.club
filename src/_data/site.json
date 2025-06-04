@@ -1,6 +1,7 @@
 {
-  "name": "computerjazz.club",
-  "other_name": "Computer Jazz Club",
+  "other_name": "computerjazz.club",
+  "name": "Computer Jazz Club",
   "description": "",
-  "url": "https://computerjazz.club"
+  "url": "https://computerjazz.club",
+  "author": "Rémi Georges"
 }
