@@ -1,0 +1,102 @@
+---
+layout: layouts/base.njk
+---
+<article class="shop-page">
+    <header class="shop-header">
+        {% if cover %}
+        <div class="album-cover-container">
+            <img src="{{ cover }}" alt="{{ title }} cover" class="album-cover">
+        </div>
+        {% endif %}
+        <div class="album-info">
+            <h1 class="album-title">{{ title }}</h1>
+            <p class="shop-subtitle">Official Merchandise</p>
+            {% if artist %}<p class="album-artist">by {{ artist }}</p>{% endif %}
+            {% if releaseDate %}<p class="release-date">Released: {{ releaseDate | date("%B %d, %Y") }}</p>{% endif %}
+        </div>
+    </header>
+
+    {% if description %}
+    <div class="album-description">
+        <p><a href="{{ page.url | replace('/shop/', '/audio/') }}" class="back-to-album">← Back to Album</a></p>
+        {{ description | markdown | safe }}
+    </div>
+    {% endif %}
+
+    {% if merch and merch.length > 0 %}
+    <section class="merchandise">
+        <h2>Available Merchandise</h2>
+        <div class="merch-grid">
+        {% for item in merch %}
+            <div class="merch-item {% if not item.available %}unavailable{% endif %}">
+                <div class="merch-image">
+                    <img src="{{ item.image }}" alt="{{ item.name }}" loading="lazy">
+                    {% if item.limited %}
+                    <span class="limited-badge">Limited Edition</span>
+                    {% endif %}
+                    {% if not item.available %}
+                    <span class="unavailable-badge">Sold Out</span>
+                    {% endif %}
+                </div>
+                <div class="merch-details">
+                    <h3 class="merch-name">{{ item.name }}</h3>
+                    <p class="merch-category">{{ item.category | title }}</p>
+                    <p class="merch-description">{{ item.description }}</p>
+                    
+                    {% if item.sizes %}
+                    <div class="merch-options">
+                        <label>Size:</label>
+                        <div class="size-options">
+                        {% for size in item.sizes %}
+                            <span class="size-option">{{ size }}</span>
+                        {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if item.variants %}
+                    <div class="merch-options">
+                        <label>Variant:</label>
+                        <div class="variant-options">
+                        {% for variant in item.variants %}
+                            <span class="variant-option">{{ variant }}</span>
+                        {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="merch-purchase">
+                        <span class="merch-price">${{ item.price }}</span>
+                        {% if item.available %}
+                        <button class="btn btn-primary add-to-cart" data-item="{{ item.name }}" data-price="{{ item.price }}">
+                            Add to Cart
+                        </button>
+                        {% else %}
+                        <button class="btn btn-disabled" disabled>
+                            Sold Out
+                        </button>
+                        {% endif %}
+                    </div>
+
+                    {% if item.limited and item.quantity %}
+                    <p class="limited-info">Limited to {{ item.quantity }} copies</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </section>
+    {% else %}
+    <section class="no-merchandise">
+        <h2>No Merchandise Available</h2>
+        <p>There's currently no merchandise available for this album. Check back later!</p>
+        <p><a href="{{ page.url | replace('/shop/', '/audio/') }}" class="btn btn-primary">Listen to Album</a></p>
+    </section>
+    {% endif %}
+
+    <div class="shop-content">
+        {{ content | safe }}
+    </div>
+</article>
+
+<script src="/assets/js/shop.js"></script>

@@ -27,6 +27,32 @@ tracks:
     file: "/assets/audio/solar-patterns/06-eclipse.mp3"
 description: |
   A celestial-inspired album exploring the relationship between light, energy, and rhythm.
+merch:
+  - name: "Solar Patterns Hoodie"
+    type: "apparel"
+    category: "hoodie"
+    price: 45.00
+    currency: "USD"
+    image: "/assets/images/merch/solar-patterns-hoodie.jpg"
+    description: "Comfortable hoodie with embroidered album logo"
+    sizes: ["S", "M", "L", "XL", "XXL"]
+    available: true
+  - name: "Solar Patterns Vinyl"
+    type: "music"
+    category: "vinyl"
+    price: 32.00
+    currency: "USD"
+    image: "/assets/images/merch/solar-patterns-vinyl.jpg"
+    description: "Standard black vinyl with custom labels"
+    available: true
+  - name: "Solar Patterns Sticker Pack"
+    type: "accessories"
+    category: "stickers"
+    price: 8.00
+    currency: "USD"
+    image: "/assets/images/merch/solar-patterns-stickers.jpg"
+    description: "Set of 5 weatherproof stickers featuring album elements"
+    available: true
 ---
 
 ## About This Album

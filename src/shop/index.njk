@@ -1,0 +1,74 @@
+---
+layout: layouts/base.njk
+permalink: "/shop/"
+title: "Shop"
+---
+
+<section class="shop-index">
+    <h1>Official Merchandise</h1>
+    <p>Browse merchandise for all our releases. All items are officially licensed and support the artists directly.</p>
+    
+    <div class="shop-albums">
+    {% for audio in collections.audio %}
+        {% if audio.data.merch and audio.data.merch.length > 0 %}
+        <article class="shop-album-preview">
+            {% if audio.data.cover %}
+            <div class="album-preview-cover">
+                <img src="{{ audio.data.cover }}" alt="{{ audio.data.title }} cover">
+            </div>
+            {% endif %}
+            <div class="album-preview-details">
+                <h2><a href="/shop{{ audio.url | replace('/audio', '') }}">{{ audio.data.title }}</a></h2>
+                {% if audio.data.artist %}<p class="artist">{{ audio.data.artist }}</p>{% endif %}
+                {% if audio.data.releaseDate %}<p class="release-date">Released: {{ audio.data.releaseDate | date("%B %d, %Y") }}</p>{% endif %}
+                
+                <div class="merch-summary">
+                    <p class="merch-count">{{ audio.data.merch.length }} items available</p>
+                    <div class="merch-types">
+                    {% for item in audio.data.merch %}
+                        {% if item.available %}
+                        <span class="merch-type">{{ item.category | title }}</span>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                    
+                    <div class="price-range">
+                    {% set minPrice = 999999 %}
+                    {% set maxPrice = 0 %}
+                    {% for item in audio.data.merch %}
+                        {% if item.available %}
+                            {% if item.price < minPrice %}{% set minPrice = item.price %}{% endif %}
+                            {% if item.price > maxPrice %}{% set maxPrice = item.price %}{% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if maxPrice > 0 %}
+                        <span class="price-info">From ${{ minPrice }} - ${{ maxPrice }}</span>
+                    {% endif %}
+                    </div>
+                </div>
+                
+                <div class="shop-actions">
+                    <a href="/shop{{ audio.url | replace('/audio', '') }}" class="btn btn-primary">View Merchandise</a>
+                    <a href="{{ audio.url }}" class="btn-secondary">Listen to Album</a>
+                </div>
+            </div>
+        </article>
+        {% endif %}
+    {% endfor %}
+    </div>
+    
+    {% set albumsWithMerch = 0 %}
+    {% for audio in collections.audio %}
+        {% if audio.data.merch and audio.data.merch.length > 0 %}
+            {% set albumsWithMerch = albumsWithMerch + 1 %}
+        {% endif %}
+    {% endfor %}
+    
+    {% if albumsWithMerch == 0 %}
+    <div class="no-merch-available">
+        <h2>No Merchandise Available Yet</h2>
+        <p>We're working on getting merchandise ready for our releases. Check back soon!</p>
+        <p><a href="/audio/" class="btn btn-primary">Browse Albums</a></p>
+    </div>
+    {% endif %}
+</section>

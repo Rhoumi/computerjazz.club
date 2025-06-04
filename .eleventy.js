@@ -13,6 +13,27 @@ module.exports = function (eleventyConfig) {
     });
   });
 
+  // Add collection for shop items
+  eleventyConfig.addCollection("shop", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("src/shop/*.md").sort((a, b) => {
+      return new Date(b.data.releaseDate) - new Date(a.data.releaseDate);
+    });
+  });
+
+  // Add filter for unique items
+  eleventyConfig.addFilter("unique", function (array) {
+    return [...new Set(array)];
+  });
+
+  // Add filter for min/max values
+  eleventyConfig.addFilter("min", function (array) {
+    return Math.min(...array);
+  });
+
+  eleventyConfig.addFilter("max", function (array) {
+    return Math.max(...array);
+  });
+
   // Add Markdown library
   const markdownIt = require("markdown-it")({
     html: true,

@@ -21,6 +21,12 @@ layout: layouts/base.njk
                 {% endif %}
                 </p>
             {% endif %}
+            
+            {% if merch and merch.length > 0 %}
+            <div class="album-shop-link">
+                <a href="/shop{{ page.url | replace('/audio', '') }}" class="btn btn-secondary">View Merchandise</a>
+            </div>
+            {% endif %}
         </div>
     </header>
 
