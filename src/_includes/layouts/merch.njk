@@ -1,0 +1,70 @@
+---
+layout: layouts/base.njk
+---
+<article class="merch-page">
+    <header class="merch-header">
+        {% if image %}
+        <div class="merch-image-container">
+            <img src="{{ image }}" alt="{{ name }}" class="merch-image-large">
+        </div>
+        {% endif %}
+        <div class="merch-info">
+            <h1 class="merch-title">{{ name }}</h1>
+            <p class="merch-category">{{ category | title }}</p>
+            {% if description %}
+            <div class="merch-description">
+                <p>{{ description }}</p>
+            </div>
+            {% endif %}
+            
+            {% if sizes %}
+            <div class="merch-options">
+                <label>Size:</label>
+                <div class="size-options">
+                {% for size in sizes %}
+                    <span class="size-option">{{ size }}</span>
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if variants %}
+            <div class="merch-options">
+                <label>Variant:</label>
+                <div class="variant-options">
+                {% for variant in variants %}
+                    <span class="variant-option">{{ variant }}</span>
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="merch-purchase">
+                <span class="merch-price">${{ price }}</span>
+                {% if available %}
+                <button class="btn btn-primary add-to-cart" data-item="{{ name }}" data-price="{{ price }}">
+                    Add to Cart
+                </button>
+                {% else %}
+                <button class="btn btn-disabled" disabled>
+                    Sold Out
+                </button>
+                {% endif %}
+            </div>
+
+            {% if limited and quantity %}
+            <p class="limited-info">Limited to {{ quantity }} copies</p>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="merch-content">
+        {{ content | safe }}
+    </div>
+    
+    <div class="back-to-shop">
+        <a href="/shop/" class="btn btn-secondary">← Back to Shop</a>
+    </div>
+</article>
+
+<script src="/assets/js/shop.js"></script>

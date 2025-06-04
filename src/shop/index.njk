@@ -6,9 +6,44 @@ title: "Shop"
 
 <section class="shop-index">
     <h1>Official Merchandise</h1>
-    <p>Browse merchandise for all our releases. All items are officially licensed and support the artists directly.</p>
+    <p>Browse merchandise for all our releases and exclusive ComputerJazz Club items. All items are officially licensed and support the artists directly.</p>
     
-    <div class="shop-albums">
+    <!-- Featured Standalone Merchandise -->
+    {% set featuredMerch = merchandise.items | selectattr("featured") %}
+    {% if featuredMerch | length > 0 %}
+    <section class="featured-merch">
+        <h2>Featured Items</h2>
+        <div class="merch-grid">
+        {% for item in featuredMerch %}
+            <div class="merch-card">
+                <a href="/shop/{{ item.slug }}/" class="merch-link">
+                    <div class="merch-image">
+                        <img src="{{ item.image }}" alt="{{ item.name }}" loading="lazy">
+                        {% if item.limited %}
+                        <span class="limited-badge">Limited Edition</span>
+                        {% endif %}
+                        {% if not item.available %}
+                        <span class="unavailable-badge">Sold Out</span>
+                        {% endif %}
+                    </div>
+                    <div class="merch-details">
+                        <h3 class="merch-name">{{ item.name }}</h3>
+                        <p class="merch-category">{{ item.category | title }}</p>
+                        <div class="merch-purchase">
+                            <span class="merch-price">${{ item.price }}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+    
+    <!-- Album-specific Merchandise -->
+    <section class="album-merch">
+        <h2>Album Merchandise</h2>
+        <div class="shop-albums">
     {% for audio in collections.audio %}
         {% if audio.data.merch and audio.data.merch.length > 0 %}
         <article class="shop-album-preview">
@@ -56,6 +91,36 @@ title: "Shop"
         {% endif %}
     {% endfor %}
     </div>
+    </section>
+    
+    <!-- All Standalone Merchandise -->
+    <section class="all-merch">
+        <h2>All Merchandise</h2>
+        <div class="merch-grid">
+        {% for item in merchandise.items %}
+            <div class="merch-card">
+                <a href="/shop/{{ item.slug }}/" class="merch-link">
+                    <div class="merch-image">
+                        <img src="{{ item.image }}" alt="{{ item.name }}" loading="lazy">
+                        {% if item.limited %}
+                        <span class="limited-badge">Limited Edition</span>
+                        {% endif %}
+                        {% if not item.available %}
+                        <span class="unavailable-badge">Sold Out</span>
+                        {% endif %}
+                    </div>
+                    <div class="merch-details">
+                        <h3 class="merch-name">{{ item.name }}</h3>
+                        <p class="merch-category">{{ item.category | title }}</p>
+                        <div class="merch-purchase">
+                            <span class="merch-price">${{ item.price }}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </section>
     
     {% set albumsWithMerch = 0 %}
     {% for audio in collections.audio %}
@@ -64,7 +129,7 @@ title: "Shop"
         {% endif %}
     {% endfor %}
     
-    {% if albumsWithMerch == 0 %}
+    {% if albumsWithMerch == 0 and merchandise.items.length == 0 %}
     <div class="no-merch-available">
         <h2>No Merchandise Available Yet</h2>
         <p>We're working on getting merchandise ready for our releases. Check back soon!</p>

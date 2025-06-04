@@ -1,0 +1,70 @@
+{
+  "items": [
+    {
+      "name": "ComputerJazz Club Logo T-Shirt",
+      "slug": "logo-tshirt",
+      "type": "apparel",
+      "category": "t-shirt",
+      "price": 28.00,
+      "currency": "USD",
+      "image": "/assets/images/placeholder-cover.svg",
+      "description": "Premium cotton t-shirt featuring the iconic ComputerJazz Club logo. Available in multiple colors.",
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "variants": ["Black", "White", "Navy", "Charcoal"],
+      "available": true,
+      "featured": true
+    },
+    {
+      "name": "ComputerJazz Club Hoodie",
+      "slug": "logo-hoodie", 
+      "type": "apparel",
+      "category": "hoodie",
+      "price": 45.00,
+      "currency": "USD",
+      "image": "/assets/images/placeholder-cover.svg",
+      "description": "Comfortable pullover hoodie with embroidered logo. Perfect for late-night coding sessions.",
+      "sizes": ["S", "M", "L", "XL", "XXL"],
+      "variants": ["Black", "Grey", "Navy"],
+      "available": true,
+      "featured": true
+    },
+    {
+      "name": "Digital Wanderer Sticker Pack",
+      "slug": "sticker-pack",
+      "type": "accessories",
+      "category": "stickers",
+      "price": 8.00,
+      "currency": "USD", 
+      "image": "/assets/images/placeholder-cover.svg",
+      "description": "Collection of 6 high-quality vinyl stickers featuring artwork from various releases.",
+      "available": true,
+      "featured": false
+    },
+    {
+      "name": "ComputerJazz Club Enamel Pin",
+      "slug": "enamel-pin",
+      "type": "accessories",
+      "category": "pin",
+      "price": 12.00,
+      "currency": "USD",
+      "image": "/assets/images/placeholder-cover.svg", 
+      "description": "Limited edition enamel pin with butterfly clasp. Collectible series.",
+      "available": true,
+      "limited": true,
+      "quantity": 250,
+      "featured": false
+    },
+    {
+      "name": "Artist Tote Bag",
+      "slug": "tote-bag",
+      "type": "accessories", 
+      "category": "bag",
+      "price": 18.00,
+      "currency": "USD",
+      "image": "/assets/images/placeholder-cover.svg",
+      "description": "Eco-friendly canvas tote bag. Perfect for carrying records and daily essentials.",
+      "available": true,
+      "featured": true
+    }
+  ]
+}

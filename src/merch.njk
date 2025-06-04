@@ -1,0 +1,54 @@
+---
+layout: layouts/merch.njk
+pagination:
+  data: merchandise.items
+  size: 1
+  alias: item
+permalink: "/shop/{{ item.slug }}/"
+eleventyComputed:
+  title: "{{ item.name }}"
+  name: "{{ item.name }}"
+  slug: "{{ item.slug }}"
+  type: "{{ item.type }}"
+  category: "{{ item.category }}"
+  price: "{{ item.price }}"
+  currency: "{{ item.currency }}"
+  image: "{{ item.image }}"
+  description: "{{ item.description }}"
+  sizes: "{{ item.sizes }}"
+  variants: "{{ item.variants }}"
+  available: "{{ item.available }}"
+  limited: "{{ item.limited }}"
+  quantity: "{{ item.quantity }}"
+  featured: "{{ item.featured }}"
+tags: 
+  - merchandise
+---
+
+{% if item.type == "apparel" %}
+## Care Instructions
+
+- Machine wash cold with like colors
+- Tumble dry low heat
+- Do not bleach or iron directly on design
+- Turn inside out before washing
+
+## Sizing Guide
+
+Our apparel runs true to size. If you're between sizes, we recommend sizing up for a more relaxed fit.
+
+{% elif item.type == "accessories" %}
+## Product Details
+
+High-quality materials and construction ensure this item will last. All accessories are designed and produced with attention to detail.
+
+{% endif %}
+
+## Shipping Information
+
+- **Processing Time:** 1-2 business days
+- **Domestic Shipping:** 3-7 business days  
+- **International Shipping:** 7-14 business days
+- **Free shipping** on orders over $50
+
+All merchandise is shipped from our fulfillment center with tracking information provided.
