@@ -3,6 +3,7 @@
     --primary-color: #2c3e50;
     --secondary-color: #3498db;
     --accent-color: #e74c3c;
+    --success-color: #27ae60;
     --text-color: #333;
     --text-light: #666;
     --background-color: #ffffff;
@@ -10,9 +11,13 @@
     --border-color: #e9ecef;
     --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
-    --border-radius: 15px;
-    --border-style: ridge;
+    --border-radius: 0px;
     --max-width: 1200px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
 }
 
 /* Reset and Base Styles */
@@ -29,7 +34,7 @@ body {
     background-color: var(--background-color);
 }
 
-/* Layout */
+/* Layout Components */
 .main-content {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -37,7 +42,7 @@ body {
     min-height: calc(100vh - 140px);
 }
 
-/* Header */
+/* Header Navigation */
 .site-header {
     background-color: var(--surface-color);
     border-bottom: 1px solid var(--border-color);
@@ -49,7 +54,7 @@ body {
 .main-nav {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 1rem 20px;
+    padding: var(--spacing-sm) 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,7 +70,7 @@ body {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: var(--spacing-lg);
 }
 
 .nav-links a {
@@ -84,12 +89,12 @@ body {
     text-align: center;
     padding: 4rem 0;
     background: linear-gradient(135deg, var(--surface-color) 0%, #ffffff 100%);
-    margin: -20px -20px 3rem -20px;
+    margin: -20px -20px var(--spacing-xl) -20px;
 }
 
 .hero h1 {
     font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-sm);
     color: var(--primary-color);
 }
 
@@ -98,27 +103,804 @@ body {
     color: var(--text-light);
 }
 
-/* Album Grid */
-.album-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin: 2rem 0;
+/* Button System */
+.btn {
+    display: inline-block;
+    padding: 0.8rem var(--spacing-md);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    border: 2px ridge transparent;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-align: center;
 }
 
-.album-card {
+.btn-primary {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2980b9;
+}
+
+.btn-secondary {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+    background: transparent;
+}
+
+.btn-secondary:hover {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.btn-success {
+    background: var(--success-color);
+    color: white;
+}
+
+.btn-success:hover {
+    background: #229954;
+}
+
+.btn-disabled {
+    background: #95a5a6;
+    color: white;
+    cursor: not-allowed;
+}
+
+/* Card System */
+.card {
     background: var(--surface-color);
     border-radius: var(--border-radius);
+    border: 2px ridge var(--border-color);
     overflow: hidden;
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card-large:hover {
+    transform: translateY(-4px);
+}
+
+.card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-image-large {
+    height: 250px;
+}
+
+.card-content {
+    padding: var(--spacing-md);
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+    color: var(--primary-color);
+}
+
+.card-subtitle {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-xs);
+}
+
+.card-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Grid System */
+.grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.grid-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.grid-compact {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+}
+
+/* Album Styles */
+.album-header {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    align-items: start;
+}
+
+.album-cover {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    border: 2px ridge var(--border-color);
+    box-shadow: var(--shadow);
+    flex-shrink: 0;
+}
+
+.album-info {
+    flex-grow: 1;
+}
+
+.album-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-xs);
+    color: var(--primary-color);
+}
+
+.album-artist {
+    font-size: 1.3rem;
+    color: var(--text-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+.album-description {
+    margin-bottom: var(--spacing-xl);
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+/* Tracklist */
+.tracklist {
+    margin-bottom: var(--spacing-xl);
+}
+
+.tracklist h2 {
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-color);
+}
+
+.tracks {
+    list-style: none;
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    border: 2px ridge var(--border-color);
+    overflow: hidden;
+}
+
+.track {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+
+.track:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+.track:last-child {
+    border-bottom: none;
+}
+
+.track-info {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: var(--spacing-sm);
+}
+
+.track-number {
+    font-weight: bold;
+    color: var(--text-light);
+    min-width: 2rem;
+}
+
+.track-title {
+    font-weight: 500;
+    flex-grow: 1;
+}
+
+.track-duration {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    min-width: 4rem;
+    text-align: right;
+}
+
+.track-controls {
+    margin-left: var(--spacing-lg);
+}
+
+.track-player {
+    width: 300px;
+    height: 40px;
+}
+
+/* Artist Styles */
+.artist {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.artist-header {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.artist-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    flex-shrink: 0;
+}
+
+.artist-info {
+    flex: 1;
+}
+
+.artist-name {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+    color: var(--primary-color);
+}
+
+.artist-location {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-xs);
+}
+
+.artist-genres {
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+.artist-website {
+    margin-bottom: var(--spacing-sm);
+}
+
+.artist-website a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.artist-website a:hover {
+    text-decoration: underline;
+}
+
+.artist-social {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.social-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    padding: 0.25rem var(--spacing-xs);
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+    transition: all 0.2s ease;
+}
+
+.social-link:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.artist-bio {
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.artist-content {
+    margin-bottom: var(--spacing-lg);
+}
+
+.artist-discography,
+.artist-merch {
+    margin-bottom: var(--spacing-lg);
+}
+
+.artist-discography h2,
+.artist-merch h2 {
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: var(--spacing-xs);
+}
+
+/* Shop Styles */
+.shop-header {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    align-items: start;
+}
+
+.shop-subtitle {
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 500;
+}
+
+.back-to-album {
+    color: var(--secondary-color);
+    text-decoration: none;
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+}
+
+.back-to-album:hover {
+    text-decoration: underline;
+}
+
+.merch-item {
     position: relative;
 }
 
-.album-card:hover {
-    transform: translateY(-4px);
+.merch-item.unavailable {
+    opacity: 0.7;
+}
+
+.limited-badge,
+.unavailable-badge {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius);
+    border: 2px ridge;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    z-index: 1;
+}
+
+.limited-badge {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.unavailable-badge {
+    background: var(--accent-color);
+    color: white;
+}
+
+.merch-options {
+    margin-bottom: var(--spacing-sm);
+}
+
+.merch-options label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.size-options,
+.variant-options {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.size-option,
+.variant-option {
+    padding: 0.3rem 0.8rem;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.size-option:hover,
+.variant-option:hover,
+.size-option.selected,
+.variant-option.selected {
+    background: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+.merch-purchase {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.merch-price {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.limited-info {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Footer */
+.site-footer {
+    background: var(--surface-color);
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-lg);
+    text-align: center;
+    color: var(--text-light);
+    margin-top: 4rem;
+}
+
+/* Cart Widget */
+.cart-widget {
+    position: fixed;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    z-index: 1000;
+}
+
+.cart-toggle {
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    border: 2px ridge;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow);
+}
+
+.cart-toggle:hover {
+    background: #2980b9;
+    transform: translateY(-1px);
+}
+
+.cart-count {
+    background: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.8rem;
+    margin-left: var(--spacing-xs);
+    display: none;
+}
+
+.cart-dropdown {
+    position: absolute;
+    top: calc(100% + var(--spacing-xs));
+    right: 0;
+    width: 350px;
+    max-height: 500px;
+    background: white;
+    border-radius: var(--border-radius);
+    border: 2px ridge var(--border-color);
     box-shadow: var(--shadow-hover);
+    transform: translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    overflow: hidden;
+}
+
+.cart-dropdown.show {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.cart-header {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--surface-color);
+}
+
+.cart-header h3 {
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.cart-items {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: var(--spacing-sm);
+}
+
+.empty-cart {
+    text-align: center;
+    color: var(--text-light);
+    font-style: italic;
+    padding: var(--spacing-lg);
+}
+
+.cart-item {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    border: 2px ridge var(--border-color);
+    flex-shrink: 0;
+}
+
+.cart-item-details {
+    flex-grow: 1;
+}
+
+.cart-item-details h4 {
+    margin: 0 0 var(--spacing-xs) 0;
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+.cart-item-details p {
+    margin: 0.2rem 0;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.cart-item-price {
+    font-weight: 600;
+    color: var(--primary-color) !important;
+}
+
+.remove-item {
+    position: absolute;
+    top: var(--spacing-xs);
+    right: 0;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-light);
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.remove-item:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
+.cart-footer {
+    padding: var(--spacing-sm);
+    border-top: 1px solid var(--border-color);
+    background: var(--surface-color);
+}
+
+.cart-total-row {
+    margin-bottom: var(--spacing-sm);
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.cart-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.cart-actions .btn {
+    flex: 1;
+    text-align: center;
+    padding: 0.8rem;
+}
+
+/* Cart Notification */
+.cart-notification {
+    position: fixed;
+    top: var(--spacing-lg);
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--success-color);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius);
+    border: 2px ridge;
+    box-shadow: var(--shadow-hover);
+    z-index: 1100;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.cart-notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.notification-content {
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Component Mappings for Legacy Classes */
+.album-grid,
+.merch-grid,
+.artists-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.album-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.merch-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.artists-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.album-card,
+.merch-card,
+.artist-card,
+.album-preview,
+.shop-album-preview,
+.merch-item {
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    border: 2px ridge var(--border-color);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.album-card:hover,
+.merch-card:hover,
+.artist-card:hover,
+.album-preview:hover,
+.shop-album-preview:hover,
+.merch-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.album-card-cover img,
+.album-cover-thumb,
+.merch-cover-thumb,
+.artist-image-thumb {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.merch-image img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.album-card-info,
+.merch-card-info,
+.artist-card-info,
+.merch-details {
+    padding: var(--spacing-md);
+}
+
+.album-card-info h3,
+.album-card-info .album-title,
+.merch-card-info .merch-title,
+.artist-card-info .artist-name,
+.merch-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+    color: var(--primary-color);
+}
+
+.artist-card-info .artist-name {
+    font-size: 1.3rem;
+}
+
+.merch-name {
+    font-size: 1.3rem;
+}
+
+.album-card-info .artist,
+.album-card-info .release-date,
+.album-date,
+.artist-card-info .artist-location,
+.artist-card_info .artist-genres,
+.merch-category {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.9rem;
+}
+
+.album-link,
+.merch-link,
+.artist-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.artist-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.artist-link:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.view-album-btn,
+.add-to-cart,
+.checkout-btn {
+    background: var(--secondary-color);
+    color: white;
+    padding: 0.8rem var(--spacing-md);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    border: 2px ridge transparent;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+}
+
+.view-album-btn:hover,
+.add-to-cart:hover {
+    background: #2980b9;
+}
+
+.checkout-btn {
+    background: var(--success-color);
+}
+
+.checkout-btn:hover {
+    background: #229954;
+}
+
+/* Special album card overlay for homepage */
+.album-card {
+    position: relative;
 }
 
 .album-card-cover {
@@ -127,9 +909,6 @@ body {
 }
 
 .album-card-cover img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
     transition: transform 0.3s ease;
 }
 
@@ -155,192 +934,33 @@ body {
     opacity: 1;
 }
 
-.view-album-btn {
-    background: var(--secondary-color);
-    color: white;
-    padding: 0.8rem 1.5rem;
-    text-decoration: none;
-    border-radius: var(--border-radius);
-    border-style: var(--border-style);
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-}
-
-.view-album-btn:hover {
-    background: #2980b9;
-}
-
-.album-card-info {
-    padding: 1.5rem;
-}
-
-.album-card-info h3 {
-    margin-bottom: 0.5rem;
-}
-
-.album-card-info h3 a {
-    text-decoration: none;
-    color: var(--primary-color);
-}
-
-.album-card-info .artist {
-    color: var(--text-light);
-    margin-bottom: 0.25rem;
-}
-
-.album-card-info .release-date {
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
-/* Album Page */
-.album-header {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 3rem;
-    align-items: start;
-}
-
-.album-cover-container {
-    flex-shrink: 0;
-}
-
-.album-cover {
-    width: 300px;
-    height: 300px;
-    object-fit: cover;
-    border-radius: var(--border-radius);
-    border-style: var(--border-style);
-    box-shadow: var(--shadow);
-}
-
-.album-info {
-    flex-grow: 1;
-}
-
-.album-title {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-}
-
-.album-artist {
-    font-size: 1.3rem;
-    color: var(--text-light);
-    margin-bottom: 1rem;
-}
-
-.release-date,
-.genre {
-    margin-bottom: 0.5rem;
-    color: var(--text-light);
-}
-
-.album-description {
-    margin-bottom: 3rem;
-    font-size: 1.1rem;
-    line-height: 1.7;
-}
-
-/* Tracklist */
-.tracklist {
-    margin-bottom: 3rem;
-}
-
-.tracklist h2 {
-    margin-bottom: 1.5rem;
-    color: var(--primary-color);
-}
-
-.tracks {
-    list-style: none;
-    background: var(--surface-color);
-    border-radius: var(--border-radius);
-    border-style: var(--border-style);
-    overflow: hidden;
-}
-
-.track {
-    display: flex;
-    align-items: center;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border-color);
-    border-style: var(--border-style);
-    transition: background-color 0.2s ease;
-}
-
-.track:hover {
-    background-color: rgba(52, 152, 219, 0.05);
-}
-
-.track:last-child {
-    border-bottom: none;
-}
-
-.track-info {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-    gap: 1rem;
-}
-
-.track-number {
-    font-weight: bold;
-    color: var(--text-light);
-    min-width: 2rem;
-}
-
-.track-title {
-    font-weight: 500;
-    flex-grow: 1;
-}
-
-.track-duration {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    min-width: 4rem;
-    text-align: right;
-}
-
-.track-controls {
-    margin-left: 2rem;
-}
-
-.track-player {
-    width: 300px;
-    height: 40px;
-}
-
-/* Audio List */
-.audio-list {
+/* Audio/Shop list layouts */
+.audio-list,
+.shop-albums {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: var(--spacing-lg);
 }
 
-.album-preview {
+.album-preview,
+.shop-album-preview {
     display: flex;
-    gap: 2rem;
-    padding: 2rem;
-    background: var(--surface-color);
-    border-radius: var(--border-radius);
-    border-style: var(--border-style);
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
 }
 
-.album-preview:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.album-preview-cover img {
+.album-preview-cover img,
+.shop-album-preview .album-preview-cover img {
     width: 120px;
     height: 120px;
     object-fit: cover;
     border-radius: var(--border-radius);
-    border-style: var(--border-style);
+    border: 2px ridge var(--border-color);
+}
+
+.shop-album-preview .album-preview-cover img {
+    width: 150px;
+    height: 150px;
 }
 
 .album-preview-details {
@@ -348,7 +968,7 @@ body {
 }
 
 .album-preview-details h2 {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-xs);
 }
 
 .album-preview-details h2 a {
@@ -356,332 +976,37 @@ body {
     color: var(--primary-color);
 }
 
-.album-preview-details .artist {
-    font-size: 1.1rem;
-    color: var(--text-light);
-    margin-bottom: 0.5rem;
-}
-
+.album-preview-details .artist,
 .album-preview-details .release-date,
 .album-preview-details .genre,
 .album-preview-details .track-count {
     color: var(--text-light);
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-xs);
 }
 
 .album-preview-details .description {
-    margin-top: 1rem;
+    margin-top: var(--spacing-sm);
     line-height: 1.6;
-}
-
-/* Buttons */
-.btn {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    text-decoration: none;
-    border-radius: var(--border-radius);
-    border-style: var(--border-style);
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-primary {
-    background: var(--secondary-color);
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #2980b9;
-}
-
-.view-all-audio {
-    text-align: center;
-    margin-top: 3rem;
-}
-
-/* Footer */
-.site-footer {
-    background: var(--surface-color);
-    border-top: 1px solid var(--border-color);
-    padding: 2rem;
-    text-align: center;
-    color: var(--text-light);
-    margin-top: 4rem;
-}
-
-/* Shop Styles */
-.shop-page {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.shop-header {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 3rem;
-    align-items: start;
-}
-
-.shop-subtitle {
-    font-size: 1.1rem;
-    color: var(--secondary-color);
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-}
-
-.back-to-album {
-    color: var(--secondary-color);
-    text-decoration: none;
-    margin-bottom: 1rem;
-    display: inline-block;
-}
-
-.back-to-album:hover {
-    text-decoration: underline;
-}
-
-.merchandise {
-    margin-bottom: 3rem;
-}
-
-.merchandise h2 {
-    margin-bottom: 2rem;
-    color: var(--primary-color);
-}
-
-.merch-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.merch-item {
-    background: var(--surface-color);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.merch-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.merch-item.unavailable {
-    opacity: 0.7;
-}
-
-.merch-image {
-    position: relative;
-    height: 250px;
-    overflow: hidden;
-}
-
-.merch-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.limited-badge,
-.unavailable-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem 1rem;
-    border-radius: var(--border-radius);
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.limited-badge {
-    background: var(--secondary-color);
-    color: white;
-}
-
-.unavailable-badge {
-    background: #e74c3c;
-    color: white;
-}
-
-.merch-details {
-    padding: 1.5rem;
-}
-
-.merch-name {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-}
-
-.merch-category {
-    color: var(--text-light);
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-}
-
-.merch-description {
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
-
-.merch-options {
-    margin-bottom: 1rem;
-}
-
-.merch-options label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--text-light);
-}
-
-.size-options,
-.variant-options {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-.size-option,
-.variant-option {
-    padding: 0.3rem 0.8rem;
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.size-option:hover,
-.variant-option:hover {
-    background: var(--secondary-color);
-    color: white;
-    border-color: var(--secondary-color);
-}
-
-.size-option.selected,
-.variant-option.selected {
-    background: var(--secondary-color);
-    color: white;
-    border-color: var(--secondary-color);
-}
-
-.merch-purchase {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.merch-price {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-.add-to-cart {
-    padding: 0.8rem 1.5rem;
-}
-
-.btn-disabled {
-    background: #95a5a6;
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border-radius: var(--border-radius);
-    border: none;
-    cursor: not-allowed;
-}
-
-.limited-info {
-    font-size: 0.9rem;
-    color: var(--text-light);
-    font-style: italic;
-}
-
-.no-merchandise {
-    text-align: center;
-    padding: 3rem;
-    background: var(--surface-color);
-    border-radius: var(--border-radius);
-}
-
-.no-merchandise h2 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-}
-
-/* Shop Index */
-.shop-index h1 {
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.shop-index > p {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 1.1rem;
-    color: var(--text-light);
-}
-
-.shop-albums {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.shop-album-preview {
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
-    background: var(--surface-color);
-    border-radius: var(--border-radius);
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.shop-album-preview:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.shop-album-preview .album-preview-cover img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: var(--border-radius);
-}
-
-.shop-album-preview .album-preview-details {
-    flex-grow: 1;
 }
 
 .merch-summary {
-    margin: 1rem 0;
-    padding: 1rem;
-    background: var(--bg-color);
+    margin: var(--spacing-sm) 0;
+    padding: var(--spacing-sm);
+    background: var(--background-color);
     border-radius: var(--border-radius);
+    border: 2px ridge var(--border-color);
 }
 
 .merch-count {
     font-weight: 500;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-xs);
 }
 
 .merch-types {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--spacing-xs);
     flex-wrap: wrap;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-xs);
 }
 
 .merch-type {
@@ -700,495 +1025,78 @@ body {
 
 .shop-actions {
     display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.btn-secondary {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    text-decoration: none;
-    border-radius: var(--border-radius);
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border: 2px solid var(--secondary-color);
-    color: var(--secondary-color);
-    background: transparent;
-}
-
-.btn-secondary:hover {
-    background: var(--secondary-color);
-    color: white;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
 }
 
 .album-shop-link {
-    margin-top: 1rem;
+    margin-top: var(--spacing-sm);
 }
 
+.no-merchandise,
 .no-merch-available {
     text-align: center;
-    padding: 3rem;
+    padding: var(--spacing-xl);
     background: var(--surface-color);
     border-radius: var(--border-radius);
+    border: 2px ridge var(--border-color);
 }
 
+.no-merchandise h2,
 .no-merch-available h2 {
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-sm);
     color: var(--primary-color);
 }
 
-/* Cart Widget */
-.cart-widget {
-    position: fixed;
-    top: 2rem;
-    right: 2rem;
-    z-index: 1000;
-}
-
-.cart-toggle {
-    background: var(--secondary-color);
-    color: white;
-    border: none;
-    padding: 1rem 1.5rem;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow);
-}
-
-.cart-toggle:hover {
-    background: #2980b9;
-    transform: translateY(-1px);
-}
-
-.cart-count {
-    background: #e74c3c;
-    color: white;
-    border-radius: 50%;
-    padding: 0.2rem 0.6rem;
-    font-size: 0.8rem;
-    margin-left: 0.5rem;
-    display: none;
-}
-
-.cart-dropdown {
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    right: 0;
-    width: 350px;
-    max-height: 500px;
-    background: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-hover);
-    border: 1px solid var(--border-color);
-    transform: translateY(-10px);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-    overflow: hidden;
-}
-
-.cart-dropdown.show {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-}
-
-.cart-header {
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
-    background: var(--surface-color);
-}
-
-.cart-header h3 {
-    margin: 0;
-    color: var(--primary-color);
-}
-
-.cart-items {
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 1rem;
-}
-
-.empty-cart {
+.view-all-audio {
     text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+.release-date,
+.genre {
+    margin-bottom: var(--spacing-xs);
     color: var(--text-light);
-    font-style: italic;
-    padding: 2rem;
-}
-
-.cart-item {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border-color);
-    position: relative;
-}
-
-.cart-item:last-child {
-    border-bottom: none;
-}
-
-.cart-item-image {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: var(--border-radius);
-    flex-shrink: 0;
-}
-
-.cart-item-details {
-    flex-grow: 1;
-}
-
-.cart-item-details h4 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1rem;
-    color: var(--primary-color);
-}
-
-.cart-item-details p {
-    margin: 0.2rem 0;
-    font-size: 0.9rem;
-    color: var(--text-light);
-}
-
-.cart-item-price {
-    font-weight: 600;
-    color: var(--primary-color) !important;
-}
-
-.remove-item {
-    position: absolute;
-    top: 0.5rem;
-    right: 0;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--text-light);
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-}
-
-.remove-item:hover {
-    background: #e74c3c;
-    color: white;
-}
-
-.cart-footer {
-    padding: 1rem;
-    border-top: 1px solid var(--border-color);
-    background: var(--surface-color);
-}
-
-.cart-total-row {
-    margin-bottom: 1rem;
-    text-align: center;
-    font-size: 1.1rem;
-}
-
-.cart-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.cart-actions .btn {
-    flex: 1;
-    text-align: center;
-    padding: 0.8rem;
-}
-
-.checkout-btn {
-    background: #27ae60;
-}
-
-.checkout-btn:hover {
-    background: #229954;
-}
-
-/* Cart Notification */
-.cart-notification {
-    position: fixed;
-    top: 2rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(-100px);
-    background: #27ae60;
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-hover);
-    z-index: 1100;
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.cart-notification.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-}
-
-.notification-content {
-    text-align: center;
-    font-weight: 500;
-}
-
-/* Artist Styles */
-.artist {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.artist-header {
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.artist-image-container {
-    flex-shrink: 0;
-}
-
-.artist-image {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-}
-
-.artist-info {
-    flex: 1;
-}
-
-.artist-name {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-}
-
-.artist-location {
-    color: var(--text-light);
-    margin-bottom: 0.5rem;
-}
-
-.artist-genres {
-    color: var(--secondary-color);
-    margin-bottom: 1rem;
-}
-
-.artist-website {
-    margin-bottom: 1rem;
-}
-
-.artist-website a {
-    color: var(--secondary-color);
-    text-decoration: none;
-}
-
-.artist-website a:hover {
-    text-decoration: underline;
-}
-
-.artist-social {
-    display: flex;
-    gap: 1rem;
-}
-
-.social-link {
-    color: var(--secondary-color);
-    text-decoration: none;
-    padding: 0.25rem 0.5rem;
-    border: 1px solid var(--secondary-color);
-    border-radius: var(--border-radius);
-    transition: all 0.2s ease;
-}
-
-.social-link:hover {
-    background-color: var(--secondary-color);
-    color: white;
-}
-
-.artist-bio {
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-    line-height: 1.7;
-}
-
-.artist-content {
-    margin-bottom: 2rem;
-}
-
-.artist-discography,
-.artist-merch {
-    margin-bottom: 2rem;
-}
-
-.artist-discography h2,
-.artist-merch h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--accent-color);
-    padding-bottom: 0.5rem;
-}
-
-.album-grid,
-.merch-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-}
-
-.album-card,
-.merch-card {
-    background: var(--surface-color);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.album-card:hover,
-.merch-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.album-link,
-.merch-link {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-}
-
-.album-cover-thumb,
-.merch-cover-thumb {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.album-card-info,
-.merch-card-info {
-    padding: 1rem;
-}
-
-.album-card-info .album-title,
-.merch-card-info .merch-title {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-}
-
-.album-date {
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
-/* Artists Index Page */
-.artists-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
-.artist-card {
-    background: var(--surface-color);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.artist-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.artist-link {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-}
-
-.artist-image-thumb {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.artist-card-info {
-    padding: 1.5rem;
-}
-
-.artist-card-info .artist-name {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-}
-
-.artist-card-info .artist-location {
-    color: var(--text-light);
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.artist-card-info .artist-genres {
-    color: var(--secondary-color);
-    font-size: 0.9rem;
-}
-
-/* Artist Links in Albums/Shop */
-.artist-link {
-    color: var(--secondary-color);
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.artist-link:hover {
-    color: var(--accent-color);
-    text-decoration: underline;
 }
 
 .album-artists,
 .album-artist {
     font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-xs);
 }
 
-/* Responsive Artist Styles */
+.merch-description {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+}
+
+.merch-category {
+    color: var(--text-light);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+    .album-header,
+    .shop-header,
     .artist-header {
         flex-direction: column;
         text-align: center;
         align-items: center;
+        gap: var(--spacing-md);
     }
 
+    .album-cover,
     .artist-image {
-        width: 150px;
-        height: 150px;
+        width: 250px;
+        height: 250px;
     }
 
-    .artist-name {
+    .artist-name,
+    .album-title {
         font-size: 2rem;
     }
 
@@ -1196,25 +1104,73 @@ body {
         justify-content: center;
     }
 
+    .album-grid,
+    .merch-grid,
     .artists-grid {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 1rem;
+        gap: var(--spacing-sm);
     }
 
-    .album-grid,
     .merch-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    .album-preview,
+    .shop-album-preview {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .cart-widget {
+        top: var(--spacing-sm);
+        right: var(--spacing-sm);
+    }
+
+    .cart-dropdown {
+        width: calc(100vw - 2rem);
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%) translateY(-10px);
+    }
+
+    .cart-dropdown.show {
+        transform: translateX(-50%) translateY(0);
     }
 }
 
 @media (max-width: 480px) {
+    .main-nav {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .nav-links {
+        gap: var(--spacing-sm);
+    }
+
+    .album-grid,
+    .merch-grid,
     .artists-grid {
         grid-template-columns: 1fr;
     }
 
-    .album-grid,
-    .merch-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    .album-cover,
+    .artist-image {
+        width: 200px;
+        height: 200px;
+    }
+
+    .track {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-xs);
+    }
+
+    .track-controls {
+        margin-left: 0;
+    }
+
+    .track-player {
+        width: 100%;
     }
 }
