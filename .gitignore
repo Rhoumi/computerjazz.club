@@ -1,0 +1,11 @@
+package/generated*
+node_modules/
+.nyc_output/
+coverage/
+docs/_data/coverage.json
+api-docs/
+.vscode
+.idea
+_site/
+.cache
+test/stubs-layout-cache/_includes/*.js
