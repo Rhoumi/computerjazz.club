@@ -1252,6 +1252,28 @@ marquee {
     border-top: 1px solid var(--border-color);
 }
 
+/* Radio Page Styles */
+.radio-page {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+}
+
+.radio-placeholder {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    border: 2px ridge var(--border-color);
+}
+
+.radio-placeholder p {
+    color: var(--text-light);
+    font-style: italic;
+    margin: 0;
+}
+
 /* Responsive Design for Merch Pages */
 @media (max-width: 768px) {
     .album-header,

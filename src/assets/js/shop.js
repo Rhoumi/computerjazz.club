@@ -267,8 +267,11 @@ class ShoppingCart {
 
 // Initialize cart when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Only initialize cart on shop pages or pages with merchandise
-    if (document.querySelector('.merch-item') || document.querySelector('.shop-page') || document.querySelector('.shop-index') || document.querySelector('.merch-page')) {
+    // Initialize cart on all shop pages (any URL starting with /shop/)
+    const isShopPage = window.location.pathname.startsWith('/shop/') || window.location.pathname === '/shop';
+    const hasMerchElements = document.querySelector('.merch-item') || document.querySelector('.shop-page') || document.querySelector('.shop-index') || document.querySelector('.merch-page');
+    
+    if (isShopPage || hasMerchElements) {
         new ShoppingCart();
     }
 });
