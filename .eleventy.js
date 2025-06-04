@@ -4,10 +4,11 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets/images");
   eleventyConfig.addPassthroughCopy("src/assets/css");
   eleventyConfig.addPassthroughCopy("src/assets/js");
+  eleventyConfig.addPassthroughCopy("src/assets/fonts");
 
-  // Add collection for albums
-  eleventyConfig.addCollection("albums", function (collectionApi) {
-    return collectionApi.getFilteredByGlob("src/albums/*.md").sort((a, b) => {
+  // Add collection for audio
+  eleventyConfig.addCollection("audio", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("src/audio/*.md").sort((a, b) => {
       return new Date(b.data.releaseDate) - new Date(a.data.releaseDate);
     });
   });

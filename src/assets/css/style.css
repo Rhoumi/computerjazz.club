@@ -306,8 +306,8 @@ body {
     height: 40px;
 }
 
-/* Albums List */
-.albums-list {
+/* Audio List */
+.audio-list {
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -388,7 +388,7 @@ body {
     background: #2980b9;
 }
 
-.view-all-albums {
+.view-all-audio {
     text-align: center;
     margin-top: 3rem;
 }

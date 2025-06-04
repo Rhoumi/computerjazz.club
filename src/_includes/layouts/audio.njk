@@ -12,7 +12,15 @@ layout: layouts/base.njk
             <h1 class="album-title">{{ title }}</h1>
             {% if artist %}<p class="album-artist">by {{ artist }}</p>{% endif %}
             {% if releaseDate %}<p class="release-date">Released: {{ releaseDate | date("%B %d, %Y") }}</p>{% endif %}
-            {% if genre %}<p class="genre">Genre: {{ genre }}</p>{% endif %}
+            {% if genre %}
+                <p class="genre">Genre: 
+                {% if genre is iterable and genre is not string %}
+                    {{ genre | join(", ") }}
+                {% else %}
+                    {{ genre }}
+                {% endif %}
+                </p>
+            {% endif %}
         </div>
     </header>
 

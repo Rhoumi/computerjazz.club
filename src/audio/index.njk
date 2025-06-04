@@ -1,0 +1,29 @@
+---
+title: Audio
+---
+
+<h1>All Audio</h1>
+
+<div class="audio-list">
+{% for audio in collections.audio %}
+    <article class="album-preview">
+        {% if audio.data.cover %}
+        <div class="album-preview-cover">
+            <img src="{{ audio.data.cover }}" alt="{{ audio.data.title }} cover">
+        </div>
+        {% endif %}
+        <div class="album-preview-details">
+            <h2><a href="{{ audio.url }}">{{ audio.data.title }}</a></h2>
+            {% if audio.data.artist %}<p class="artist">{{ audio.data.artist }}</p>{% endif %}
+            {% if audio.data.releaseDate %}<p class="release-date">Released: {{ audio.data.releaseDate | date("%B %d, %Y") }}</p>{% endif %}
+            {% if audio.data.genre %}<p class="genre">Genre: {{ audio.data.genre }}</p>{% endif %}
+            {% if audio.data.description %}
+            <p class="description">{{ audio.data.description | truncate(200) }}</p>
+            {% endif %}
+            {% if audio.data.tracks %}
+            <p class="track-count">{{ audio.data.tracks | length }} tracks</p>
+            {% endif %}
+        </div>
+    </article>
+{% endfor %}
+</div>

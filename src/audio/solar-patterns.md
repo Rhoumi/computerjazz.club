@@ -1,6 +1,6 @@
 ---
-layout: layouts/album.njk
-permalink: "/albums/solar-patterns/"
+layout: layouts/audio.njk
+permalink: "/audio/solar-patterns/"
 title: "Solar Patterns"
 artist: "ComputerJazz Club"
 releaseDate: "2024-08-22"

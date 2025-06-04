@@ -1,10 +1,10 @@
 ---
-layout: layouts/album.njk
-permalink: "/albums/midnight-echoes/"
+layout: layouts/audio.njk
+permalink: "/audio/midnight-echoes/"
 title: "Midnight Echoes"
 artist: "ComputerJazz Club"
 releaseDate: "2024-12-15"
-genre: "Electronic Ambient"
+genre: ["Electronic Ambient", "Bob"]
 cover: "/assets/images/placeholder-cover.svg"
 tracks:
   - title: "Nocturnal Drift"
