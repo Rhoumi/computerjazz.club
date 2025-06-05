@@ -1,0 +1,106 @@
+---
+layout: layouts/base.njk
+---
+<article class="artist">
+    <header class="artist-header">
+        {% if image %}
+        <div class="artist-image-container">
+            <img src="{{ image }}" alt="{{ name }}" class="artist-image">
+        </div>
+        {% endif %}
+        <div class="artist-info">
+            <h1 class="artist-name">{{ name }}</h1>
+            {% if location %}<p class="artist-location">{{ location }}</p>{% endif %}
+            {% if genres %}
+                <p class="artist-genres">
+                {% if genres is iterable and genres is not string %}
+                    {{ genres | join(", ") }}
+                {% else %}
+                    {{ genres }}
+                {% endif %}
+                </p>
+            {% endif %}
+            {% if website %}
+                <p class="artist-website">
+                    <a href="{{ website }}" target="_blank" rel="noopener">{{ website }}</a>
+                </p>
+            {% endif %}
+            {% if social %}
+                <div class="artist-social">
+                    {% for platform, url in social %}
+                        <a href="{{ url }}" target="_blank" rel="noopener" class="social-link">{{ platform }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </header>
+
+    {% if bio %}
+    <div class="artist-bio">
+        {{ bio | markdown | safe }}
+    </div>
+    {% endif %}
+
+    <div class="artist-content">
+        {{ content | safe }}
+    </div>
+
+    {% set artistAlbums = [] %}
+    {% for album in collections.audio %}
+        {% if album.data.artists and album.data.artists.includes(name) %}
+            {% set artistAlbums = (artistAlbums.push(album), artistAlbums) %}
+        {% elif album.data.artist and album.data.artist == name %}
+            {% set artistAlbums = (artistAlbums.push(album), artistAlbums) %}
+        {% endif %}
+    {% endfor %}
+    {% if artistAlbums.length > 0 %}
+    <section class="artist-discography">
+        <h2>Discography</h2>
+        <div class="album-grid">
+        {% for album in artistAlbums %}
+            <div class="album-card">
+                <a href="{{ album.url }}" class="album-link">
+                    {% if album.data.cover %}
+                    <img src="{{ album.data.cover }}" alt="{{ album.data.title }} cover" class="album-cover-thumb">
+                    {% endif %}
+                    <div class="album-card-info">
+                        <h3 class="album-title">{{ album.data.title }}</h3>
+                        {% if album.data.releaseDate %}
+                        <p class="album-date">{{ album.data.releaseDate | date("%Y") }}</p>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    {% set artistMerch = [] %}
+    {% for item in collections.shop %}
+        {% if item.data.artists and item.data.artists.includes(name) %}
+            {% set artistMerch = (artistMerch.push(item), artistMerch) %}
+        {% elif item.data.artist and item.data.artist == name %}
+            {% set artistMerch = (artistMerch.push(item), artistMerch) %}
+        {% endif %}
+    {% endfor %}
+    {% if artistMerch.length > 0 %}
+    <section class="artist-merch">
+        <h2>Merchandise</h2>
+        <div class="merch-grid">
+        {% for item in artistMerch %}
+            <div class="merch-card">
+                <a href="{{ item.url }}" class="merch-link">
+                    {% if item.data.cover %}
+                    <img src="{{ item.data.cover }}" alt="{{ item.data.title }} merch" class="merch-cover-thumb">
+                    {% endif %}
+                    <div class="merch-card-info">
+                        <h3 class="merch-title">{{ item.data.title }}</h3>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</article>
