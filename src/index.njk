@@ -142,7 +142,7 @@ title: Home
           this.maxCol = 0; // max caret column
           this.row = 0; // caret row
           this.cols = 46; // number of columns
-          this.rows = 20; // number of rows
+          this.rows = 7; // number of rows
           this.gap = 0; // gap between chars in px
           this.ctx = canvas.getContext("2d");
           this.setBuffer(text);
@@ -159,6 +159,10 @@ title: Home
           this.paint();
 
           document.addEventListener("keydown", (e) => {
+            const blockedKeys = ['ArrowDown', 'ArrowUp','ArrowLeft', 'ArrowRight'];
+            if (blockedKeys.includes(event.key)) {
+              event.preventDefault();
+            }
             if (e.key === "ArrowRight") {
               this.moveRight();
             } else if (e.key === "ArrowLeft") {
