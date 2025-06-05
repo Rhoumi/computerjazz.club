@@ -2,31 +2,51 @@
 layout: layouts/base.njk
 permalink: "/about/"
 title: "About"
-description: "Legal and technical information about ComputerJazzClub"
+description: "About computerjazz.club"
 ---
 
-# About ComputerJazzClub
+# About computerjazz.club
+
+## The Computer Jazz Club is built as an hub for digital music. Listen, Share, Download.
+
+<br>
+<br>
+<br>
+<br>
+
+```
+    _,-----,____g===;,
+  <'.._____,-------g  ;
+                     \   \,
+                       q   q,
+                        q    q,
+                       [='     q
+                         `;  O  p
+                           k  O  p -{0
+                            l  O  p -o
+                            ,i     p
+                             P  O   |
+        *jazz*             q:|   O| |BD
+                              [   | P b
+                              |   |  |____________
+                            [ |   |  |\         /
+                            | '   |  P :       ;
+                            | [   0   Q:  ( )  ;
+                             [ P  ( )  |;  ( ) ;
+                             :Q  ( )  V        p
+                              \   [           ;
+                               \',     O    /
+                                 ' ; _ . '
+```
 
 <div class="about-page">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
-## Legal Information
-
-### Copyright & Licensing
-
-All musical compositions, recordings, and audio content on this website are the intellectual property of their respective artists and are protected by copyright law. Unless otherwise specified, all content is released under the terms described in individual release notes.
-
-**Website License:** This website's source code is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). You can find the full license text in our [GitHub repository](https://github.com/computerjazz/computerjazz.club).
-
-**Content License:** All original musical content, artwork, and related materials remain the exclusive property of ComputerJazzClub and associated artists. Unauthorized reproduction, distribution, or commercial use is prohibited without explicit written permission.
-
-### Terms of Use
-
-By accessing and using this website, you agree to the following terms:
-
-- Content is provided for personal, non-commercial use only
-- Downloading audio tracks is permitted for personal listening
-- Redistribution, modification, or commercial use requires explicit permission
-- We reserve the right to modify these terms at any time
+## Technical Information
 
 ### Privacy & Data Collection
 
@@ -46,14 +66,12 @@ ComputerJazzClub believes in accessible digital music:
 - **Multiple formats** are offered for compatibility
 - **Fair use** principles are respected and encouraged
 
-## Technical Information
-
 ### Website Architecture
 
-**Static Site Generator:** [Eleventy (11ty)](https://www.11ty.dev/) v3.1.1  
-**Template Engine:** Nunjucks with Markdown content  
-**Build System:** Node.js with pnpm package management  
-**Hosting:** Static file hosting with CDN distribution  
+**Static Site Generator:** [Eleventy (11ty)](https://www.11ty.dev/) v3.1.1
+**Template Engine:** Nunjucks with Markdown content
+**Build System:** Node.js with pnpm package management
+**Hosting:** Static file hosting with CDN distribution
 
 ### Accessibility Features
 
@@ -67,7 +85,7 @@ ComputerJazzClub believes in accessible digital music:
 
 The complete source code for this website is available under the AGPL-3.0 license:
 
-**Repository:** [github.com/computerjazz/computerjazz.club](https://github.com/computerjazz/computerjazz.club)  
+**Repository:** [github.com/rhoumi/computerjazz.club](https://github.com/rhoumi/computerjazz.club)
 **Technologies Used:**
 - Eleventy (Static Site Generator)
 - Markdown + Nunjucks (Content & Templates)
@@ -77,23 +95,23 @@ The complete source code for this website is available under the AGPL-3.0 licens
 
 ### Content Management
 
-**Audio Formats:** MP3 (primary), OGG Vorbis (fallback)  
-**Image Formats:** SVG (preferred), PNG, JPEG, WebP  
-**Content Updates:** Git-based workflow with automated deployment  
-**Version Control:** All changes tracked in public repository  
+**Audio Formats:** MP3 (primary), WAV (downloads), OGG Vorbis (fallback)
+**Image Formats:** SVG (preferred), PNG, JPEG, WebP
+**Content Updates:** Git-based workflow with automated deployment
+**Version Control:** All changes tracked in public repository
 
 ### Contact Information
 
 For technical issues, licensing inquiries, or other questions:
 
-**Technical Support:** Issues can be reported via the GitHub repository  
-**Licensing Inquiries:** Contact information available through artist pages  
-**Website Feedback:** Contributions welcome via pull requests  
+**Technical Support:** Issues can be reported via the GitHub repository
+**Licensing Inquiries:** Contact information available through artist pages
+**Website Feedback:** Contributions welcome via pull requests
 
 ### Third-Party Resources
 
-**Fonts:** JGS font family (included with appropriate licensing)  
-**Dependencies:** All npm packages listed in package.json with compatible licenses  
-**External Services:** None - fully self-contained static website  
+**Fonts:** JGS font family (included with appropriate licensing)
+**Dependencies:** All npm packages listed in package.json with compatible licenses
+**External Services:** None - fully self-contained static website
 
 </div>

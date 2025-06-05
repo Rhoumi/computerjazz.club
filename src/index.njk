@@ -35,6 +35,7 @@ title: Home
             {% endif %}
             <div class="album-card-info">
                 <h3><a href="{{ audio.url }}">{{ audio.data.title }}</a></h3>
+
                 {% if audio.data.artists %}
                     <p class="artist">by
                     {% for artistName in audio.data.artists %}
@@ -45,6 +46,18 @@ title: Home
                 {% elif audio.data.artist %}
                     <p class="artist">{{ audio.data.artist }}</p>
                 {% endif %}
+
+                {% if audio.data.labels %}
+                    <p class="labels-artists">Released on
+                    {% for labelsName in audio.data.labels %}
+                        {% set labelsSlug = labelsName | slugify %}
+                        <a href="/labels/{{ labelsSlug }}/" class="labels-link">{{ labelsName }}</a>{% if not loop.last %}{% if loop.revindex == 2 %} && {% else %}, {% endif %}{% endif %}
+                    {% endfor %}
+                    </p>
+                {% elif audio.data.labels %}
+                    <p class="labels-artist">Released on {{ audio.data.labels }}</p>
+                {% endif %}
+
                 {% if audio.data.releaseDate %}<p class="release-date">{{ audio.data.releaseDate | date("%Y") }}</p>{% endif %}
             </div>
         </div>

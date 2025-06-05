@@ -38,6 +38,11 @@ marquee {
     background-color: lightgray;
 }
 
+code {
+    font-family: jgs5;
+    letter-spacing: 0.2rem;
+}
+
 /* Layout Components */
 .main-content {
     max-width: var(--max-width);
