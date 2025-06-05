@@ -3,6 +3,7 @@ layout: layouts/audio.njk
 permalink: "/audio/bubo-odlt/"
 title: "Brotteaux-Nation"
 artists: ["bubobubobubobubo"]
+labels: ["Ordinateur dans la tête"]
 releaseDate: "2022-10-24"
 genre: ["live coding","computer music","live","techno", "experimental"]
 cover: "/assets/images/ODLT_2.jpg"

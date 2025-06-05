@@ -14,8 +14,9 @@ title: Audio
         {% endif %}
         <div class="album-preview-details">
             <h2><a href="{{ audio.url }}">{{ audio.data.title }}</a></h2>
+
             {% if audio.data.artists %}
-                <p class="artist">by 
+                <p class="artist">by
                 {% for artistName in audio.data.artists %}
                     {% set artistSlug = artistName | slugify %}
                     <a href="/artists/{{ artistSlug }}/" class="artist-link">{{ artistName }}</a>{% if not loop.last %}{% if loop.revindex == 2 %} and {% else %}, {% endif %}{% endif %}
@@ -24,6 +25,18 @@ title: Audio
             {% elif audio.data.artist %}
                 <p class="artist">{{ audio.data.artist }}</p>
             {% endif %}
+
+            {% if audio.data.labels %}
+                <p class="labels-artists">Released on
+                {% for labelsName in audio.data.labels %}
+                    {% set labelsSlug = labelsName | slugify %}
+                    <a href="/labels/{{ labelsSlug }}/" class="labels-link">{{ labelsName }}</a>{% if not loop.last %}{% if loop.revindex == 2 %} && {% else %}, {% endif %}{% endif %}
+                {% endfor %}
+                </p>
+            {% elif audio.data.labels %}
+                <p class="labels-artist">Released on {{ audio.data.labels }}</p>
+            {% endif %}
+
             {% if audio.data.releaseDate %}<p class="release-date">Released: {{ audio.data.releaseDate | date("%B %d, %Y") }}</p>{% endif %}
             {% if audio.data.genre %}<p class="genre">Genre: {{ audio.data.genre }}</p>{% endif %}
             {% if audio.data.description %}

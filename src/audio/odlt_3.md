@@ -3,6 +3,7 @@ layout: layouts/audio.njk
 permalink: "/audio/cipher-odlt/"
 title: "🎵"
 artists: ["Jules Cipher"]
+labels: ["Ordinateur dans la tête"]
 releaseDate: "2022-10-27"
 genre: ["live coding","computer music","foxdot","idm", "experimental"]
 cover: "/assets/images/ODLT_3.jpg"

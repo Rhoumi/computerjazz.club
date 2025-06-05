@@ -3,6 +3,7 @@ layout: layouts/audio.njk
 permalink: "/audio/ralt-odlt/"
 title: "Ordinateur dans la tête"
 artists: ["Ralt144MI"]
+labels: ["Ordinateur dans la tête"]
 releaseDate: "2022-06-13"
 genre: [
   "underwater-music",

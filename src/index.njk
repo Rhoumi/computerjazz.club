@@ -3,7 +3,9 @@ layout: 'layouts/base.njk'
 title: Home
 ---
 
+<!--
 {% include "partials/bytebeat-player.njk" %}
+--->
 
 <section class="hero">
     <h1>{{ site.other_name }}</h1>
@@ -37,7 +39,7 @@ title: Home
                     <p class="artist">by
                     {% for artistName in audio.data.artists %}
                         {% set artistSlug = artistName | slugify %}
-                        <a href="/artists/{{ artistSlug }}/" class="artist-link">{{ artistName }}</a>{% if not loop.last %}{% if loop.revindex == 2 %} and {% else %}, {% endif %}{% endif %}
+                        <a href="/artists/{{ artistSlug }}/" class="artist-link">{{ artistName }}</a>{% if not loop.last %}{% if loop.revindex == 2 %} && {% else %}, {% endif %}{% endif %}
                     {% endfor %}
                     </p>
                 {% elif audio.data.artist %}
@@ -162,10 +164,10 @@ title: Home
 
           // Make canvas focusable
           canvas.tabIndex = 0;
-          
+
           // Only listen to keyboard events when canvas is focused
           canvas.addEventListener("keydown", (e) => {
-            const blockedKeys = ['ArrowDown', 'ArrowUp','ArrowLeft', 'ArrowRight'];
+            const blockedKeys = ['ArrowDown', 'ArrowUp','ArrowLeft', 'ArrowRight', ' '];
             if (blockedKeys.includes(e.key)) {
               e.preventDefault();
             }
@@ -305,10 +307,11 @@ title: Home
       });
 
       const initialCode = `                                              |
-                                              |
-  \\O                                          |
-   |)     *saxophone jazz playing             |
-  ( \\   on crappy speakers in the background* |
+//  \\O                                          |
+//   |)     *saxophone jazz playing on           |
+//  ( \\   crappy speakers in the background*    |
+
+(t * ((t >> 9 | t >> 13 ) & 25)) % 128
 `;
       const editor = new Editor(canvas, font, initialCode);
       // render code

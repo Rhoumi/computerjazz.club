@@ -11,18 +11,30 @@ layout: layouts/base.njk
         <div class="album-info">
             <h1 class="album-title">{{ title }}</h1>
             {% if artists %}
-                <p class="album-artists">by 
+                <p class="album-artists">by
                 {% for artistName in artists %}
                     {% set artistSlug = artistName | slugify %}
-                    <a href="/artists/{{ artistSlug }}/" class="artist-link">{{ artistName }}</a>{% if not loop.last %}{% if loop.revindex == 2 %} and {% else %}, {% endif %}{% endif %}
+                    <a href="/artists/{{ artistSlug }}/" class="artist-link">{{ artistName }}</a>{% if not loop.last %}{% if loop.revindex == 2 %} && {% else %}, {% endif %}{% endif %}
                 {% endfor %}
                 </p>
             {% elif artist %}
                 <p class="album-artist">by {{ artist }}</p>
             {% endif %}
-            {% if releaseDate %}<p class="release-date">Released: {{ releaseDate | date("%B %d, %Y") }}</p>{% endif %}
+
+            {% if labels %}
+                <p class="labels-artists">Released on
+                {% for labelsName in labels %}
+                    {% set labelsSlug = labelsName | slugify %}
+                    <a href="/labels/{{ labelsSlug }}/" class="labels-link">{{ labelsName }}</a>{% if not loop.last %}{% if loop.revindex == 2 %} && {% else %}, {% endif %}{% endif %}
+                {% endfor %}
+                </p>
+            {% elif labels %}
+                <p class="labels-artist">Released on {{ labels }}</p>
+            {% endif %}
+
+            {% if releaseDate %}<p class="release-date">Date: {{ releaseDate | date("%B %d, %Y") }}</p>{% endif %}
             {% if genre %}
-                <p class="genre">Genre: 
+                <p class="genre">Genre:
                 {% if genre is iterable and genre is not string %}
                     {{ genre | join(", ") }}
                 {% else %}
@@ -30,7 +42,7 @@ layout: layouts/base.njk
                 {% endif %}
                 </p>
             {% endif %}
-            
+
             {% if merch and merch.length > 0 %}
             <div class="album-shop-link">
                 <a href="/shop{{ page.url | replace('/audio', '') }}" class="btn btn-secondary">View Merchandise</a>

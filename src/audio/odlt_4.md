@@ -3,6 +3,7 @@ layout: layouts/audio.njk
 permalink: "/audio/ete-odlt/"
 title: été demo
 artists: ["Raphaël Bastide"]
+labels: ["Ordinateur dans la tête"]
 releaseDate: "2023-06-12"
 genre: ["live coding","computer music","polyrhythmic","voice","été", "experimental"]
 cover: "/assets/images/ODLT_4.jpg"
