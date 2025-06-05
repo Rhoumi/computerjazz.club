@@ -1,0 +1,236 @@
+<style>
+.bytebeat-editor {
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid var(--border-color);
+  background-color: var(--surface-color);
+}
+
+.bytebeat-editor textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: var(--spacing-sm);
+  font-family: "jgs7", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  border: none;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.bytebeat-editor canvas {
+  width: 100%;
+  height: 120px;
+  background-color: white;
+  border-top: 1px solid var(--border-color);
+  display: block;
+}
+
+.bytebeat-editor .top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px var(--spacing-sm);
+  color: var(--text-light);
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 12px;
+}
+
+.bytebeat-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.bytebeat-controls button {
+  background: var(--text-color);
+  color: var(--background-color);
+  border: 1px solid var(--border-color);
+  padding: 4px 8px;
+  font-family: "jgs7", "Courier New", monospace;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.bytebeat-controls button:hover {
+  background: var(--text-light);
+}
+
+.bytebeat-controls button:active {
+  background: var(--text-color);
+  transform: translateY(1px);
+}
+</style>
+
+<div class="bytebeat-editor">
+  <div class="top-bar">
+    <span>💡 press ctrl+enter to execute bytebeat • ctrl+. to stop • variable 't' represents time</span>
+    <div class="bytebeat-controls">
+      <button id="bytebeat-play">▶ play</button>
+      <button id="bytebeat-stop">⏹ stop</button>
+    </div>
+  </div>
+  <textarea id="bytebeat-code" spellcheck="false" placeholder="// enter bytebeat expression here...">(t * ((t >> 9 | t >> 13) & 25 & t >> 6)) % 128</textarea>
+  <canvas id="bytebeat-canvas" width="800" height="200"></canvas>
+</div>
+
+<script>
+(function() {
+  const bytebeatEditor = {
+    init() {
+      this.input = document.querySelector("#bytebeat-code");
+      this.canvas = document.querySelector("#bytebeat-canvas");
+      this.drawContext = this.canvas.getContext("2d");
+      this.canvas.width = 800;
+      this.canvas.height = 200;
+      this.drawSilence();
+      
+      this.ctx = null;
+      this.worklet = null;
+
+      // Auto-resume audio context on user interaction
+      document.addEventListener("click", () => {
+        if (this.ctx) this.ctx.resume();
+      }, { once: true });
+
+      // Button handlers
+      document.querySelector("#bytebeat-play").addEventListener("click", () => this.execute());
+      document.querySelector("#bytebeat-stop").addEventListener("click", () => this.stop());
+
+      // Keyboard shortcuts - only when textarea is focused
+      this.input.addEventListener("keydown", async (e) => {
+        if ((e.ctrlKey || e.altKey) && e.key === "Enter") {
+          e.preventDefault();
+          e.stopPropagation();
+          await this.execute();
+        }
+        if ((e.ctrlKey || e.altKey) && e.code === "Period") {
+          e.preventDefault();
+          e.stopPropagation();
+          this.stop();
+        }
+      });
+    },
+
+    async execute() {
+      try {
+        if (!this.ctx) {
+          this.ctx = new AudioContext();
+        }
+        await this.ctx.resume();
+        this.stop();
+        this.worklet = await this.runWorklet(this.ctx, this.input.value);
+        this.worklet.port.onmessage = (e) => this.drawBuffer(e.data);
+      } catch (error) {
+        console.error('Bytebeat execution error:', error);
+      }
+    },
+
+    stop() {
+      if (this.worklet) {
+        this.worklet.disconnect();
+        this.worklet.port.postMessage("stop");
+        this.worklet = null;
+      }
+      this.drawSilence();
+    },
+
+    drawBuffer(samples) {
+      this.drawContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.plot(
+        (x) => samples[Math.floor(x)] || 0,
+        this.drawContext,
+        [1, samples.length],
+        [-1, 1],
+        "black",
+        2
+      );
+    },
+
+    drawSilence() {
+      this.drawContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.drawContext.strokeStyle = "black";
+      this.drawContext.lineWidth = 2;
+      this.drawContext.beginPath();
+      this.drawContext.moveTo(0, this.canvas.height / 2);
+      this.drawContext.lineTo(this.canvas.width, this.canvas.height / 2);
+      this.drawContext.stroke();
+    },
+
+    plot(fn, ctx, xrange = [-1, 1], yrange = [-1, 1], color = "black", lineWidth = 2) {
+      const lerp = (v, min, max) => v * (max - min) + min;
+      const invLerp = (v, min, max) => (v - min) / (max - min);
+      const remap = (v, vmin, vmax, omin, omax) =>
+        lerp(invLerp(v, vmin, vmax), omin, omax);
+      
+      ctx.lineWidth = lineWidth;
+      ctx.strokeStyle = color;
+      
+      const [x0, x1] = xrange;
+      const [y0, y1] = yrange;
+      const [px0, px1] = [0, ctx.canvas.width];
+      const [py0, py1] = [ctx.canvas.height - ctx.lineWidth, ctx.lineWidth];
+      
+      ctx.beginPath();
+      for (let px = 0; px < ctx.canvas.width; px++) {
+        const x = remap(px, px0, px1, x0, x1);
+        const y = fn(x);
+        const py = remap(y, y0, y1, py0, py1);
+        px === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+    },
+
+    async runWorklet(ac, expression) {
+      const name = `bytebeat-${Date.now()}`;
+      const workletCode = `
+let dsp = (t) => ${expression};
+class BytebeatProcessor extends AudioWorkletProcessor {
+  constructor() {
+    super();
+    this.t = 0;
+    this.active = true;
+    this.framebuffer = new Float32Array(Math.floor(sampleRate/60));
+    this.port.onmessage = (e) => e.data === "stop" && (this.active = false)
+  }
+  process(inputs, outputs, parameters) {
+    const output = outputs[0];
+    for (let i = 0; i < output[0].length; i++) {
+      try {
+        const out = Math.max(-1, Math.min(1, dsp(this.t) / 128));
+        for (let c = 0; c < output.length; c++) 
+          output[c][i] = out;
+        this.framebuffer[this.t%this.framebuffer.length] = out;
+        if(this.t % this.framebuffer.length === 0 && this.t > 0) {
+          this.port.postMessage(this.framebuffer)
+        }
+        this.t++;
+      } catch(e) {
+        for (let c = 0; c < output.length; c++) 
+          output[c][i] = 0;
+      }
+    }
+    return this.active;
+  }
+}
+registerProcessor('${name}', BytebeatProcessor);`;
+      
+      const dataURL = `data:text/javascript;base64,${btoa(workletCode)}`;
+      await ac.audioWorklet.addModule(dataURL);
+      const node = new AudioWorkletNode(ac, name);
+      node.connect(ac.destination);
+      return node;
+    }
+  };
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => bytebeatEditor.init());
+  } else {
+    bytebeatEditor.init();
+  }
+})();
+</script>

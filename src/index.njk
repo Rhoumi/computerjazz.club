@@ -3,6 +3,8 @@ layout: 'layouts/base.njk'
 title: Home
 ---
 
+{% include "partials/bytebeat-player.njk" %}
+
 <section class="hero">
     <h1>{{ site.other_name }}</h1>
     <p>digital hub for music</p>
@@ -158,10 +160,14 @@ title: Home
           this.onChange();
           this.paint();
 
-          document.addEventListener("keydown", (e) => {
+          // Make canvas focusable
+          canvas.tabIndex = 0;
+          
+          // Only listen to keyboard events when canvas is focused
+          canvas.addEventListener("keydown", (e) => {
             const blockedKeys = ['ArrowDown', 'ArrowUp','ArrowLeft', 'ArrowRight'];
-            if (blockedKeys.includes(event.key)) {
-              event.preventDefault();
+            if (blockedKeys.includes(e.key)) {
+              e.preventDefault();
             }
             if (e.key === "ArrowRight") {
               this.moveRight();
