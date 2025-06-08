@@ -43,5 +43,5 @@ Recorded on Silver Mirror C45 Cassette.
 
 ### Credits
 
-- **Composed & Produced**: [Raphaël "Bubo" Maurice Forment]
-- **Mixed & Mastered by**: [Julien Hugues]
+- **Composed & Produced**: Raphaël "Bubo" Maurice Forment
+- **Mixed & Mastered by**: Julien Hugues

@@ -16,7 +16,7 @@ cover: "/assets/images/ODLT_1.jpg"
 tracks:
   - title: "Algorave 10th Birthday Live - 03-20-22"
     duration: "09:49"
-    file: "/assets/audio/midnight-echoes/01-nocturnal-drift.mp3"
+    file: "/assets/audio/midnight-echoes/test.mp3"
   - title: "Plasma Live - 04-20-22"
     duration: "09:22"
     file: "/assets/audio/midnight-echoes/02-urban-shadows.mp3"
@@ -30,5 +30,5 @@ description: |
 
 ### Credits
 
-- **Composed & Produced**: [Rémi "Ralt144MI" GEORGES]
-- **Mastered by**: [Julien Hugues]
+- **Composed & Produced**: Rémi "Ralt144MI" GEORGES
+- **Mastered by**: Julien Hugues

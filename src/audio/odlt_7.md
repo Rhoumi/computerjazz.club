@@ -42,5 +42,5 @@ Mix/Mastering : Nascimo Marconnet
 
 ### Credits
 
-- **Composed & Produced**: [Nascimo Marconnet && Rémi "Ralt144MI" Georges]
-- **Mixed & Mastered by**: [Nascimo Marconnet]
+- **Composed & Produced**: Nascimo Marconnet && Rémi "Ralt144MI" Georges
+- **Mixed & Mastered by**: Nascimo Marconnet

@@ -45,5 +45,5 @@ limited to 10 numbered ex.
 
 ### Credits
 
-- **Composed & Produced**: [Juliette "Lucky Juj" Monzat && Rémi "Ralt144MI" Georges]
-- **Mixed & Mastered by**: [ODLT]
+- **Composed & Produced**: Juliette "Lucky Juj" Monzat && Rémi "Ralt144MI" Georges
+- **Mixed & Mastered by**: ODLT

@@ -39,5 +39,5 @@ On▒June▒11th▒2022▒▒▒▒▒▒▒▒▒▒
 
 ### Credits
 
-- **Composed & Produced**: [Elie "Jules Cipher" Gavoty]
-- **Mixed & Mastered by**: [ODLT]
+- **Composed & Produced**: Elie "Jules Cipher" Gavoty
+- **Mixed & Mastered by**: ODLT

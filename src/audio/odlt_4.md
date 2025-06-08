@@ -39,5 +39,5 @@ Download the free font été mono at [raphaelbastide.com/ete-mono](raphaelbastid
 
 ### Credits
 
-- **Composed & Produced**: [Raphaël Bastide]
-- **Mixed & Mastered by**: [Julien Hugues]
+- **Composed & Produced**: Raphaël Bastide
+- **Mixed & Mastered by**: Julien Hugues

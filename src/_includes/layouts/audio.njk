@@ -83,6 +83,170 @@ layout: layouts/base.njk
     </section>
     {% endif %}
 
+
+
+<script>
+    // AUDIO
+
+let current_play = false;
+let mouse_in = false;
+
+let audio = document.getElementsByTagName("audio");
+console.log(audio);
+let global_time = 0;
+
+window.setInterval(function(){
+  global_time++;
+},100);
+
+for (var i = 0; i < audio.length; i++) {
+  let play_bar = document.createElement("span");
+  let duration_info = document.createElement("span");
+  let play_link = document.createElement("a");
+  let cells = 58;
+  for (var j = 0; j < cells; j++) {
+    let play_cell = document.createElement("a");
+    play_cell.textContent = '-';
+    play_cell.index = j;
+    play_cell.addEventListener("mouseenter",function(){
+      mouse_in = true;
+    });
+    play_cell.addEventListener("mouseout",function(){
+      mouse_in = false;
+    });
+    play_cell.addEventListener("mouseover",function(){
+      print_time(this[2],this[0],Math.floor(this[0].duration/cells*this[1].index));
+    }.bind([audio[i],play_cell,duration_info]));
+    play_cell.addEventListener("mousedown",function(){
+      this[1].currentTime = Math.floor(this[1].duration/cells*this[0].index);
+      if (this[1].paused) {
+        if (current_play) {
+          current_play.pause();
+          current_play.play_link.textContent = " ▶ Play   ";
+        }
+        current_play = this[1];
+        this[1].play();
+        this[2].textContent = "ll Pause  ";
+      }
+    }.bind([play_cell,audio[i],play_link]));
+
+
+    window.setInterval(function(){
+      if (this[1].paused) return;
+      if (this[1].currentTime > Math.floor(this[1].duration/cells*this[0].index)){
+        this[0].textContent =
+          Number.isInteger((global_time-this[0].index)/2) ?
+            Number.isInteger((global_time-this[0].index)/4) ? '.':'\'':
+            Number.isInteger((global_time-this[0].index)/4) ? '2':'·';
+      } else {
+        this[0].textContent = '-';
+      }
+    }.bind([play_cell,audio[i],duration_info,i])
+    ,100);
+    //audio[i].addEventListener("timeupdate",function(){
+    //  if (this[1].currentTime > Math.floor(this[1].duration/cells*this[0].index)){
+    //    this[0].textContent =
+    //      Number.isInteger(global_time/2) ? 'o':'°';
+    //  } else {
+    //    this[0].textContent = '·';
+    //  }
+    //}.bind([play_cell,audio[i],duration_info,j]));
+
+
+    play_bar.appendChild(play_cell);
+  }
+    if (i-1 > -1) {
+      audio[i-1].addEventListener("ended",function(){
+        if (this[1].paused) {
+          if (current_play) {
+            current_play.pause();
+            current_play.currentTime = 0;
+            current_play.play_link.textContent = " ▶ Play   ";
+          }
+          current_play = this[1];
+          this[1].currentTime = 0;
+          this[1].play();
+          this[0].textContent = "ll Pause  ";
+        }
+      }.bind([play_link,audio[i]]));
+    }
+
+    audio[i].addEventListener("timeupdate",function(){
+      if (mouse_in) return;
+      print_time(this[1],this[0],this[0].currentTime);
+
+    }.bind([audio[i],duration_info]));
+
+
+
+
+
+  print_time(duration_info,audio[i],audio[i].currentTime);
+
+  play_link.textContent = " ▶ Play   ";
+  play_link.addEventListener("mousedown",function(){
+    if (this[1].paused) {
+      if (current_play) {
+        current_play.pause();
+        current_play.play_link.textContent = " ▶ Play   ";
+      }
+      current_play = this[1];
+      this[1].play();
+      this[0].textContent = "ll Pause  ";
+    } else {
+      this[1].pause();
+      this[0].textContent = " ▶ Play   ";
+    }
+  }.bind([play_link,audio[i]]));
+
+
+  let volume_bar = document.createElement("span");
+  volume_bar.textContent = "\n   Volume ";
+  for (var j = 0; j < 11; j++) {
+    let volume_cell = document.createElement("a");
+    volume_cell.textContent = audio[i].volume * 10 >= j ? '/' : '.';
+    volume_cell.addEventListener("mousedown",function(){
+      for (var i = 0; i < audio.length; i++) {
+        audio[i].volume = this[1]/10;
+      }
+    }.bind([audio[i],j]));
+    audio[i].addEventListener("volumechange",function(){
+      this[1].textContent = this[0].volume * 10 >= this[2] ? '/' : '.';
+    }.bind([audio[i],volume_cell,j]));
+    volume_bar.appendChild(volume_cell);
+  }
+  let volume_info = document.createElement("span");
+  volume_info.textContent = ' '+audio[i].volume*100+'%';
+  audio[i].addEventListener("volumechange",function(){
+    this[1].textContent = ' '+this[0].volume*100+'%';
+  }.bind([audio[i],volume_info]));
+  volume_bar.appendChild(volume_info);
+
+  audio[i].play_link = play_link;
+  audio[i].parentNode.insertBefore(play_link, audio[i]);
+  audio[i].parentNode.insertBefore(play_bar, audio[i]);
+  audio[i].parentNode.insertBefore(duration_info, audio[i]);
+  audio[i].parentNode.insertBefore(volume_bar, audio[i]);
+  audio[i].style.display = "none";
+}
+
+function print_time(where,audio,time){
+  let minute = Math.floor(time/60);
+  let second = Math.floor(time - minute*60);
+  let dur_minute = Math.floor(audio.duration/60);
+  let dur_second = Math.floor(audio.duration - dur_minute*60);
+  if (isNaN(dur_minute)){
+    console.log("coucouc");
+    setTimeout(function(){
+      print_time(where,audio,time);
+    },100);
+    return;
+  }
+  where.textContent = ' ' + (minute < 10 ? '0' : '')+ minute + ':' + (second < 10 ? '0' :'') + second + '/' +
+         (dur_minute < 10 ? '0' : '')+ dur_minute + ':' + (dur_second < 10 ? '0' :'') + dur_second
+}
+</script>
+
     <div class="album-content">
         {{ content | safe }}
     </div>
