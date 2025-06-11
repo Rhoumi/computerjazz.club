@@ -1,0 +1,43 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: artists
+  size: 1
+  alias: artist
+permalink: "/artists/{{ artist.id }}/"
+---
+
+<article class="artist">
+    <header class="artist-header">
+        {% if artist.imageUrl %}
+        <div class="artist-image-container">
+            <img src="{{ artist.imageUrl }}" alt="{{ artist.name }}" class="artist-image">
+        </div>
+        {% endif %}
+        <div class="artist-info">
+            <h1 class="artist-name">{{ artist.name }}</h1>
+            {% if location %}<p class="artist-location">{{ artist.location }}</p>{% endif %}
+            {% if genres %}
+                <p class="artist-genres">
+                {% if artist.tags is iterable and artist.tags is not string %}
+                    {{ artist.tags | join(", ") }}
+                {% else %}
+                    {{ artist.tags }}
+                {% endif %}
+                </p>
+            {% endif %}
+            {% if artist.url %}
+                <p class="artist-website">
+                    <a href="{{ artist.url }}" target="_blank" rel="noopener">{{ artist.url }}</a>
+                </p>
+            {% endif %}
+            {% if social %}
+                <div class="artist-social">
+                    {% for platform, url in social %}
+                        <a href="{{ url }}" target="_blank" rel="noopener" class="social-link">{{ platform }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </header>
+</article>
