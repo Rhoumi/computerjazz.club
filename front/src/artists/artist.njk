@@ -35,9 +35,26 @@ permalink: "/artists/{{ artist.id }}/"
         </div>
         // loop on album
         {% if artist.albums.length > 0 %}
-            {% for album in artist.albums %}
-                {{ album.name }}
-            {% endfor %}
+            <section class="artist-discography">
+                <h2>Discography</h2>
+                <div class="album-grid">
+                {% for album in artist.albums %}
+                    <div class="album-card">
+                        <a href="/album/{{ album.id }}" class="album-link">
+                            {% if album.imageUrl %}
+                            <img src="{{ album.imageUrl }}" alt="{{ album.name }} cover" class="album-cover-thumb">
+                            {% endif %}
+                            <div class="album-card-info">
+                                <h3 class="album-title">{{ album.name }}</h3>
+                                {% if album.release_date %}
+                                <p class="album-date">{{ album.release_date | date("%Y") }}</p>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+                </div>
+            </section>
         {% endif %}
     </header>
 </article>

@@ -9,12 +9,17 @@ export default async function () {
 	let url = `${PRIVATE_POCKETBASE_URL}/api/collections/artists/records`;
 
 	let artists = await EleventyFetch(url, {
-		duration: "10s",
+		duration: "1m", // Increased duration
 		type: "json",
+		fetchOptions: {
+			headers: {
+				"Cache-Control": "no-cache"
+			}
+		}
 	});
 
 	// Ensure output images directory exists
-	const outputDir = "_site/images/artists";
+	let outputDir = "_site/images/artists";
 	if (!fs.existsSync(outputDir)) {
 		fs.mkdirSync(outputDir, { recursive: true });
 	}
@@ -25,44 +30,80 @@ export default async function () {
 			const imageUrl = `${PRIVATE_POCKETBASE_URL}/api/files/artists/${artist.id}/${artist.image}`;
 			
 			try {
-				// Fetch the image as a buffer
 				const imageBuffer = await EleventyFetch(imageUrl, {
 					duration: "1m",
-					type: "buffer", // This returns a Buffer object
+					type: "buffer",
 				});
 				
-				// Write the buffer to a file in your output directory
 				const outputFileName = `${artist.id}-${artist.image}`;
 				const outputPath = path.join(outputDir, outputFileName);
 				
 				fs.writeFileSync(outputPath, imageBuffer);
-				
-				// Set the public URL path for your templates
 				artist.imageUrl = `/images/artists/${outputFileName}`;
 				
 			} catch (error) {
 				console.error(`Failed to cache image for artist ${artist.name}:`, error);
-				// Fallback to original URL
 				artist.imageUrl = imageUrl;
 			}
 		}
 
-		// for each artist album fetch the albums from the albums collection
-		if (artist.albums) {
-			console.log(`Artist ${artist.name} has albums:`, artist.albums);
-			const albumsUrl = `${PRIVATE_POCKETBASE_URL}/api/collections/albums/records?filter=(id="${artist.albums.join('") || (id="')}")&expand=tracks`;
-			console.log(`Fetching albums for artist ${artist.name} from ${albumsUrl}`);
-			try {
-				const albums = await EleventyFetch(albumsUrl, {
-					duration: "1m",
-					type: "json",
-				});
-				console.log(`Fetched ${albums.items.length} albums for artist ${artist.name}`);
-				artist.albums = albums.items;
-				console.log(`Albums for artist ${artist.name}:`, artist.albums);
-			} catch (error) {
-				console.error(`Failed to fetch albums for artist ${artist.name}:`, error);
-				artist.albums = [];
+		// Store original album IDs and fetch album details
+		if (artist.albums && Array.isArray(artist.albums) && artist.albums.length > 0) {
+			// Check if albums are still IDs (strings) and not already fetched objects
+			if (typeof artist.albums[0] === 'string') {
+				console.log(`Artist ${artist.name} has album IDs:`, artist.albums);
+				
+				const albumsUrl = `${PRIVATE_POCKETBASE_URL}/api/collections/albums/records?filter=(id="${artist.albums.join('") || (id="')}")&expand=tracks`;
+				console.log(`Fetching albums for artist ${artist.name}`);
+				let outputDir = "_site/images/albums";
+				if (!fs.existsSync(outputDir)) {
+					fs.mkdirSync(outputDir, { recursive: true });
+				}
+				try {
+					const albums = await EleventyFetch(albumsUrl, {
+						duration: "1m",
+						type: "json",
+						// Use a unique cache key for each artist's albums
+						directory: ".cache",
+						hashLength: 30,
+					});
+					
+					console.log(`Fetched ${albums.items.length} albums for artist ${artist.name}`);
+					// get the album cover images
+					for (let album of albums.items) {
+						if (album.cover) {
+							const imageUrl = `${PRIVATE_POCKETBASE_URL}/api/files/albums/${album.id}/${album.cover}`;
+							console.log(`Caching image for album ${album.name} from ${imageUrl}`);
+							try {
+								const imageBuffer = await EleventyFetch(imageUrl, {
+									duration: "1m",
+									type: "buffer",
+								});
+								
+								const outputFileName = `${album.id}-${album.cover}`;
+								const outputPath = path.join(outputDir, outputFileName);
+								fs.writeFileSync(outputPath, imageBuffer);
+								album.imageUrl = `/images/albums/${outputFileName}`;
+
+							} catch (error) {
+								console.error(`Failed to cache image for album ${album.name}:`, error);
+								album.imageUrl = imageUrl;
+							}
+						}
+					}
+					// Create a new property for the full album objects
+					artist.albumDetails = albums.items;
+					// Keep original IDs in case needed
+					artist.albumIds = [...artist.albums];
+					// Replace albums with full objects
+					artist.albums = albums.items;
+					
+				} catch (error) {
+					console.error(`Failed to fetch albums for artist ${artist.name}:`, error);
+					artist.albums = [];
+				}
+			} else {
+				console.log(`Albums already fetched for artist ${artist.name}`);
 			}
 		}
 	}
