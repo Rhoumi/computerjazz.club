@@ -17,7 +17,7 @@ permalink: "/artists/{{ artist.id }}/"
         <div class="artist-info">
             <h1 class="artist-name">{{ artist.name }}</h1>
             {% if location %}<p class="artist-location">{{ artist.location }}</p>{% endif %}
-            {% if genres %}
+            {% if artist.tags %}
                 <p class="artist-genres">
                 {% if artist.tags is iterable and artist.tags is not string %}
                     {{ artist.tags | join(", ") }}
@@ -31,13 +31,13 @@ permalink: "/artists/{{ artist.id }}/"
                     <a href="{{ artist.url }}" target="_blank" rel="noopener">{{ artist.url }}</a>
                 </p>
             {% endif %}
-            {% if social %}
-                <div class="artist-social">
-                    {% for platform, url in social %}
-                        <a href="{{ url }}" target="_blank" rel="noopener" class="social-link">{{ platform }}</a>
-                    {% endfor %}
-                </div>
-            {% endif %}
+           
         </div>
+        // loop on album
+        {% if artist.albums.length > 0 %}
+            {% for album in artist.albums %}
+                {{ album.name }}
+            {% endfor %}
+        {% endif %}
     </header>
 </article>

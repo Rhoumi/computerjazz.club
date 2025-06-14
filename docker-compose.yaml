@@ -11,11 +11,11 @@ services:
   frontend-dev:
     image: yassinsiouda/computerjazzclub-front:dev
     build: 
-      context: front/
+      context: ./front/
       target: "dev"
     volumes:
       - ./front/:/app/
     ports:
-      - "8080:8080" #keep same port to avoid Cross scripting errors
+      - "3000:8080" #keep same port to avoid Cross scripting errors
     env_file:
       - .env
