@@ -1,18 +1,18 @@
 ---
 layout: layouts/artist.njk
-permalink: "/artists/computerjazz-club/"
-name: "ComputerJazz Club"
-location: "Digital Realm"
-genres: ["Electronic Ambient", "Ambient Techno", "Experimental"]
-image: "/assets/images/artists/computerjazz-club.jpg"
-website: "https://computerjazz.club"
+permalink: "/artists/ctrl-sh33eeeep/"
+name: "Ctrl_Sh33eeEEp"
+location: "Lyon/Tarn"
+genres: ["Black Metal", "live-coding", "electro-acoustic","Experimental"]
+image: "/assets/images/artists/ctrl-sh33eeeep.jpg"
+website: ["https://remigeorges.fr"]
 social:
   bandcamp: "https://computerjazzclub.bandcamp.com"
-  spotify: "https://open.spotify.com/artist/computerjazzclub"
+  contact: "mailto:ordinateurdanslatete@protonmail.com"
 tags: ["artists"]
 bio: |
   ComputerJazz Club is an experimental electronic music project that explores the intersection of algorithmic composition, ambient soundscapes, and urban rhythms. Drawing inspiration from late-night coding sessions and the subtle hum of electronic devices, the project creates immersive sonic environments that blur the line between organic and synthetic.
-  
+
   Founded in the digital realm, ComputerJazz Club has been crafting atmospheric electronic music that captures the essence of modern technological life while maintaining a deeply human emotional core.
 ---
 
@@ -38,3 +38,14 @@ Drawing from a wide range of sources including:
 - Electronic innovators such as Aphex Twin and Boards of Canada
 - Urban soundscape artists
 - The rhythm and pulse of modern city life
+
+### Recording Philosophy
+
+- **Location-based recordings**: Each release often features recordings from specific geographic locations
+- **Minimal processing**: Field recordings are treated with respect, with minimal digital manipulation
+- **Extended compositions**: Most tracks are designed for deep listening sessions
+- **Analog warmth**: Heavy use of analog processing to maintain organic feel
+
+### Recent Projects
+
+Digital Wanderer has been working on a series of location-based albums, each dedicated to capturing the sonic essence of different European cities. The upcoming collaboration with ComputerJazz Club represents a new direction, blending urban electronic elements with the more pastoral approach typical of Digital Wanderer's solo work.

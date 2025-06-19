@@ -1,18 +1,18 @@
 ---
 layout: layouts/artist.njk
-permalink: "/artists/digital-wanderer/"
-name: "Digital Wanderer"
-location: "Berlin, Germany"
-genres: ["Ambient", "Drone", "Electronic"]
-image: "/assets/images/artists/digital-wanderer.jpg"
-website: "https://digitalwanderer.net"
+permalink: "/artists/ralt144mi/"
+name: "Ralt144MI"
+location: "Lyon, France"
+genres: ["live coding", "electro-acoustic", "Electronic", "IDM", ]
+image: "/assets/images/artists/ralt144mi.jpg"
+website: "https://ralt144mi.remigeorges.fr"
 social:
   bandcamp: "https://digitalwanderer.bandcamp.com"
-  soundcloud: "https://soundcloud.com/digitalwanderer"
+  contact: "mailto:remi.georges@protonmail.com"
 tags: ["artists"]
 bio: |
   Digital Wanderer is the ambient electronic alias of a Berlin-based sound artist who creates expansive, meditative soundscapes. Known for long-form compositions that evolve slowly over time, Digital Wanderer's work often incorporates field recordings from travels across Europe, creating a sense of place and movement within the music.
-  
+
   The project began as a way to document sonic memories from various locations, gradually evolving into a more structured artistic practice focused on creating immersive listening experiences.
 ---
 
