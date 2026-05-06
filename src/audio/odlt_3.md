@@ -6,19 +6,15 @@ artists: ["Jules Cipher"]
 labels: ["Ordinateur dans la tête"]
 releaseDate: "2022-10-27"
 genre: ["live coding","computer music","foxdot","idm", "experimental"]
-cover: "/assets/images/ODLT_3.jpg"
+cover: "/assets/images/ODLT/ODLT_3.jpg"
 tracks:
   - title: "Live at Sound and Music Computing Festival"
-    duration: "20:17"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "quint(x)"
-    duration: "05:16"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "ouafaha"
-    duration: "05:37"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "silicon rain"
-    duration: "05:29"
     file: "/assets/audio/midnight-echoes/a.mp3"
 description: |
   Jules Cipher first album.

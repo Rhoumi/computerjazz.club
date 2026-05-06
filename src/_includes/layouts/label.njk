@@ -75,32 +75,4 @@ layout: layouts/base.njk
         </div>
     </section>
     {% endif %}
-
-    {% set labelMerch = [] %}
-    {% for item in collections.shop %}
-        {% if item.data.labels and item.data.labels.includes(name) %}
-            {% set labelMerch = (labelMerch.push(item), labelMerch) %}
-        {% elif item.data.label and item.data.label == name %}
-            {% set labelMerch = (labelMerch.push(item), labelMerch) %}
-        {% endif %}
-    {% endfor %}
-    {% if labelMerch.length > 0 %}
-    <section class="label-merch">
-        <h2>Merchandise</h2>
-        <div class="merch-grid">
-        {% for item in labelMerch %}
-            <div class="merch-card">
-                <a href="{{ item.url }}" class="merch-link">
-                    {% if item.data.cover %}
-                    <img src="{{ item.data.cover }}" alt="{{ item.data.title }} merch" class="merch-cover-thumb">
-                    {% endif %}
-                    <div class="merch-card-info">
-                        <h3 class="merch-title">{{ item.data.title }}</h3>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-        </div>
-    </section>
-    {% endif %}
 </article>

@@ -3,9 +3,7 @@ layout: 'layouts/base.njk'
 title: Home
 ---
 
-<!--
-{% include "partials/bytebeat-player.njk" %}
---->
+{# {% include "partials/bytebeat-player.njk" %} #}
 
 <section class="hero">
     <h1>{{ site.other_name }}</h1>
@@ -27,7 +25,7 @@ title: Home
         <div class="album-card">
             {% if audio.data.cover %}
             <div class="album-card-cover">
-                <img src="{{ audio.data.cover }}" alt="{{ audio.data.title }} cover">
+                <img src="{{ audio.data.cover }}" alt="{{ audio.data.title }} cover" loading="lazy">
                 <div class="album-card-overlay">
                     <a href="{{ audio.url }}" class="view-album-btn">View Album</a>
                 </div>
@@ -327,7 +325,4 @@ title: Home
 (t * ((t >> 9 | t >> 13 ) & 25)) % 128
 `;
       const editor = new Editor(canvas, font, initialCode);
-      // render code
-      document.querySelector("#pre").textContent =
-        document.querySelector("html").outerHTML;
     </script>

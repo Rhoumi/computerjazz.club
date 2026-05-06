@@ -5,6 +5,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets/css");
   eleventyConfig.addPassthroughCopy("src/assets/js");
   eleventyConfig.addPassthroughCopy("src/assets/fonts");
+  eleventyConfig.addPassthroughCopy({ "CNAME": "CNAME" });
 
   // Add collection for audio
   eleventyConfig.addCollection("audio", function (collectionApi) {
@@ -17,6 +18,13 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection("shop", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/shop/*.md").sort((a, b) => {
       return new Date(b.data.releaseDate) - new Date(a.data.releaseDate);
+    });
+  });
+
+  // Add collection for labels
+  eleventyConfig.addCollection("labels", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("src/labels/*.md").sort((a, b) => {
+      return (a.data.name || "").localeCompare(b.data.name || "");
     });
   });
 

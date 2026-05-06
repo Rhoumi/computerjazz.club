@@ -43,7 +43,30 @@
         <p> {{ site.name }} || computer && jazz everywhere </p>
     </footer>
 
-    <script src="/assets/js/player.js"></script>
+    <div id="footer-player" class="footer-player">
+        <audio id="fp-audio"></audio>
+        <img id="fp-cover-img" class="fp-cover-img" src="" alt="">
+        <div class="fp-info">
+            <span id="fp-track-title" class="fp-track-title">---</span>
+            <span id="fp-album-title" class="fp-album-title">---</span>
+        </div>
+        <div class="fp-controls">
+            <button id="fp-shuffle" class="fp-mode-btn" title="Shuffle">~?</button>
+            <button id="fp-prev" title="Previous">|◀</button>
+            <button id="fp-play" title="Play/Pause">▶</button>
+            <button id="fp-next" title="Next">▶|</button>
+            <button id="fp-loop" class="fp-mode-btn" title="Loop">↺</button>
+        </div>
+        <span id="fp-progress-area" class="fp-progress-area">
+            <span id="fp-progress-bar" class="fp-progress-bar">----------------------------------------</span>
+        </span>
+        <span id="fp-time" class="fp-time">--:-- / --:--</span>
+        <div class="fp-volume">
+            <span id="fp-vol-bar" class="fp-vol-bar">/////......</span>
+        </div>
+    </div>
+
+    <script src="/assets/js/footer-player.js"></script>
     <script src="/assets/js/shop.js"></script>
 </body>
 </html>

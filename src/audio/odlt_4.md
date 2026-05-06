@@ -6,22 +6,17 @@ artists: ["Raphaël Bastide"]
 labels: ["Ordinateur dans la tête"]
 releaseDate: "2023-06-12"
 genre: ["live coding","computer music","polyrhythmic","voice","été", "experimental"]
-cover: "/assets/images/ODLT_4.jpg"
+cover: "/assets/images/ODLT/ODLT_4.jpg"
 tracks:
   - title: "Hello été"
-    duration: "03:24"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "Ces monstres"
-    duration: "11:50"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "Mycophiles"
-    duration: "05:02"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "Music for seeds"
-    duration: "05:47"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "Salad ship"
-    duration: "04:14"
     file: "/assets/audio/midnight-echoes/a.mp3"
 description: |
   été demonstration, voice and computer mycophilic music.

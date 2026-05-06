@@ -62,20 +62,19 @@ layout: layouts/base.njk
         <h2>Tracks</h2>
         <ol class="tracks">
         {% for track in tracks %}
-            <li class="track" data-track="{{ loop.index }}">
+            <li class="track"
+                data-index="{{ loop.index0 }}"
+                {% if track.file %}data-file="{{ track.file }}"{% endif %}
+                data-title="{{ track.title }}"
+                data-album="{{ title }}"
+                data-cover="{{ cover }}">
                 <div class="track-info">
                     <span class="track-number">{{ loop.index }}.</span>
                     <span class="track-title">{{ track.title }}</span>
-                    {% if track.duration %}<span class="track-duration">{{ track.duration }}</span>{% endif %}
+                    <span class="track-duration" data-track-duration></span>
                 </div>
                 {% if track.file %}
-                <div class="track-controls">
-                    <audio controls class="track-player" preload="metadata">
-                        <source src="{{ track.file }}" type="audio/mpeg">
-                        <source src="{{ track.file | replace('.mp3', '.ogg') }}" type="audio/ogg">
-                        Your browser does not support the audio element.
-                    </audio>
-                </div>
+                <div class="track-controls"></div>
                 {% endif %}
             </li>
         {% endfor %}
@@ -83,168 +82,187 @@ layout: layouts/base.njk
     </section>
     {% endif %}
 
-
-
 <script>
-    // AUDIO
+(function () {
+  var charWidth = null;
 
-let current_play = false;
-let mouse_in = false;
+  function measureCharWidth(el) {
+    var probe = document.createElement('span');
+    probe.style.cssText = 'visibility:hidden;position:absolute;white-space:nowrap;font-family:' +
+      getComputedStyle(el).fontFamily + ';font-size:' + getComputedStyle(el).fontSize;
+    probe.textContent = '-'.repeat(20);
+    document.body.appendChild(probe);
+    var w = probe.getBoundingClientRect().width / 20;
+    document.body.removeChild(probe);
+    return w || 8.5;
+  }
 
-let audio = document.getElementsByTagName("audio");
-console.log(audio);
-let global_time = 0;
+  function animChar(gt, cellIndex) {
+    var x = ((gt - cellIndex) % 4 + 4) % 4;
+    if (x === 0) return '.';
+    if (x === 2) return "'";
+    return '\u00b7';
+  }
 
-window.setInterval(function(){
-  global_time++;
-},100);
+  var trackItems = Array.from(document.querySelectorAll('.track[data-file]'));
+  if (trackItems.length === 0) return;
 
-for (var i = 0; i < audio.length; i++) {
-  let play_bar = document.createElement("span");
-  let duration_info = document.createElement("span");
-  let play_link = document.createElement("a");
-  let cells = 58;
-  for (var j = 0; j < cells; j++) {
-    let play_cell = document.createElement("a");
-    play_cell.textContent = '-';
-    play_cell.index = j;
-    play_cell.addEventListener("mouseenter",function(){
-      mouse_in = true;
-    });
-    play_cell.addEventListener("mouseout",function(){
-      mouse_in = false;
-    });
-    play_cell.addEventListener("mouseover",function(){
-      print_time(this[2],this[0],Math.floor(this[0].duration/cells*this[1].index));
-    }.bind([audio[i],play_cell,duration_info]));
-    play_cell.addEventListener("mousedown",function(){
-      this[1].currentTime = Math.floor(this[1].duration/cells*this[0].index);
-      if (this[1].paused) {
-        if (current_play) {
-          current_play.pause();
-          current_play.play_link.textContent = " ▶ Play   ";
-        }
-        current_play = this[1];
-        this[1].play();
-        this[2].textContent = "ll Pause  ";
+  var playlist = trackItems.map(function (el, i) {
+    return { file: el.dataset.file, title: el.dataset.title, album: el.dataset.album || '', cover: el.dataset.cover || '', index: i };
+  });
+
+  var globalTime = 0;
+  setInterval(function () { globalTime++; }, 100);
+
+  // Build ASCII controls for each track
+  trackItems.forEach(function (trackEl, i) {
+    var controlsDiv = trackEl.querySelector('.track-controls');
+    if (!controlsDiv) return;
+
+    var playLink = document.createElement('a');
+    playLink.className = 'ascii-play-btn';
+    playLink.textContent = ' \u25b6 Play   ';
+    playLink.style.cursor = 'pointer';
+
+    var playBar = document.createElement('span');
+    playBar.className = 'ascii-progress';
+
+    var currentCells = 20;
+
+    function rebuildCells(n) {
+      currentCells = n;
+      playBar.innerHTML = '';
+      for (var j = 0; j < n; j++) {
+        (function (cellIndex, totalCells) {
+          var cell = document.createElement('a');
+          cell.textContent = '-';
+          cell.style.cursor = 'pointer';
+          cell.addEventListener('mousedown', function () {
+            var fp = window.FooterPlayer;
+            if (!fp) return;
+            var pl = fp.getPlaylist();
+            var sameAlbum = pl.length > 0 && pl[0] && pl[0].file === playlist[0].file;
+            if (!sameAlbum || fp.getCurrentIndex() !== i) {
+              fp.play(playlist, i);
+            }
+            setTimeout(function () {
+              if (fp.audio.duration) fp.audio.currentTime = fp.audio.duration / totalCells * cellIndex;
+            }, 50);
+          });
+          playBar.appendChild(cell);
+        })(j, n);
       }
-    }.bind([play_cell,audio[i],play_link]));
+    }
 
+    rebuildCells(20);
 
-    window.setInterval(function(){
-      if (this[1].paused) return;
-      if (this[1].currentTime > Math.floor(this[1].duration/cells*this[0].index)){
-        this[0].textContent =
-          Number.isInteger((global_time-this[0].index)/2) ?
-            Number.isInteger((global_time-this[0].index)/4) ? '.':'\'':
-            Number.isInteger((global_time-this[0].index)/4) ? '2':'·';
+    var durationSpan = document.createElement('span');
+    durationSpan.className = 'ascii-duration';
+    durationSpan.textContent = ' --:--/--:--';
+
+    playLink.addEventListener('mousedown', function () {
+      var fp = window.FooterPlayer;
+      if (!fp) return;
+      var pl = fp.getPlaylist();
+      var sameTrack = pl.length > 0 && pl[fp.getCurrentIndex()] && pl[fp.getCurrentIndex()].file === playlist[i].file;
+      if (sameTrack) {
+        fp.audio.paused ? fp.audio.play() : fp.audio.pause();
       } else {
-        this[0].textContent = '-';
+        fp.play(playlist, i);
       }
-    }.bind([play_cell,audio[i],duration_info,i])
-    ,100);
-    //audio[i].addEventListener("timeupdate",function(){
-    //  if (this[1].currentTime > Math.floor(this[1].duration/cells*this[0].index)){
-    //    this[0].textContent =
-    //      Number.isInteger(global_time/2) ? 'o':'°';
-    //  } else {
-    //    this[0].textContent = '·';
-    //  }
-    //}.bind([play_cell,audio[i],duration_info,j]));
+    });
 
+    var spacer = document.createElement('span');
+    spacer.textContent = '\u00a0';
+    controlsDiv.appendChild(playLink);
+    controlsDiv.appendChild(spacer);
+    controlsDiv.appendChild(playBar);
+    controlsDiv.appendChild(durationSpan);
 
-    play_bar.appendChild(play_cell);
-  }
-    if (i-1 > -1) {
-      audio[i-1].addEventListener("ended",function(){
-        if (this[1].paused) {
-          if (current_play) {
-            current_play.pause();
-            current_play.currentTime = 0;
-            current_play.play_link.textContent = " ▶ Play   ";
-          }
-          current_play = this[1];
-          this[1].currentTime = 0;
-          this[1].play();
-          this[0].textContent = "ll Pause  ";
+    // After layout: measure actual bar width and rebuild dynamically
+    requestAnimationFrame(function () {
+      if (!charWidth) charWidth = measureCharWidth(controlsDiv);
+      function updateCells() {
+        var bw = playBar.getBoundingClientRect().width;
+        if (bw > 0 && charWidth > 0) {
+          var n = Math.max(10, Math.floor(bw / charWidth));
+          if (n !== currentCells) rebuildCells(n);
         }
-      }.bind([play_link,audio[i]]));
-    }
-
-    audio[i].addEventListener("timeupdate",function(){
-      if (mouse_in) return;
-      print_time(this[1],this[0],this[0].currentTime);
-
-    }.bind([audio[i],duration_info]));
-
-
-
-
-
-  print_time(duration_info,audio[i],audio[i].currentTime);
-
-  play_link.textContent = " ▶ Play   ";
-  play_link.addEventListener("mousedown",function(){
-    if (this[1].paused) {
-      if (current_play) {
-        current_play.pause();
-        current_play.play_link.textContent = " ▶ Play   ";
       }
-      current_play = this[1];
-      this[1].play();
-      this[0].textContent = "ll Pause  ";
-    } else {
-      this[1].pause();
-      this[0].textContent = " ▶ Play   ";
-    }
-  }.bind([play_link,audio[i]]));
-
-
-  let volume_bar = document.createElement("span");
-  volume_bar.textContent = "\n   Volume ";
-  for (var j = 0; j < 11; j++) {
-    let volume_cell = document.createElement("a");
-    volume_cell.textContent = audio[i].volume * 10 >= j ? '/' : '.';
-    volume_cell.addEventListener("mousedown",function(){
-      for (var i = 0; i < audio.length; i++) {
-        audio[i].volume = this[1]/10;
+      updateCells();
+      if (window.ResizeObserver) {
+        var ro = new ResizeObserver(updateCells);
+        ro.observe(controlsDiv);
       }
-    }.bind([audio[i],j]));
-    audio[i].addEventListener("volumechange",function(){
-      this[1].textContent = this[0].volume * 10 >= this[2] ? '/' : '.';
-    }.bind([audio[i],volume_cell,j]));
-    volume_bar.appendChild(volume_cell);
-  }
-  let volume_info = document.createElement("span");
-  volume_info.textContent = ' '+audio[i].volume*100+'%';
-  audio[i].addEventListener("volumechange",function(){
-    this[1].textContent = ' '+this[0].volume*100+'%';
-  }.bind([audio[i],volume_info]));
-  volume_bar.appendChild(volume_info);
+    });
+  });
 
-  audio[i].play_link = play_link;
-  audio[i].parentNode.insertBefore(play_link, audio[i]);
-  audio[i].parentNode.insertBefore(play_bar, audio[i]);
-  audio[i].parentNode.insertBefore(duration_info, audio[i]);
-  audio[i].parentNode.insertBefore(volume_bar, audio[i]);
-  audio[i].style.display = "none";
-}
+  // Load duration from audio metadata for each track
+  trackItems.forEach(function (trackEl) {
+    var durSpan = trackEl.querySelector('[data-track-duration]');
+    var file = trackEl.dataset.file;
+    if (!durSpan || !file) return;
+    var tmpAudio = new Audio();
+    tmpAudio.preload = 'metadata';
+    tmpAudio.addEventListener('loadedmetadata', function () {
+      var m = Math.floor(tmpAudio.duration / 60);
+      var s = Math.floor(tmpAudio.duration % 60);
+      durSpan.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    });
+    tmpAudio.src = file;
+  });
 
-function print_time(where,audio,time){
-  let minute = Math.floor(time/60);
-  let second = Math.floor(time - minute*60);
-  let dur_minute = Math.floor(audio.duration/60);
-  let dur_second = Math.floor(audio.duration - dur_minute*60);
-  if (isNaN(dur_minute)){
-    console.log("coucouc");
-    setTimeout(function(){
-      print_time(where,audio,time);
-    },100);
-    return;
+  // ===== CALLBACKS for footer player =====
+  window.onFooterPlayerTimeUpdate = function (currentTime, duration, activeIndex) {
+    trackItems.forEach(function (trackEl, i) {
+      var playBar = trackEl.querySelector('.ascii-progress');
+      var durationSpan = trackEl.querySelector('.ascii-duration');
+      var playLink = trackEl.querySelector('.ascii-play-btn');
+      if (!playBar) return;
+
+      var cellEls = playBar.querySelectorAll('a');
+      var totalCells = cellEls.length;
+
+      if (i === activeIndex && duration && !isNaN(duration)) {
+        var filled = Math.floor((currentTime / duration) * totalCells);
+        cellEls.forEach(function (cell, j) {
+          cell.textContent = j < filled ? animChar(globalTime, j) : '-';
+        });
+        if (durationSpan) {
+          var fmt = function (s) {
+            var m = Math.floor(s / 60), sec = Math.floor(s % 60);
+            return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
+          };
+          durationSpan.textContent = ' ' + fmt(currentTime) + '/' + fmt(duration);
+        }
+        if (playLink && window.FooterPlayer) {
+          playLink.textContent = window.FooterPlayer.audio.paused ? ' \u25b6 Play   ' : 'll Pause  ';
+        }
+      } else {
+        cellEls.forEach(function (c) { c.textContent = '-'; });
+        if (playLink) playLink.textContent = ' \u25b6 Play   ';
+        if (durationSpan) durationSpan.textContent = ' --:--/--:--';
+      }
+    });
+  };
+
+  window.onFooterPlayerTrackChange = function (activeIndex) {
+    trackItems.forEach(function (trackEl, i) {
+      trackEl.classList.toggle('playing', i === activeIndex);
+      var playLink = trackEl.querySelector('.ascii-play-btn');
+      if (playLink) playLink.textContent = i === activeIndex ? 'll Pause  ' : ' \u25b6 Play   ';
+    });
+  };
+
+  // Restore state if already playing from this album (after SPA navigation back)
+  if (window.FooterPlayer) {
+    var fp = window.FooterPlayer;
+    var pl = fp.getPlaylist();
+    if (pl.length > 0 && pl[0] && pl[0].file === playlist[0].file) {
+      window.onFooterPlayerTrackChange(fp.getCurrentIndex());
+    }
   }
-  where.textContent = ' ' + (minute < 10 ? '0' : '')+ minute + ':' + (second < 10 ? '0' :'') + second + '/' +
-         (dur_minute < 10 ? '0' : '')+ dur_minute + ':' + (dur_second < 10 ? '0' :'') + dur_second
-}
+})();
 </script>
 
     <div class="album-content">

@@ -6,25 +6,19 @@ artists: ["bubobubobubobubo"]
 labels: ["Ordinateur dans la tête"]
 releaseDate: "2022-10-24"
 genre: ["live coding","computer music","live","techno", "experimental"]
-cover: "/assets/images/ODLT_2.jpg"
+cover: "/assets/images/ODLT/ODLT_2.jpg"
 tracks:
   - title: "RMF SURAIGU"
-    duration: "12:03"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "À RECULONS"
-    duration: "09:08"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "ÉCRÊTAGE"
-    duration: "09:08"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "SUZANNE"
-    duration: "16:14"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "RHÔNE ET SAÔNE"
-    duration: "06:58"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "LE MOT DU PUBLIC "
-    duration: "09:58"
     file: "/assets/audio/midnight-echoes/a.mp3"
 description: |
   Mighty Owl techno live performed at Grrrnd Zero.

@@ -3,7 +3,6 @@
     --primary-color: #2c3e50;
     --secondary-color: #3498db;
     --accent-color: #e74c3c;
-    --success-color: #27ae60;
     --text-color: #333;
     --text-light: #666;
     --background-color: #ffffff;
@@ -91,6 +90,7 @@ code {
 
 .nav-links {
     display: flex;
+    flex-wrap: wrap;
     list-style: none;
     gap: var(--spacing-lg);
 }
@@ -161,92 +161,6 @@ code {
     color: white;
 }
 
-.btn-success {
-    background: var(--success-color);
-    color: white;
-}
-
-.btn-success:hover {
-    background: #229954;
-}
-
-.btn-disabled {
-    background: #95a5a6;
-    color: white;
-    cursor: not-allowed;
-}
-
-/* Card System */
-.card {
-    background: var(--surface-color);
-    border-radius: var(--border-radius);
-    border: 2px ridge var(--border-color);
-    overflow: hidden;
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.card-large:hover {
-    transform: translateY(-4px);
-}
-
-.card-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.card-image-large {
-    height: 250px;
-}
-
-.card-content {
-    padding: var(--spacing-md);
-}
-
-.card-title {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-bottom: var(--spacing-xs);
-    color: var(--primary-color);
-}
-
-.card-subtitle {
-    color: var(--text-light);
-    margin-bottom: var(--spacing-xs);
-}
-
-.card-link {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-}
-
-/* Grid System */
-.grid {
-    display: grid;
-    gap: var(--spacing-lg);
-}
-
-.grid-auto-fit {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
-
-.grid-auto-fill {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-}
-
-.grid-compact {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: var(--spacing-md);
-}
-
 /* Album Styles */
 .album-header {
     display: flex;
@@ -307,10 +221,11 @@ code {
 
 .track {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     padding: var(--spacing-sm) var(--spacing-md);
     border-bottom: 1px solid var(--border-color);
     transition: background-color 0.2s ease;
+    overflow: hidden;
 }
 
 .track:hover {
@@ -324,36 +239,34 @@ code {
 .track-info {
     display: flex;
     align-items: center;
-    flex-grow: 1;
     gap: var(--spacing-sm);
+    min-width: 0;
+    width: 100%;
 }
 
 .track-number {
     font-weight: bold;
     color: var(--text-light);
     min-width: 2rem;
+    flex-shrink: 0;
 }
 
 .track-title {
     font-weight: 500;
-    flex-grow: 1;
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .track-duration {
     color: var(--text-light);
     font-size: 0.9rem;
-    min-width: 4rem;
+    flex-shrink: 0;
     text-align: right;
 }
 
-.track-controls {
-    margin-left: var(--spacing-lg);
-}
-
-.track-player {
-    width: 300px;
-    height: 40px;
-}
 
 /* Artist Styles */
 .artist {
@@ -442,133 +355,16 @@ code {
     margin-bottom: var(--spacing-lg);
 }
 
-.artist-discography,
-.artist-merch {
+.artist-discography {
     margin-bottom: var(--spacing-lg);
 }
 
-.artist-discography h2,
-.artist-merch h2 {
+.artist-discography h2 {
     font-size: 1.8rem;
     margin-bottom: var(--spacing-sm);
     color: var(--primary-color);
     border-bottom: 2px solid var(--accent-color);
     padding-bottom: var(--spacing-xs);
-}
-
-/* Shop Styles */
-.shop-header {
-    display: flex;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
-    align-items: start;
-}
-
-.shop-subtitle {
-    font-size: 1.1rem;
-    color: var(--secondary-color);
-    margin-bottom: var(--spacing-xs);
-    font-weight: 500;
-}
-
-.back-to-album {
-    color: var(--secondary-color);
-    text-decoration: none;
-    margin-bottom: var(--spacing-sm);
-    display: inline-block;
-}
-
-.back-to-album:hover {
-    text-decoration: underline;
-}
-
-.merch-item {
-    position: relative;
-}
-
-.merch-item.unavailable {
-    opacity: 0.7;
-}
-
-.limited-badge,
-.unavailable-badge {
-    position: absolute;
-    top: var(--spacing-sm);
-    right: var(--spacing-sm);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--border-radius);
-    border: 2px ridge;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    z-index: 1;
-}
-
-.limited-badge {
-    background: var(--secondary-color);
-    color: white;
-}
-
-.unavailable-badge {
-    background: var(--accent-color);
-    color: white;
-}
-
-.merch-options {
-    margin-bottom: var(--spacing-sm);
-}
-
-.merch-options label {
-    display: block;
-    margin-bottom: var(--spacing-xs);
-    font-weight: 500;
-    color: var(--text-light);
-}
-
-.size-options,
-.variant-options {
-    display: flex;
-    gap: var(--spacing-xs);
-    flex-wrap: wrap;
-}
-
-.size-option,
-.variant-option {
-    padding: 0.3rem 0.8rem;
-    background: var(--background-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.size-option:hover,
-.variant-option:hover,
-.size-option.selected,
-.variant-option.selected {
-    background: var(--secondary-color);
-    color: white;
-    border-color: var(--secondary-color);
-}
-
-.merch-purchase {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-sm);
-}
-
-.merch-price {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-.limited-info {
-    font-size: 0.9rem;
-    color: var(--text-light);
-    font-style: italic;
 }
 
 /* Footer */
@@ -581,219 +377,230 @@ code {
     margin-top: 4rem;
 }
 
-/* Cart Widget */
-.cart-widget {
-    position: relative;
-    z-index: 1000;
-}
-
-/* Fallback for pages without updated nav structure */
-.cart-widget-fallback {
+/* Persistent Footer Player */
+.footer-player {
     position: fixed;
-    top: var(--spacing-lg);
-    right: var(--spacing-lg);
-}
-
-.cart-toggle {
-    background: var(--secondary-color);
-    color: white;
-    border: none;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--border-radius);
-    border: 2px ridge;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow);
-    white-space: nowrap;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface-color);
+    border-top: 2px ridge var(--border-color);
+    padding: 0.4rem var(--spacing-md);
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs);
-}
-
-.cart-toggle:hover {
-    background: #2980b9;
-    transform: translateY(-1px);
-}
-
-.cart-count {
-    background: var(--accent-color);
-    color: white;
-    border-radius: 50%;
-    padding: 0.2rem 0.6rem;
-    font-size: 0.8rem;
-    margin-left: var(--spacing-xs);
-    display: none;
-}
-
-.cart-dropdown {
-    position: absolute;
-    top: calc(100% + var(--spacing-xs));
-    right: 0;
-    width: 350px;
-    max-width: 90vw;
-    max-height: 500px;
-    background: white;
-    border-radius: var(--border-radius);
-    border: 2px ridge var(--border-color);
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-10px);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-    overflow: hidden;
-    z-index: 1100;
-}
-
-.cart-dropdown.show {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-}
-
-.cart-header {
-    padding: var(--spacing-sm);
-    border-bottom: 1px solid var(--border-color);
-    background: var(--surface-color);
-}
-
-.cart-header h3 {
-    margin: 0;
-    color: var(--primary-color);
-}
-
-.cart-items {
-    max-height: 300px;
-    overflow-y: auto;
-    padding: var(--spacing-sm);
-}
-
-.empty-cart {
-    text-align: center;
-    color: var(--text-light);
-    font-style: italic;
-    padding: var(--spacing-lg);
-}
-
-.cart-item {
-    display: flex;
     gap: var(--spacing-sm);
-    padding: var(--spacing-sm) 0;
-    border-bottom: 1px solid var(--border-color);
-    position: relative;
+    z-index: 200;
+    font-family: "jgs7", monospace;
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+    min-height: 56px;
 }
 
-.cart-item:last-child {
-    border-bottom: none;
+.footer-player.active {
+    transform: translateY(0);
 }
 
-.cart-item-image {
-    width: 60px;
-    height: 60px;
+body.player-active {
+    padding-bottom: 62px;
+}
+
+.fp-cover-img {
+    width: 44px;
+    height: 44px;
     object-fit: cover;
-    border-radius: var(--border-radius);
-    border: 2px ridge var(--border-color);
+    border: 1px ridge var(--border-color);
     flex-shrink: 0;
 }
 
-.cart-item-details {
-    flex-grow: 1;
+.fp-info {
+    min-width: 0;
+    flex: 1 1 120px;
+    max-width: 200px;
+    overflow: hidden;
 }
 
-.cart-item-details h4 {
-    margin: 0 0 var(--spacing-xs) 0;
-    font-size: 1rem;
-    color: var(--primary-color);
+.fp-track-title {
+    display: block;
+    font-weight: bold;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.cart-item-details p {
-    margin: 0.2rem 0;
+.fp-album-title {
+    display: block;
+    color: var(--text-light);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fp-controls {
+    display: flex;
+    gap: 0.2rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.fp-controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0.15rem 0.3rem;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.fp-controls button:hover {
+    color: var(--secondary-color);
+}
+
+.fp-mode-btn {
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+.fp-mode-btn.active {
+    color: var(--secondary-color);
+}
+
+.fp-progress-area {
+    flex: 2 1 100px;
+    min-width: 0;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.fp-progress-bar {
+    font-family: "jgs5", monospace;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    letter-spacing: 0;
+    display: block;
+    overflow: hidden;
+    color: var(--text-color);
+}
+
+.fp-time {
+    flex-shrink: 0;
+    color: var(--text-light);
+    font-size: 0.78rem;
+    white-space: nowrap;
+}
+
+.fp-volume {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.78rem;
+    color: var(--text-light);
+}
+
+.fp-vol-bar {
+    font-family: "jgs5", monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0;
+    cursor: pointer;
+    user-select: none;
+    color: var(--text-color);
+}
+
+.fp-vol-bar:hover {
+    color: var(--secondary-color);
+}
+
+/* Track playing state */
+.track.playing {
+    background-color: rgba(52, 152, 219, 0.08);
+    border-left: 3px solid var(--secondary-color);
+}
+
+.track.playing .track-title {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+/* ASCII player controls in track list */
+.track-controls {
+    font-family: "jgs5", monospace;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 0.2rem;
+}
+
+.ascii-play-btn {
+    color: var(--secondary-color);
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.ascii-play-btn:hover {
+    color: var(--accent-color);
+}
+
+.ascii-progress {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.ascii-progress a {
+    color: var(--text-color);
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+.ascii-progress a:hover {
+    color: var(--secondary-color);
+}
+
+.ascii-duration {
+    color: var(--text-light);
+    margin-left: 0.25rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.ascii-volume-row {
+    padding: var(--spacing-sm) 0 var(--spacing-xs) 0;
+    font-family: "jgs5", monospace;
     font-size: 0.9rem;
     color: var(--text-light);
 }
 
-.cart-item-price {
-    font-weight: 600;
-    color: var(--primary-color) !important;
-}
-
-.remove-item {
-    position: absolute;
-    top: var(--spacing-xs);
-    right: 0;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--text-light);
+.ascii-volume-row a {
+    color: var(--text-color);
     cursor: pointer;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
+    text-decoration: none;
+    user-select: none;
 }
 
-.remove-item:hover {
-    background: var(--accent-color);
-    color: white;
+.ascii-volume-row a:hover {
+    color: var(--secondary-color);
 }
 
-.cart-footer {
-    padding: var(--spacing-sm);
-    border-top: 1px solid var(--border-color);
-    background: var(--surface-color);
+/* Active nav link */
+.nav-links a.active {
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--secondary-color);
 }
 
-.cart-total-row {
-    margin-bottom: var(--spacing-sm);
-    text-align: center;
-    font-size: 1.1rem;
-}
-
-.cart-actions {
-    display: flex;
-    gap: var(--spacing-xs);
-}
-
-.cart-actions .btn {
-    flex: 1;
-    text-align: center;
-    padding: 0.8rem;
-}
-
-/* Cart Notification */
-.cart-notification {
-    position: fixed;
-    top: var(--spacing-lg);
-    left: 50%;
-    transform: translateX(-50%) translateY(-100px);
-    background: var(--success-color);
-    color: white;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border-radius: var(--border-radius);
-    border: 2px ridge;
-    box-shadow: var(--shadow-hover);
-    z-index: 1100;
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.cart-notification.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-}
-
-.notification-content {
-    text-align: center;
-    font-weight: 500;
-}
-
-/* Component Mappings for Legacy Classes */
+/* Component Mappings */
 .album-grid,
-.merch-grid,
 .artists-grid {
     display: grid;
     gap: var(--spacing-lg);
@@ -803,20 +610,13 @@ code {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
-.merch-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-}
-
 .artists-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
 .album-card,
-.merch-card,
 .artist-card,
-.album-preview,
-.shop-album-preview,
-.merch-item {
+.album-preview {
     background: var(--surface-color);
     border-radius: var(--border-radius);
     border: 2px ridge var(--border-color);
@@ -827,42 +627,28 @@ code {
 }
 
 .album-card:hover,
-.merch-card:hover,
 .artist-card:hover,
-.album-preview:hover,
-.shop-album-preview:hover,
-.merch-item:hover {
+.album-preview:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-hover);
 }
 
 .album-card-cover img,
 .album-cover-thumb,
-.merch-cover-thumb,
 .artist-image-thumb {
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
 
-.merch-image img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-}
-
 .album-card-info,
-.merch-card-info,
-.artist-card-info,
-.merch-details {
+.artist-card-info {
     padding: var(--spacing-md);
 }
 
 .album-card-info h3,
 .album-card-info .album-title,
-.merch-card-info .merch-title,
-.artist-card-info .artist-name,
-.merch-name {
+.artist-card-info .artist-name {
     font-size: 1.1rem;
     font-weight: bold;
     margin-bottom: var(--spacing-xs);
@@ -873,23 +659,17 @@ code {
     font-size: 1.3rem;
 }
 
-.merch-name {
-    font-size: 1.3rem;
-}
-
 .album-card-info .artist,
 .album-card-info .release-date,
 .album-date,
 .artist-card-info .artist-location,
-.artist-card_info .artist-genres,
-.merch-category {
+.artist-card_info .artist-genres {
     color: var(--text-light);
     margin-bottom: var(--spacing-xs);
     font-size: 0.9rem;
 }
 
 .album-link,
-.merch-link,
 .artist-link {
     //display: block;
     color: inherit;
@@ -907,9 +687,7 @@ code {
     text-decoration: underline;
 }
 
-.view-album-btn,
-.add-to-cart,
-.checkout-btn {
+.view-album-btn {
     background: var(--secondary-color);
     color: white;
     padding: 0.8rem var(--spacing-md);
@@ -923,17 +701,8 @@ code {
     display: inline-block;
 }
 
-.view-album-btn:hover,
-.add-to-cart:hover {
+.view-album-btn:hover {
     background: #2980b9;
-}
-
-.checkout-btn {
-    background: var(--success-color);
-}
-
-.checkout-btn:hover {
-    background: #229954;
 }
 
 /* Special album card overlay for homepage */
@@ -972,33 +741,25 @@ code {
     opacity: 1;
 }
 
-/* Audio/Shop list layouts */
-.audio-list,
-.shop-albums {
+/* Audio list layout */
+.audio-list {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
 }
 
-.album-preview,
-.shop-album-preview {
+.album-preview {
     display: flex;
     gap: var(--spacing-lg);
     padding: var(--spacing-lg);
 }
 
-.album-preview-cover img,
-.shop-album-preview .album-preview-cover img {
+.album-preview-cover img {
     width: 120px;
     height: 120px;
     object-fit: cover;
     border-radius: var(--border-radius);
     border: 2px ridge var(--border-color);
-}
-
-.shop-album-preview .album-preview-cover img {
-    width: 150px;
-    height: 150px;
 }
 
 .album-preview-details {
@@ -1027,68 +788,13 @@ code {
     line-height: 1.6;
 }
 
-.merch-summary {
-    margin: var(--spacing-sm) 0;
-    padding: var(--spacing-sm);
-    background: var(--background-color);
-    border-radius: var(--border-radius);
-    border: 2px ridge var(--border-color);
-}
-
-.merch-count {
-    font-weight: 500;
-    margin-bottom: var(--spacing-xs);
-}
-
-.merch-types {
-    display: flex;
-    gap: var(--spacing-xs);
-    flex-wrap: wrap;
-    margin-bottom: var(--spacing-xs);
-}
-
-.merch-type {
-    padding: 0.2rem 0.6rem;
-    background: var(--secondary-color);
-    color: white;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-}
-
-.price-info {
-    font-weight: 500;
-    color: var(--primary-color);
-}
-
-.shop-actions {
-    display: flex;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-md);
+.view-all-audio {
+    text-align: center;
+    margin-top: var(--spacing-xl);
 }
 
 .album-shop-link {
     margin-top: var(--spacing-sm);
-}
-
-.no-merchandise,
-.no-merch-available {
-    text-align: center;
-    padding: var(--spacing-xl);
-    background: var(--surface-color);
-    border-radius: var(--border-radius);
-    border: 2px ridge var(--border-color);
-}
-
-.no-merchandise h2,
-.no-merch-available h2 {
-    margin-bottom: var(--spacing-sm);
-    color: var(--primary-color);
-}
-
-.view-all-audio {
-    text-align: center;
-    margin-top: var(--spacing-xl);
 }
 
 .release-date,
@@ -1101,19 +807,6 @@ code {
 .album-artist {
     font-size: 1.1rem;
     margin-bottom: var(--spacing-xs);
-}
-
-.merch-description {
-    margin-bottom: var(--spacing-md);
-    line-height: 1.6;
-}
-
-.merch-category {
-    color: var(--text-light);
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: var(--spacing-sm);
 }
 
 /* About Page Styles */
@@ -1187,79 +880,6 @@ code {
     margin: var(--spacing-xl) 0;
 }
 
-/* Standalone Merchandise Styles */
-.merch-page {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.merch-header {
-    display: flex;
-    gap: var(--spacing-xl);
-    margin-bottom: var(--spacing-xl);
-    align-items: start;
-}
-
-.merch-image-container {
-    flex-shrink: 0;
-}
-
-.merch-image-large {
-    width: 400px;
-    height: 400px;
-    object-fit: cover;
-    border-radius: var(--border-radius);
-    border: 2px ridge var(--border-color);
-    box-shadow: var(--shadow);
-}
-
-.merch-info {
-    flex-grow: 1;
-}
-
-.merch-title {
-    font-size: 2.5rem;
-    margin-bottom: var(--spacing-xs);
-    color: var(--primary-color);
-}
-
-.merch-category {
-    color: var(--text-light);
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: var(--spacing-md);
-}
-
-.merch-description {
-    margin-bottom: var(--spacing-lg);
-    font-size: 1.1rem;
-    line-height: 1.7;
-}
-
-.featured-merch,
-.album-merch,
-.all-merch {
-    margin-bottom: var(--spacing-xl);
-}
-
-.featured-merch h2,
-.album-merch h2,
-.all-merch h2 {
-    font-size: 1.8rem;
-    margin-bottom: var(--spacing-md);
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--accent-color);
-    padding-bottom: var(--spacing-xs);
-}
-
-.back-to-shop {
-    text-align: center;
-    margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--border-color);
-}
-
 /* Radio Page Styles */
 .radio-page {
     max-width: 600px;
@@ -1282,10 +902,9 @@ code {
     margin: 0;
 }
 
-/* Responsive Design for Merch Pages */
+/* Responsive Design */
 @media (max-width: 768px) {
     .album-header,
-    .shop-header,
     .artist-header {
         flex-direction: column;
         text-align: center;
@@ -1309,51 +928,14 @@ code {
     }
 
     .album-grid,
-    .merch-grid,
     .artists-grid {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: var(--spacing-sm);
     }
 
-    .merch-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    }
-
-    .album-preview,
-    .shop-album-preview {
+    .album-preview {
         flex-direction: column;
         text-align: center;
-    }
-
-    .cart-dropdown {
-        width: calc(100vw - 2rem);
-        right: auto;
-        left: 50%;
-        transform: translateX(-50%) translateY(-10px);
-    }
-
-    .cart-dropdown.show {
-        transform: translateX(-50%) translateY(0);
-    }
-
-    .cart-text {
-        display: none;
-    }
-
-    .merch-header {
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
-        gap: var(--spacing-md);
-    }
-
-    .merch-image-large {
-        width: 300px;
-        height: 300px;
-    }
-
-    .merch-title {
-        font-size: 2rem;
     }
 }
 
@@ -1363,14 +945,19 @@ code {
         justify-content: center;
     }
 
+    .site-title {
+        order: 1;
+    }
+
     .nav-links {
         order: 2;
         flex-basis: 100%;
         justify-content: center;
+        gap: var(--spacing-sm);
     }
 
-    .site-title {
-        order: 1;
+    .nav-links a {
+        font-size: 1.3rem;
     }
 
     .nav-cart {
@@ -1386,7 +973,7 @@ code {
     }
 
     .nav-links {
-        gap: var(--spacing-sm);
+        gap: var(--spacing-xs) var(--spacing-sm);
         justify-content: center;
     }
 
@@ -1394,29 +981,7 @@ code {
         align-self: center;
     }
 
-    .cart-toggle {
-        padding: var(--spacing-xs) var(--spacing-sm);
-        font-size: 0.9rem;
-    }
-
-    .cart-text {
-        display: none;
-    }
-
-    .cart-dropdown {
-        width: calc(100vw - 1rem);
-        right: auto;
-        left: 50%;
-        transform: translateX(-50%) translateY(-10px);
-        max-height: 70vh;
-    }
-
-    .cart-dropdown.show {
-        transform: translateX(-50%) translateY(0);
-    }
-
     .album-grid,
-    .merch-grid,
     .artists-grid {
         grid-template-columns: 1fr;
     }
@@ -1427,22 +992,71 @@ code {
         height: 200px;
     }
 
-    .track {
-        flex-direction: column;
-        align-items: stretch;
-        gap: var(--spacing-xs);
-    }
-
-    .track-controls {
-        margin-left: 0;
-    }
-
-    .track-player {
-        width: 100%;
-    }
-
-    .merch-image-large {
-        width: 250px;
-        height: 250px;
+    .ascii-duration {
+        display: none;
     }
 }
+
+/* Contribute page — styled boxes */
+.cjc-box {
+    border: 1px solid #ccc;
+    background: #fafafa;
+    color: #222;
+    margin: 1.2rem 0;
+    overflow-x: auto;
+    font-family: jgs5, "Courier New", monospace;
+}
+
+.cjc-box__label {
+    border-bottom: 1px solid #ccc;
+    padding: 0.2rem 0.8rem;
+    font-size: 0.72rem;
+    color: #aaa;
+    letter-spacing: 0.18rem;
+    text-transform: uppercase;
+}
+
+.cjc-box pre {
+    margin: 0;
+    padding: 1rem 1.2rem;
+    font-family: jgs5, "Courier New", monospace;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    white-space: pre;
+    overflow-x: auto;
+    background: transparent;
+    color: #222;
+}
+
+.cjc-box__list {
+    list-style: none;
+    margin: 0;
+    padding: 0.8rem 1.2rem;
+}
+
+.cjc-box__list li {
+    padding: 0.35rem 0;
+    border-bottom: 1px dotted #ddd;
+    font-size: 0.9rem;
+    color: #222;
+}
+
+.cjc-box__list li:last-child {
+    border-bottom: none;
+}
+
+.cjc-box__list code {
+    font-weight: bold;
+    background: transparent;
+    letter-spacing: normal;
+}
+
+/* YAML syntax highlighting — minimal */
+.sh-key    { font-weight: bold; }
+.sh-val    { color: #555; }
+.sh-string { color: #222; }
+.sh-url    { text-decoration: underline; }
+.sh-delim  { color: #bbb; }
+.sh-pipe   { color: #888; }
+.sh-dash   { color: #888; }
+.sh-text   { color: #555; }

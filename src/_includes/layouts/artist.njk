@@ -61,41 +61,13 @@ layout: layouts/base.njk
             <div class="album-card">
                 <a href="{{ album.url }}" class="album-link">
                     {% if album.data.cover %}
-                    <img src="{{ album.data.cover }}" alt="{{ album.data.title }} cover" class="album-cover-thumb">
+                    <img src="{{ album.data.cover }}" alt="{{ album.data.title }} cover" class="album-cover-thumb" loading="lazy">
                     {% endif %}
                     <div class="album-card-info">
                         <h3 class="album-title">{{ album.data.title }}</h3>
                         {% if album.data.releaseDate %}
                         <p class="album-date">{{ album.data.releaseDate | date("%Y") }}</p>
                         {% endif %}
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-        </div>
-    </section>
-    {% endif %}
-
-    {% set artistMerch = [] %}
-    {% for item in collections.shop %}
-        {% if item.data.artists and item.data.artists.includes(name) %}
-            {% set artistMerch = (artistMerch.push(item), artistMerch) %}
-        {% elif item.data.artist and item.data.artist == name %}
-            {% set artistMerch = (artistMerch.push(item), artistMerch) %}
-        {% endif %}
-    {% endfor %}
-    {% if artistMerch.length > 0 %}
-    <section class="artist-merch">
-        <h2>Merchandise</h2>
-        <div class="merch-grid">
-        {% for item in artistMerch %}
-            <div class="merch-card">
-                <a href="{{ item.url }}" class="merch-link">
-                    {% if item.data.cover %}
-                    <img src="{{ item.data.cover }}" alt="{{ item.data.title }} merch" class="merch-cover-thumb">
-                    {% endif %}
-                    <div class="merch-card-info">
-                        <h3 class="merch-title">{{ item.data.title }}</h3>
                     </div>
                 </a>
             </div>

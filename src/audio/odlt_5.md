@@ -6,13 +6,11 @@ artists: ["Lucky Juj","Ralt144MI"]
 labels: ["Ordinateur dans la tête"]
 releaseDate: "2024-02-06"
 genre: ["live coding","computer music","floppy disk", "experimental"]
-cover: "/assets/images/ODLT_5.jpg"
+cover: "/assets/images/ODLT/ODLT_5.jpg"
 tracks:
   - title: "[Floppy Edit] _ V%CE _ Extract  [mp3_44100_32kbps]"
-    duration: "05:12"
     file: "/assets/audio/midnight-echoes/a.mp3"
   - title: "V%CE"
-    duration: "16:42"
     file: "/assets/audio/midnight-echoes/a.mp3"
 description: |
   live performance by lucky.juj && Ralt144MI.

@@ -9,7 +9,7 @@ title: Audio
     <article class="album-preview">
         {% if audio.data.cover %}
         <div class="album-preview-cover">
-            <img src="{{ audio.data.cover }}" alt="{{ audio.data.title }} cover">
+            <img src="{{ audio.data.cover }}" alt="{{ audio.data.title }} cover" loading="lazy">
         </div>
         {% endif %}
         <div class="album-preview-details">

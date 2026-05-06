@@ -11,6 +11,9 @@ description: "About computerjazz.club"
 
 <br>
 <br>
+
+### if you want to be featured on the Computer Jazz Club, follow this tutorial : [contribute](/contribute/)
+
 <br>
 <br>
 

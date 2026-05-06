@@ -1,0 +1,33 @@
+---
+permalink: "/labels/"
+title: "Labels"
+---
+
+<h1>Labels</h1>
+
+<div class="labels-grid">
+{% for label in collections.labels %}
+    <div class="label-card">
+        <a href="{{ label.url }}" class="label-link">
+            {% if label.data.image %}
+            <img src="{{ label.data.image }}" alt="{{ label.data.name }}" class="label-image-thumb">
+            {% endif %}
+            <div class="label-card-info">
+                <h2 class="label-name">{{ label.data.name }}</h2>
+                {% if label.data.location %}
+                <p class="label-location">{{ label.data.location }}</p>
+                {% endif %}
+                {% if label.data.genres %}
+                <p class="label-genres">
+                {% if label.data.genres is iterable and label.data.genres is not string %}
+                    {{ label.data.genres | join(", ") }}
+                {% else %}
+                    {{ label.data.genres }}
+                {% endif %}
+                </p>
+                {% endif %}
+            </div>
+        </a>
+    </div>
+{% endfor %}
+</div>
