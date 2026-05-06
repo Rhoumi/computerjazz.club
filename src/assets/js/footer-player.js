@@ -108,7 +108,7 @@
 
   fpProgressArea.addEventListener('mousedown', function (e) {
     if (!fpAudio.duration) return;
-    const rect = this.getBoundingClientRect();
+    const rect = fpProgressBar.getBoundingClientRect();
     const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
     fpAudio.currentTime = ratio * fpAudio.duration;
     fpProgressBar.textContent = buildBar();

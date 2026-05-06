@@ -13,11 +13,12 @@ genre: [
   "experimental"
 ]
 cover: "/assets/images/ODLT/ODLT_1.jpg"
+ia_identifier: "computerjazz-odlt-ralt144mi"
 tracks:
   - title: "Algorave 10th Birthday Live - 03-20-22"
-    file: "/assets/audio/midnight-echoes/test.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-ralt144mi/01-algorave-10th-birthday.mp3"
   - title: "Plasma Live - 04-20-22"
-    file: "/assets/audio/midnight-echoes/02-urban-shadows.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-ralt144mi/02-plasma-live.mp3"
 description: |
   2022 live compilation by Ralt144MI.
 ---

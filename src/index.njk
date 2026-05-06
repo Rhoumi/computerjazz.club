@@ -6,16 +6,29 @@ title: Home
 {# {% include "partials/bytebeat-player.njk" %} #}
 
 <section class="hero">
-    <h1>{{ site.other_name }}</h1>
+    <h1 id="home-title">{{ site.other_name }}</h1>
     <p>digital hub for music</p>
-    <canvas id="canvas"
+    <div id="ascii-jazz-container"
     style="background: darkGrey;
     width: 644px; height: 140px;
     border: 15px inset black;
-    image-rendering: pixelated;"
-    width="322" height="70">
-
-    </canvas>
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;">
+      <pre id="ascii-jazz-pre"
+      style="margin:0;padding:0;
+      font-family:'jgs7','Courier New',monospace;
+      font-size:11px;line-height:1;
+      color:#ddd;white-space:pre;
+      width:644px;height:140px;
+      overflow:hidden;text-align:center;
+      display:flex;align-items:center;justify-content:center;"></pre>
+    </div>
+    <small style="display:block;margin-top:4px;">
+      <a href="https://adelfaure.net/artware/asciifreejazz/" target="_blank" rel="noopener"
+      style="font-size:10px;opacity:0.6;">asciifreejazz by Adel Faure</a>
+    </small>
 </section>
 
 <section class="featured-audio">
@@ -69,260 +82,222 @@ title: Home
 
 
 <script>
-      class PixelFont {
-        constructor(font) {
-          const { base64, chars, cols, rows } = font;
-          this.base64 = base64;
-          this.chars = chars;
-          this.perChar = base64.length / chars.length;
-          const maxBits = this.perChar * 6; // 1 base64 char = 6 bit
-          this.cols = cols;
-          this.rows = rows;
-          this.bitsPerChar = this.cols * this.rows;
-          const totalPixels = this.cols * this.rows * this.chars.length;
-          this.bits = new Uint8Array(totalPixels);
-          this.decode();
-        }
-        getChar(char) {
-          const i = this.chars.indexOf(char);
-          const [from, to] = [i * this.perChar, (i + 1) * this.perChar];
-          const chunk = this.base64.slice(from, to);
-          const bin = this.base64ToBinary(chunk);
-          return bin.slice(0, this.bitsPerChar);
-        }
-        base64ToBinary(base64String) {
-          const binaryString = atob(base64String);
-          let str = "";
-          for (let i = 0; i < binaryString.length; i++) {
-            str += binaryString.charCodeAt(i).toString(2).padStart(8, "0");
-          }
-          return str;
-        }
-        decode() {
-          for (let i = 0; i < this.chars.length; i++) {
-            const blockOffset = i * this.bitsPerChar;
-            const bits = this.getChar(this.chars[i]);
-            for (let j = 0; j < bits.length; j++) {
-              const blockStart = (blockOffset + j) * 4;
-              const v = bits[j] === "1" ? 255 : 0;
-              this.bits[blockOffset + j] = v;
-            }
-          }
-        }
+(function () {
+  const FONTS = [
+    'FlorDeRuina-Germen', 'FlorDeRuina-Semilla', 'FlorDeRuina-Flor',
+    'FlorDeRuina-Ruina', 'FlorDeRuina-Fractura',
+    'jgs5', 'jgs7', 'jgs9',
+    'bianzhidai-Base', 'bianzhidai-Brush', 'bianzhidai-Bubble',
+    'bianzhidai-Cloud', 'bianzhidai-Cube', 'bianzhidai-Messier',
+    'bianzhidai-Messy', 'bianzhidai-Pearl', 'bianzhidai-Ring',
+    'bianzhidai-Stitches',
+    'FungalVF'
+  ];
 
-        insertChar(char, imageData, x, y, gap = 1, a = 1) {
-          const { data } = imageData;
-          const charIndex = this.chars.indexOf(char);
-          const readStart = charIndex * this.cols * this.rows;
-          const fw = this.cols + gap;
-          const fh = this.rows + gap;
-          if (x >= imageData.width) {
-            console.log("overflow..");
-            return;
-          }
-          const topLeft = y * imageData.width + x;
-          const ia = 1 - a;
-          for (let row = 0; row < this.rows; row++) {
-            const writeStart = topLeft + row * imageData.width;
-            for (let col = 0; col < this.cols; col++) {
-              const i = (writeStart + col) * 4;
-              const readBlock = readStart + (row * this.cols + col);
-              const v = this.bits[readBlock] * a;
-              data[i] = v + ia * data[i];
-              data[i + 1] = v + ia * data[i + 1];
-              data[i + 2] = v + ia * data[i + 2];
-              data[i + 3] = v ? 255 : 0;
-            }
-          }
-        }
-        insertText(text, imageData, x, y, gap = 1, a = 1) {
-          const lines = text.split("\n");
-          lines.forEach((line, l) => {
-            line.split("").forEach((char, i) => {
-              const offsetX = x + i * (this.cols + gap);
-              const offsetY = y + l * (this.rows + gap);
-              this.insertChar(char, imageData, offsetX, offsetY, gap, a);
-            });
-          });
+  function randFont() {
+    const f = FONTS[Math.floor(Math.random() * FONTS.length)];
+    // Variable font: randomise GROW (0–1000) and THCK (500–1000)
+    const variation = f === 'FungalVF'
+      ? `'GROW' ${Math.floor(Math.random() * 1001)}, 'THCK' ${Math.random() < 0.5 ? 500 : 1000}`
+      : null;
+    return { family: f, variation };
+  }
+
+  function applyFont(el, { family, variation }) {
+    el.style.fontFamily = "'" + family + "', serif";
+    el.style.fontVariationSettings = variation || 'normal';
+  }
+
+  const title = document.getElementById('home-title');
+  const text  = title.textContent;
+
+  // 10% chance: font different per character
+  if (Math.random() < 0.1) {
+    title.textContent = '';
+    title.setAttribute('aria-label', text);
+    for (const char of text) {
+      if (char === ' ') {
+        title.appendChild(document.createTextNode(' '));
+      } else {
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.style.display = 'inline-block';
+        applyFont(span, randFont());
+        title.appendChild(span);
+      }
+    }
+  } else {
+    applyFont(title, randFont());
+  }
+})();
+
+(function () {
+  const container = document.getElementById('ascii-jazz-container');
+  const pre = document.getElementById('ascii-jazz-pre');
+
+  let audioCtx = null;
+  let workletNode = null;
+  let started = false;
+  let playing = false;
+
+  function computeGrid() {
+    const probe = document.createElement('span');
+    const cs = getComputedStyle(pre);
+    probe.style.cssText =
+      'position:absolute;visibility:hidden;white-space:pre;font-family:' +
+      cs.fontFamily + ';font-size:' + cs.fontSize + ';line-height:' + cs.lineHeight;
+    probe.textContent = 'x'.repeat(100) + '\n' + 'x'.repeat(100);
+    document.body.appendChild(probe);
+    const r = probe.getBoundingClientRect();
+    document.body.removeChild(probe);
+    const charW = r.width / 100;
+    const charH = r.height / 2;
+    const cols = Math.max(4, Math.floor(container.clientWidth / charW));
+    const rows = Math.max(2, Math.floor(container.clientHeight / charH));
+    return [cols, rows];
+  }
+
+  const processorCode = `
+class Sprite {
+  constructor(width, height, initFn) {
+    this.width = width;
+    this.height = height;
+    this.data = new Uint32Array(width * height);
+    if (initFn) {
+      var i = 0;
+      for (var y = 0; y < height; y++) {
+        for (var x = 0; x < width; x++) {
+          this.data[i] = initFn({ i: i, x: x, y: y, sprite: this });
+          i++;
         }
       }
-
-      const _mod = (n, m) => ((n % m) + m) % m;
-      const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
-      class Editor {
-        constructor(canvas, font, text) {
-          this.canvas = canvas;
-          this.scale = 2;
-          this.col = 0; // caret column
-          this.maxCol = 0; // max caret column
-          this.row = 0; // caret row
-          this.cols = 46; // number of columns
-          this.rows = 7; // number of rows
-          this.gap = 0; // gap between chars in px
-          this.ctx = canvas.getContext("2d");
-          this.setBuffer(text);
-          this.font = font;
-          const [x, y, w, h] = this.getCaretRect();
-
-          canvas.width = w * this.cols;
-          canvas.height = h * this.rows;
-          canvas.style.width = canvas.width * this.scale + "px";
-          canvas.style.height = canvas.height * this.scale + "px";
-          canvas.style.imageRendering = "pixelated";
-          this.image = new ImageData(canvas.width, canvas.height);
-          this.onChange();
-          this.paint();
-
-          // Make canvas focusable
-          canvas.tabIndex = 0;
-
-          // Only listen to keyboard events when canvas is focused
-          canvas.addEventListener("keydown", (e) => {
-            const blockedKeys = ['ArrowDown', 'ArrowUp','ArrowLeft', 'ArrowRight', ' '];
-            if (blockedKeys.includes(e.key)) {
-              e.preventDefault();
-            }
-            if (e.key === "ArrowRight") {
-              this.moveRight();
-            } else if (e.key === "ArrowLeft") {
-              this.moveLeft();
-            } else if (e.key === "ArrowUp") {
-              this.moveUp();
-            } else if (e.key === "ArrowDown") {
-              this.moveDown();
-            } else if (e.key === "Enter") {
-              this.writeChar("\n");
-              this.col = 0;
-              this.maxCol = 0;
-              this.row++;
-            } else if (e.key === "Backspace") {
-              this.deleteChar();
-            } else if (e.key === " " || this.font.chars.includes(e.key)) {
-              this.writeChar(e.key);
-              this.col++;
-              this.maxCol = this.col;
-            } else {
-              return;
-            }
-            this.onChange();
-            this.paint();
-          });
-
-        }
-        getLines() {
-          return this.buffer.join("").split("\n");
-        }
-        setBuffer(text) {
-          this.buffer = text.split("");
-        }
-        getPaddedText() {
-          const padded = [];
-          const lines = this.getLines();
-          for (let r = 0; r < this.rows; r++) {
-            padded[r] =
-              lines[r]?.padEnd(this.cols).slice(0, this.cols) ||
-              Array(this.cols).fill(" ").join("");
-          }
-          return padded.join("\n");
-        }
-        onChange() {
-          const paddedText = this.getPaddedText();
-          this.font.insertText(paddedText, this.image, 0, 0, this.gap);
-        }
-        paint() {
-          this.ctx.imageSmoothingEnabled = false;
-          this.drawCaret();
-          this.ctx.putImageData(this.image, 0, 0);
-        }
-
-        moveRight() {
-          const lines = this.getLines();
-          const line = lines[this.row];
-          this.col++;
-          if (this.col > line.length && this.row < lines.length - 1) {
-            this.row++;
-            this.col = 0;
-          } else if (this.col > line.length) {
-            this.col = line.length;
-          }
-          this.maxCol = this.col;
-        }
-        moveLeft() {
-          const lines = this.getLines();
-          const line = lines[this.row];
-          this.col--;
-          if (this.col < 0 && this.row > 0) {
-            this.row--;
-            this.col = lines[this.row].length;
-          } else if (this.col < 0) {
-            this.col = 0;
-          }
-          this.maxCol = this.col;
-        }
-        moveUp() {
-          const lines = this.getLines();
-          const line = lines[this.row];
-          if (this.row > 0) {
-            this.row--;
-            this.col = Math.min(this.maxCol, lines[this.row].length);
-          } else {
-            this.col = 0;
-          }
-        }
-        moveDown() {
-          const lines = this.getLines();
-          const line = lines[this.row];
-          if (this.row < lines.length - 1) {
-            this.row++;
-            this.col = Math.min(this.maxCol, lines[this.row].length);
-          } else {
-            this.col = lines[this.row].length;
-          }
-        }
-        getCaretIndex() {
-          const chars = this.getLines()
-            .slice(0, this.row)
-            .reduce((sum, line) => sum + line.length + 1, 0);
-          return chars + this.col;
-        }
-        deleteChar() {
-          if (this.col > 0 || this.row > 0) {
-            this.moveLeft();
-            this.buffer.splice(this.getCaretIndex(), 1);
-          }
-        }
-        writeChar(char) {
-          this.buffer.splice(this.getCaretIndex(), 0, char);
-        }
-        drawCaret() {
-          const [x, y] = this.getCaretRect();
-          const char = this.buffer[this.row * this.cols + this.col];
-          this.font.insertChar("§", this.image, x, y, this.gap, 0.4);
-        }
-        getCaretRect() {
-          const w = this.font.cols + this.gap;
-          const h = this.font.rows + this.gap;
-          const x = this.col * w;
-          const y = this.row * h;
-          return [x, y, w, h];
-        }
+    }
+  }
+  map(fn) {
+    var i = 0;
+    for (var y = 0; y < this.height; y++) {
+      for (var x = 0; x < this.width; x++) {
+        this.data[i] = fn({ i: i, x: x, y: y, sprite: this });
+        i++;
       }
-      const canvas = document.querySelector("#canvas");
-      const font = new PixelFont({
-        base64:
-          "////////////////////ECBAgQIECAAAQIAAAA==AAChQoAAAAAAAAAAAA==RIkX9EiRIkSL+iRIgA==AABBxUoOChSo4IAAAA==AkVRIIEECCBBIqiQAA==AADCRIopSokR0AAAAA==AAAgggAAAAAAAAAAAA==AgQQIIECBAgQECAgQA==gQECAgQIECBBAggQAA==AAAAhUc/nFQgAAAAAA==ECBAgQI/iBAgQIECAA==AAAAAAAAAAAQQQAAAA==AAAAAAA/gAAAAAAAAA==AAAAAAAAAAAAQIAAAA==AgQQIIEECCBBAggQAA==AAABxEiVKkSI4AAAAA==AAAAQYUCBAgQIAAAAA==AAABxECCCCCB8AAAAA==AAABxECGAgSI4AAAAA==AAAAwoUSJHwQIAAAAA==AAAD5AgeAgSI4AAAAA==AAABxEgeIkSI4AAAAA==AAAD4ECCCCCBAAAAAA==AAABxEiOIkSI4AAAAA==AAABxEiRHgSI4AAAAA==AAAAgQAAAAAAQIAAAA==AAAAgQAAAAAQQQAAAA==AAAAMYwgQGAwGAAAAA==AAAH8AAAAAAD+AAAAA==AAAGAwGAgQxjAAAAAA==AHESIEEECAAAQIAAAA==AAABxFOpUpiA4AAAAA==AAABxEiRPkSJEAAAAA==AAADxEieIkSJ4AAAAA==AAABxEgQIECI4AAAAA==AAADxEiRIkSJ4AAAAA==AAAD5AgeIECB8AAAAA==AAAD5AgeIECBAAAAAA==AAABxEgQLkSI4AAAAA==AAACJEifIkSJEAAAAA==AAAD4QIECBAh8AAAAA==AAAAIECBAkSI4AAAAA==AAACJIoYMFCREAAAAA==AAACBAgQIECB8AAAAA==AAACJsqRIkSJEAAAAA==AAACJkyVKkyZEAAAAA==AAABxEiRIkSI4AAAAA==AAADxEiRPECBAAAAAA==AAABxEiRIlSQ0AAAAA==AAADxEiRPFCREAAAAA==AAABxEgOAgSI4AAAAA==AAAD4QIECBAgQAAAAA==AAACJEiRIkSI4AAAAA==AAACJEiKFCggQAAAAA==AAACJEiRIlTZEAAAAA==AAACJEUECCiJEAAAAA==AAACJEUKCBAgQAAAAA==AAAD4EEECCCB8AAAAA==AAAA8QIECBAgeAAAAA==gQECAgQECAgQECAgQA==AAAHgQIECBAjwAAAAA==EFCiJFBggAAAAAAAAA==AAAAAAAAAAAAAAAfwA==AACAgIAAAAAAAAAAAA==AAAAAAcRHkSI4AAAAA==AAACBA8RIkSI4AAAAA==AAAAAAcRIECI4AAAAA==AAAAIEeRIkSI4AAAAA==AAAAAAcRPkCI4AAAAA==AAABxEgeIECBAAAAAA==AAAAAAcRIkR4EiOAAA==AAACBA8RIkSJEAAAAA==AAAAgQAACBAgQAAAAA==AAAAIEAAAgQIEiOAAA==AAACBAiWMGCxEAAAAA==AAAAgQIECBAgQAAAAA==AAAAAAUVKlSJEAAAAA==AAAAAAcRIkSJEAAAAA==AAAAAAcRIkSI4AAAAA==AAAAAAcRIkSJ4gQAAA==AAAAAAcRIkSI8CBAAA==AAAAAAcRIECBAAAAAA==AAAAAAcRHASI4AAAAA==AAACBAgeIECI4AAAAA==AAAAAAiRIkSI4AAAAA==AAAAAAiRFCggQAAAAA==AAAAAAiRKlSooAAAAA==AAAAAAiKCBBREAAAAA==AAAAAAiRIkR4EiOAAA==AAAAAA+CCBBB8AAAAA==AAwgQIYQIDAQIEBgAA==ECBAgQIECBAgQIECAA==AYCBAgMBAhhAgQwAAA==YSBIYAAAAAAAAAAAAA==",
-        chars:
-          "§!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
-        cols: 7,
-        rows: 14,
-      });
+    }
+  }
+}
 
-      const initialCode = `                                              |
-//  \\O                                          |
-//   |)     *saxophone jazz playing on           |
-//  ( \\   crappy speakers in the background*    |
+var fps = 24;
+var grid = null;
+var note = 0;
+var playing = false;
+var sampleCount = 0;
+var frameNum = 0;
+var ready = false;
 
-(t * ((t >> 9 | t >> 13 ) & 25)) % 128
+function initGrid(cols, rows) {
+  grid = new Sprite(cols, rows, function() { return 32; });
+}
+
+function audioSample(t) {
+  if (!playing || note === 0) return 0;
+  return (t % note < (t / note) % 128) ? 0.25 : 0;
+}
+
+function nextFrame() {
+  if (!grid) return null;
+  note = 0;
+  var total = grid.width * grid.height;
+  if (Math.random() > 0.995) grid.map(function() { return 0; });
+  if (Math.random() > 0.995) grid.map(function() { return 32; });
+  grid.map(function(ctx) {
+    if (ctx.x === ctx.sprite.width - 1) return 10;
+    var d = ctx.sprite.data;
+    if (Math.random() < 1 / (total * 10)) return 32 + Math.floor(Math.random() * 96);
+    if (Math.random() < 1000 / total && ctx.i > 0 && d[ctx.i - 1] > 32) return d[ctx.i - 1];
+    if (Math.random() < 10 / total && ctx.i + 1 < total && d[ctx.i + 1] > 32) return d[ctx.i + 1];
+    if (Math.random() < 1 / total && ctx.i + ctx.sprite.width < total && d[ctx.i + ctx.sprite.width] > 32) return d[ctx.i + ctx.sprite.width];
+    if (Math.random() < 1 / total && ctx.i - ctx.sprite.width >= 0 && d[ctx.i - ctx.sprite.width] > 32) return d[ctx.i - ctx.sprite.width];
+    note += d[ctx.i];
+    return d[ctx.i];
+  });
+  note = ((note / total) % 4 * 100) * 3;
+  var copy = new Uint32Array(grid.data);
+  return copy.buffer;
+}
+
+class AsciiJazzProcessor extends AudioWorkletProcessor {
+  constructor() {
+    super();
+    this.port.onmessage = function(evt) {
+      if (evt.data === 'play') { playing = true; return; }
+      if (evt.data === 'stop') { playing = false; return; }
+      initGrid(evt.data[0], evt.data[1]);
+      playing = true;
+      ready = true;
+    };
+  }
+  process(inputs, outputs) {
+    if (!ready) return true;
+    var newFrame = Math.floor(sampleCount / sampleRate * fps);
+    if (newFrame !== frameNum) {
+      var buf = nextFrame();
+      if (buf) this.port.postMessage(buf, [buf]);
+      frameNum = newFrame;
+    }
+    var output = outputs[0];
+    for (var i = 0; i < output[0].length; i++) {
+      var s = audioSample(sampleCount);
+      for (var c = 0; c < output.length; c++) output[c][i] = s;
+      sampleCount++;
+    }
+    return true;
+  }
+}
+registerProcessor('ascii-jazz-proc', AsciiJazzProcessor);
 `;
-      const editor = new Editor(canvas, font, initialCode);
-    </script>
+
+  async function start() {
+    started = true;
+    playing = true;
+    audioCtx = new AudioContext();
+    const blob = new Blob([processorCode], { type: 'application/javascript' });
+    const url = URL.createObjectURL(blob);
+    await audioCtx.audioWorklet.addModule(url);
+    URL.revokeObjectURL(url);
+    workletNode = new AudioWorkletNode(audioCtx, 'ascii-jazz-proc');
+    workletNode.connect(audioCtx.destination);
+    workletNode.port.onmessage = function(evt) {
+      var data = new Uint32Array(evt.data);
+      var str = '';
+      for (var i = 0; i < data.length; i++) {
+        str += data[i] ? String.fromCharCode(data[i]) : ' ';
+      }
+      pre.textContent = str;
+    };
+    var grid = computeGrid();
+    workletNode.port.postMessage(grid);
+  }
+
+  async function toggle() {
+    if (!started) {
+      pre.textContent = '';
+      await start();
+      return;
+    }
+    playing = !playing;
+    workletNode.port.postMessage(playing ? 'play' : 'stop');
+    if (playing) audioCtx.resume();
+    else audioCtx.suspend();
+  }
+
+  container.addEventListener('click', toggle);
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+    if (e.key === 'j' || e.key === 'J') {
+      e.preventDefault();
+      toggle();
+    }
+  });
+
+  pre.textContent = 'click or press [J] to jam';
+})();
+</script>

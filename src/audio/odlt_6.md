@@ -7,15 +7,16 @@ labels: ["Ordinateur dans la tête"]
 releaseDate: "2024-12-21"
 genre: ["black metal","live coding","computer music","experimental"]
 cover: "/assets/images/ODLT/ODLT_6.jpg"
+ia_identifier: "computerjazz-odlt-ctrlsheep"
 tracks:
   - title: "trve code"
-    file: "/assets/audio/midnight-echoes/test.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-ctrlsheep/01-trve-code.mp3"
   - title: "in ."
-    file: "/assets/audio/midnight-echoes/b.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-ctrlsheep/02-in.mp3"
   - title: "(s gdur 0.6)"
-    file: "/assets/audio/midnight-echoes/c.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-ctrlsheep/03-s-gdur-0-6.mp3"
   - title: "feelsless Rng"
-    file: "/assets/audio/midnight-echoes/d.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-ctrlsheep/04-feelsless-rng.mp3"
 description: |
   Ctrl_Sh33eeEEp first EP.
 ---

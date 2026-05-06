@@ -7,11 +7,12 @@ labels: ["Ordinateur dans la tête"]
 releaseDate: "2024-02-06"
 genre: ["live coding","computer music","floppy disk", "experimental"]
 cover: "/assets/images/ODLT/ODLT_5.jpg"
+ia_identifier: "computerjazz-odlt-voce"
 tracks:
   - title: "[Floppy Edit] _ V%CE _ Extract  [mp3_44100_32kbps]"
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-voce/01-voce-floppy-edit.mp3"
   - title: "V%CE"
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-voce/02-voce.mp3"
 description: |
   live performance by lucky.juj && Ralt144MI.
 ---

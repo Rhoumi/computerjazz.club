@@ -7,19 +7,20 @@ labels: ["Ordinateur dans la tête"]
 releaseDate: "2022-10-24"
 genre: ["live coding","computer music","live","techno", "experimental"]
 cover: "/assets/images/ODLT/ODLT_2.jpg"
+ia_identifier: "computerjazz-odlt-bubo"
 tracks:
   - title: "RMF SURAIGU"
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-bubo/01-rmf-suraigu.mp3"
   - title: "À RECULONS"
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-bubo/02-a-reculons.mp3"
   - title: "ÉCRÊTAGE"
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-bubo/03-ecretage.mp3"
   - title: "SUZANNE"
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-bubo/04-suzanne.mp3"
   - title: "RHÔNE ET SAÔNE"
-    file: "/assets/audio/midnight-echoes/a.mp3"
-  - title: "LE MOT DU PUBLIC "
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-bubo/05-rhone-et-saone.mp3"
+  - title: "LE MOT DU PUBLIC"
+    file: "https://archive.org/download/computerjazz-odlt-bubo/06-le-mot-du-public.mp3"
 description: |
   Mighty Owl techno live performed at Grrrnd Zero.
 ---

@@ -7,17 +7,18 @@ labels: ["Ordinateur dans la tête"]
 releaseDate: "2023-06-12"
 genre: ["live coding","computer music","polyrhythmic","voice","été", "experimental"]
 cover: "/assets/images/ODLT/ODLT_4.jpg"
+ia_identifier: "computerjazz-odlt-ete"
 tracks:
   - title: "Hello été"
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-ete/01-hello-ete.mp3"
   - title: "Ces monstres"
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-ete/02-ces-monstres.mp3"
   - title: "Mycophiles"
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-ete/03-mycophiles.mp3"
   - title: "Music for seeds"
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-ete/04-music-for-seeds.mp3"
   - title: "Salad ship"
-    file: "/assets/audio/midnight-echoes/a.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-ete/05-salad-ship.mp3"
 description: |
   été demonstration, voice and computer mycophilic music.
 ---

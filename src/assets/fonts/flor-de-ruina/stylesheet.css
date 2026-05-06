@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'FlorDeRuina-Germen';
+    src: url('FlorDeRuina-Germen.woff2') format('woff2');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'FlorDeRuina-Semilla';
+    src: url('FlorDeRuina-Semilla.woff2') format('woff2');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'FlorDeRuina-Flor';
+    src: url('FlorDeRuina-Flor.woff2') format('woff2');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'FlorDeRuina-Ruina';
+    src: url('FlorDeRuina-Ruina.woff2') format('woff2');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'FlorDeRuina-Fractura';
+    src: url('FlorDeRuina-Fractura.woff2') format('woff2');
+    font-weight: normal; font-style: normal; font-display: swap;
+}

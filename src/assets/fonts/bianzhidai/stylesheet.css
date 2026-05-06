@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'bianzhidai-Base';
+    src: url('bianzhidai-Base.woff') format('woff');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'bianzhidai-Brush';
+    src: url('bianzhidai-Brush.woff') format('woff');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'bianzhidai-Bubble';
+    src: url('bianzhidai-Bubble.woff') format('woff');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'bianzhidai-Cloud';
+    src: url('bianzhidai-Cloud.woff') format('woff');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'bianzhidai-Cube';
+    src: url('bianzhidai-Cube.woff') format('woff');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'bianzhidai-Messier';
+    src: url('bianzhidai-Messier.woff') format('woff');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'bianzhidai-Messy';
+    src: url('bianzhidai-Messy.woff') format('woff');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'bianzhidai-Pearl';
+    src: url('bianzhidai-Pearl.woff') format('woff');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'bianzhidai-Ring';
+    src: url('bianzhidai-Ring.woff') format('woff');
+    font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+    font-family: 'bianzhidai-Stitches';
+    src: url('bianzhidai-Stitches.woff') format('woff');
+    font-weight: normal; font-style: normal; font-display: swap;
+}

@@ -1,0 +1,38 @@
+general:
+  public_url: ${LIBRETIME_PUBLIC_URL}
+  api_key: ${LIBRETIME_API_KEY}
+  secret_key: ${LIBRETIME_SECRET_KEY}
+
+storage:
+  path: /srv/libretime
+
+database:
+  host: "postgres"
+  name: "libretime"
+  user: "libretime"
+  password: ${POSTGRES_PASSWORD}
+
+rabbitmq:
+  host: "rabbitmq"
+  vhost: "/libretime"
+  user: "libretime"
+  password: ${RABBITMQ_DEFAULT_PASS}
+
+playout:
+  liquidsoap_host: "liquidsoap"
+
+liquidsoap:
+  server_listen_address: "0.0.0.0"
+
+stream:
+  outputs:
+    .default_icecast_output: &default_icecast_output
+      enabled: true
+      host: "icecast"
+      port: 8000
+      mount: "main"
+      source_password: ${ICECAST_SOURCE_PASSWORD}
+      admin_password: ${ICECAST_ADMIN_PASSWORD}
+      audio:
+        format: mp3
+        bitrate: 256
