@@ -116,13 +116,13 @@ code {
 }
 
 .hero h1 {
-    font-size: 4rem;
+    font-size: clamp(1.6rem, 8vw, 4rem);
     margin-bottom: var(--spacing-sm);
     color: var(--primary-color);
 }
 
 .hero p {
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 4vw, 1.5rem);
     text-align: center;
     margin-right: 33%;
     color: var(--text-light);
@@ -874,6 +874,11 @@ body.player-active {
     text-decoration: underline;
 }
 
+.about-page pre {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
 .about-page hr {
     border: none;
     border-top: 1px solid var(--border-color);
@@ -1085,6 +1090,14 @@ h1:not(.site-title):not(.status) {
 
     .nav-cart {
         order: 3;
+    }
+
+    .hero {
+        padding: 2rem 1rem;
+    }
+
+    .hero p {
+        margin-right: 0;
     }
 }
 
