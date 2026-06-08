@@ -135,10 +135,16 @@ title: Home
   const container = document.getElementById('ascii-jazz-container');
   const pre = document.getElementById('ascii-jazz-pre');
 
-  let audioCtx = null;
-  let workletNode = null;
   let started = false;
   let playing = false;
+  let audioCtx = null;
+  let scriptNode = null;
+  let audioT = 0;
+  let currentNote = 0;
+  let cols = 0, rows = 0;
+  let grid = null;
+  const FPS = 24;
+  let lastFrame = 0;
 
   function computeGrid() {
     const probe = document.createElement('span');
@@ -152,146 +158,84 @@ title: Home
     document.body.removeChild(probe);
     const charW = r.width / 100;
     const charH = r.height / 2;
-    const cols = Math.max(4, Math.floor(container.clientWidth / charW));
-    const rows = Math.max(2, Math.floor(container.clientHeight / charH));
-    return [cols, rows];
+    cols = Math.max(4, Math.floor(container.clientWidth / charW));
+    rows = Math.max(2, Math.floor(container.clientHeight / charH));
+    grid = new Uint32Array(cols * rows).fill(32);
   }
 
-  const processorCode = `
-class Sprite {
-  constructor(width, height, initFn) {
-    this.width = width;
-    this.height = height;
-    this.data = new Uint32Array(width * height);
-    if (initFn) {
-      var i = 0;
-      for (var y = 0; y < height; y++) {
-        for (var x = 0; x < width; x++) {
-          this.data[i] = initFn({ i: i, x: x, y: y, sprite: this });
-          i++;
+  function tick(ts) {
+    requestAnimationFrame(tick);
+    if (!playing) return;
+    if (ts - lastFrame < 1000 / FPS) return;
+    lastFrame = ts;
+
+    const total = cols * rows;
+    if (Math.random() > 0.995) grid.fill(0);
+    if (Math.random() > 0.995) grid.fill(32);
+
+    let note = 0;
+    for (let i = 0, y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++, i++) {
+        if (x === cols - 1) { grid[i] = 10; continue; }
+        if (Math.random() < 1 / (total * 10)) { grid[i] = 32 + Math.floor(Math.random() * 96); continue; }
+        if (i > 0 && grid[i-1] > 32 && Math.random() < 1000 / total) { grid[i] = grid[i-1]; continue; }
+        if (i + 1 < total && grid[i+1] > 32 && Math.random() < 10 / total) { grid[i] = grid[i+1]; continue; }
+        if (i + cols < total && grid[i+cols] > 32 && Math.random() < 1 / total) { grid[i] = grid[i+cols]; continue; }
+        if (i - cols >= 0 && grid[i-cols] > 32 && Math.random() < 1 / total) { grid[i] = grid[i-cols]; continue; }
+        note += grid[i];
+      }
+    }
+    currentNote = ((note / total) % 4 * 100) * 3;
+
+    let str = '';
+    for (let i = 0; i < total; i++) str += String.fromCharCode(grid[i] || 32);
+    pre.textContent = str;
+  }
+
+  function setupAudio() {
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      scriptNode = audioCtx.createScriptProcessor(4096, 0, 1);
+      scriptNode.onaudioprocess = function(e) {
+        const out = e.outputBuffer.getChannelData(0);
+        const n = currentNote;
+        for (let i = 0; i < out.length; i++) {
+          out[i] = (playing && n > 0) ? ((audioT % n < (audioT / n) % 128) ? 0.25 : 0) : 0;
+          audioT++;
         }
-      }
+      };
+      scriptNode.connect(audioCtx.destination);
+      audioCtx.resume();
+    } catch (e) {
+      audioCtx = scriptNode = null;
     }
   }
-  map(fn) {
-    var i = 0;
-    for (var y = 0; y < this.height; y++) {
-      for (var x = 0; x < this.width; x++) {
-        this.data[i] = fn({ i: i, x: x, y: y, sprite: this });
-        i++;
-      }
-    }
-  }
-}
 
-var fps = 24;
-var grid = null;
-var note = 0;
-var playing = false;
-var sampleCount = 0;
-var frameNum = 0;
-var ready = false;
-
-function initGrid(cols, rows) {
-  grid = new Sprite(cols, rows, function() { return 32; });
-}
-
-function audioSample(t) {
-  if (!playing || note === 0) return 0;
-  return (t % note < (t / note) % 128) ? 0.25 : 0;
-}
-
-function nextFrame() {
-  if (!grid) return null;
-  note = 0;
-  var total = grid.width * grid.height;
-  if (Math.random() > 0.995) grid.map(function() { return 0; });
-  if (Math.random() > 0.995) grid.map(function() { return 32; });
-  grid.map(function(ctx) {
-    if (ctx.x === ctx.sprite.width - 1) return 10;
-    var d = ctx.sprite.data;
-    if (Math.random() < 1 / (total * 10)) return 32 + Math.floor(Math.random() * 96);
-    if (Math.random() < 1000 / total && ctx.i > 0 && d[ctx.i - 1] > 32) return d[ctx.i - 1];
-    if (Math.random() < 10 / total && ctx.i + 1 < total && d[ctx.i + 1] > 32) return d[ctx.i + 1];
-    if (Math.random() < 1 / total && ctx.i + ctx.sprite.width < total && d[ctx.i + ctx.sprite.width] > 32) return d[ctx.i + ctx.sprite.width];
-    if (Math.random() < 1 / total && ctx.i - ctx.sprite.width >= 0 && d[ctx.i - ctx.sprite.width] > 32) return d[ctx.i - ctx.sprite.width];
-    note += d[ctx.i];
-    return d[ctx.i];
-  });
-  note = ((note / total) % 4 * 100) * 3;
-  var copy = new Uint32Array(grid.data);
-  return copy.buffer;
-}
-
-class AsciiJazzProcessor extends AudioWorkletProcessor {
-  constructor() {
-    super();
-    this.port.onmessage = function(evt) {
-      if (evt.data === 'play') { playing = true; return; }
-      if (evt.data === 'stop') { playing = false; return; }
-      initGrid(evt.data[0], evt.data[1]);
-      playing = true;
-      ready = true;
-    };
-  }
-  process(inputs, outputs) {
-    if (!ready) return true;
-    var newFrame = Math.floor(sampleCount / sampleRate * fps);
-    if (newFrame !== frameNum) {
-      var buf = nextFrame();
-      if (buf) this.port.postMessage(buf, [buf]);
-      frameNum = newFrame;
-    }
-    var output = outputs[0];
-    for (var i = 0; i < output[0].length; i++) {
-      var s = audioSample(sampleCount);
-      for (var c = 0; c < output.length; c++) output[c][i] = s;
-      sampleCount++;
-    }
-    return true;
-  }
-}
-registerProcessor('ascii-jazz-proc', AsciiJazzProcessor);
-`;
-
-  async function start() {
+  function start() {
     started = true;
     playing = true;
-    audioCtx = new AudioContext();
-    const blob = new Blob([processorCode], { type: 'application/javascript' });
-    const url = URL.createObjectURL(blob);
-    await audioCtx.audioWorklet.addModule(url);
-    URL.revokeObjectURL(url);
-    workletNode = new AudioWorkletNode(audioCtx, 'ascii-jazz-proc');
-    workletNode.connect(audioCtx.destination);
-    workletNode.port.onmessage = function(evt) {
-      var data = new Uint32Array(evt.data);
-      var str = '';
-      for (var i = 0; i < data.length; i++) {
-        str += data[i] ? String.fromCharCode(data[i]) : ' ';
-      }
-      pre.textContent = str;
-    };
-    var grid = computeGrid();
-    workletNode.port.postMessage(grid);
+    setupAudio();
+    computeGrid();
+    requestAnimationFrame(tick);
   }
 
-  async function toggle() {
-    if (!started) {
-      pre.textContent = '';
-      await start();
-      return;
-    }
+  function toggle() {
+    if (!started) { pre.textContent = ''; start(); return; }
     playing = !playing;
-    workletNode.port.postMessage(playing ? 'play' : 'stop');
-    if (playing) audioCtx.resume();
-    else audioCtx.suspend();
+    if (audioCtx) {
+      if (playing) audioCtx.resume();
+      else {
+        if (gain) gain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
+        audioCtx.suspend();
+      }
+    }
   }
 
   container.addEventListener('click', toggle);
+  container.addEventListener('touchend', function(e) { e.preventDefault(); toggle(); });
 
   document.addEventListener('visibilitychange', function() {
-    if (!started) return;
+    if (!started || !audioCtx) return;
     if (document.hidden) audioCtx.suspend();
     else if (playing) audioCtx.resume();
   });
@@ -304,6 +248,6 @@ registerProcessor('ascii-jazz-proc', AsciiJazzProcessor);
     }
   });
 
-  pre.textContent = 'click or press [J] to jam';
+  pre.textContent = 'tap or press [J] to jam';
 })();
 </script>
