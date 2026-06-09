@@ -249,8 +249,9 @@
 
   // ===== HIGHLIGHT TRACK ON PAGE =====
   function highlightCurrentTrack() {
-    document.querySelectorAll('.track[data-index]').forEach(el => {
-      el.classList.toggle('playing', parseInt(el.dataset.index) === currentIndex);
+    const currentFile = playlist[currentIndex] ? playlist[currentIndex].file : null;
+    document.querySelectorAll('.track[data-file]').forEach(el => {
+      el.classList.toggle('playing', currentFile != null && el.dataset.file === currentFile);
     });
     if (typeof window.onFooterPlayerTrackChange === 'function') {
       window.onFooterPlayerTrackChange(currentIndex, playlist[currentIndex]);

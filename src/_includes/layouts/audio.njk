@@ -214,6 +214,8 @@ layout: layouts/base.njk
 
   // ===== CALLBACKS for footer player =====
   window.onFooterPlayerTimeUpdate = function (currentTime, duration, activeIndex) {
+    var fp = window.FooterPlayer;
+    var activeFile = (fp && fp.getPlaylist()[activeIndex]) ? fp.getPlaylist()[activeIndex].file : null;
     trackItems.forEach(function (trackEl, i) {
       var playBar = trackEl.querySelector('.ascii-progress');
       var durationSpan = trackEl.querySelector('.ascii-duration');
@@ -223,7 +225,7 @@ layout: layouts/base.njk
       var cellEls = playBar.querySelectorAll('a');
       var totalCells = cellEls.length;
 
-      if (i === activeIndex && duration && !isNaN(duration)) {
+      if (activeFile && playlist[i].file === activeFile && duration && !isNaN(duration)) {
         var filled = Math.floor((currentTime / duration) * totalCells);
         cellEls.forEach(function (cell, j) {
           cell.textContent = j < filled ? animChar(globalTime, j) : '-';
@@ -246,11 +248,13 @@ layout: layouts/base.njk
     });
   };
 
-  window.onFooterPlayerTrackChange = function (activeIndex) {
+  window.onFooterPlayerTrackChange = function (activeIndex, activeTrack) {
+    var activeFile = activeTrack ? activeTrack.file : null;
     trackItems.forEach(function (trackEl, i) {
-      trackEl.classList.toggle('playing', i === activeIndex);
+      var isActive = activeFile != null && playlist[i].file === activeFile;
+      trackEl.classList.toggle('playing', isActive);
       var playLink = trackEl.querySelector('.ascii-play-btn');
-      if (playLink) playLink.textContent = i === activeIndex ? 'll Pause  ' : ' \u25b6 Play   ';
+      if (playLink) playLink.textContent = isActive ? 'll Pause  ' : ' \u25b6 Play   ';
     });
   };
 
@@ -258,8 +262,9 @@ layout: layouts/base.njk
   if (window.FooterPlayer) {
     var fp = window.FooterPlayer;
     var pl = fp.getPlaylist();
+    var idx = fp.getCurrentIndex();
     if (pl.length > 0 && pl[0] && pl[0].file === playlist[0].file) {
-      window.onFooterPlayerTrackChange(fp.getCurrentIndex());
+      window.onFooterPlayerTrackChange(idx, pl[idx]);
     }
   }
 })();

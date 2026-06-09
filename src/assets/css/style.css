@@ -514,6 +514,10 @@ body.player-active {
     color: var(--secondary-color);
 }
 
+.fp-bottom-row {
+    display: contents;
+}
+
 /* Track playing state */
 .track.playing {
     background-color: rgba(52, 152, 219, 0.08);
@@ -1068,6 +1072,42 @@ h1:not(.site-title):not(.status) {
 }
 
 @media (max-width: 600px) {
+    .footer-player {
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 0.4rem var(--spacing-sm);
+        min-height: auto;
+    }
+
+    body.player-active {
+        padding-bottom: 90px;
+    }
+
+    .fp-info {
+        max-width: none;
+        flex: 1 1 0;
+    }
+
+    .fp-bottom-row {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .fp-progress-area {
+        flex: 1 1 0;
+    }
+
+    .fp-time {
+        flex-shrink: 0;
+    }
+
+    .fp-volume {
+        flex-shrink: 0;
+    }
+
     .main-nav {
         flex-wrap: wrap;
         justify-content: center;
