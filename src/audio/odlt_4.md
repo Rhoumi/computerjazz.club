@@ -7,18 +7,18 @@ labels: ["Ordinateur dans la tête"]
 releaseDate: "2023-06-12"
 genre: ["live coding","computer music","polyrhythmic","voice","été", "experimental"]
 cover: "/assets/images/ODLT/ODLT_4.jpg"
-ia_identifier: "computerjazz-odlt-ete"
+ia_identifier: "computerjazz-odlt-raphael-bastide-ete-demo"
 tracks:
   - title: "Hello été"
-    file: "https://archive.org/download/computerjazz-odlt-ete/01-hello-ete.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-raphael-bastide-ete-demo/01-Raphael-Bastide---Hello-ete.mp3"
   - title: "Ces monstres"
-    file: "https://archive.org/download/computerjazz-odlt-ete/02-ces-monstres.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-raphael-bastide-ete-demo/02-Raphael-Bastide---Ces-monstres.mp3"
   - title: "Mycophiles"
-    file: "https://archive.org/download/computerjazz-odlt-ete/03-mycophiles.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-raphael-bastide-ete-demo/03-Raphael-Bastide---Mycophiles.mp3"
   - title: "Music for seeds"
-    file: "https://archive.org/download/computerjazz-odlt-ete/04-music-for-seeds.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-raphael-bastide-ete-demo/04-Raphael-Bastide---Music-for-seeds.mp3"
   - title: "Salad ship"
-    file: "https://archive.org/download/computerjazz-odlt-ete/05-salad-ship.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-raphael-bastide-ete-demo/05-Raphael-Bastide---Salad-ship.mp3"
 description: |
   été demonstration, voice and computer mycophilic music.
 ---

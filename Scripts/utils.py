@@ -182,7 +182,18 @@ def generate_audio_md(
     entries = info.get("entries") or [info]
 
     title = info.get("album") or info.get("title", "Unknown Album")
-    artist = info.get("uploader") or info.get("artist", "Unknown Artist")
+    first_entry = (info.get("entries") or [{}])[0]
+    artist = (
+        info.get("artist")
+        or info.get("album_artist")
+        or info.get("creator")
+        or first_entry.get("artist")
+        or first_entry.get("album_artist")
+        or first_entry.get("creator")
+        or info.get("uploader")
+        or first_entry.get("uploader")
+        or "Unknown Artist"
+    )
     date = format_release_date(info.get("release_date") or info.get("upload_date", ""))
     tags = info.get("tags", [])
     description = (info.get("description") or "").strip()

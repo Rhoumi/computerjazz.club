@@ -7,20 +7,20 @@ labels: ["Ordinateur dans la tête"]
 releaseDate: "2022-10-24"
 genre: ["live coding","computer music","live","techno", "experimental"]
 cover: "/assets/images/ODLT/ODLT_2.jpg"
-ia_identifier: "computerjazz-odlt-bubo"
+ia_identifier: "computerjazz-odlt-bubobubobubobubo-brotteaux-nation"
 tracks:
   - title: "RMF SURAIGU"
-    file: "https://archive.org/download/computerjazz-odlt-bubo/01-rmf-suraigu.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-bubobubobubobubo-brotteaux-nation/01-bubobubobubobubo---RMF-SURAIGU.mp3"
   - title: "À RECULONS"
-    file: "https://archive.org/download/computerjazz-odlt-bubo/02-a-reculons.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-bubobubobubobubo-brotteaux-nation/02-bubobubobubobubo---A-RECULONS.mp3"
   - title: "ÉCRÊTAGE"
-    file: "https://archive.org/download/computerjazz-odlt-bubo/03-ecretage.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-bubobubobubobubo-brotteaux-nation/03-bubobubobubobubo---ECRETAGE.mp3"
   - title: "SUZANNE"
-    file: "https://archive.org/download/computerjazz-odlt-bubo/04-suzanne.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-bubobubobubobubo-brotteaux-nation/04-bubobubobubobubo---SUZANNE.mp3"
   - title: "RHÔNE ET SAÔNE"
-    file: "https://archive.org/download/computerjazz-odlt-bubo/05-rhone-et-saone.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-bubobubobubobubo-brotteaux-nation/05-bubobubobubobubo---RHONE-ET-SAONE.mp3"
   - title: "LE MOT DU PUBLIC"
-    file: "https://archive.org/download/computerjazz-odlt-bubo/06-le-mot-du-public.mp3"
+    file: "https://archive.org/download/computerjazz-odlt-bubobubobubobubo-brotteaux-nation/06-bubobubobubobubo---LE-MOT-DU-PUBLIC.mp3"
 description: |
   Mighty Owl techno live performed at Grrrnd Zero.
 ---

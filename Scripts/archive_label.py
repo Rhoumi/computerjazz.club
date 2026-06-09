@@ -38,6 +38,21 @@ from utils import (
 )
 
 
+def _artist_from_entries(info: dict) -> str:
+    """Try to extract a common artist name from the first track entry."""
+    entries = info.get("entries") or []
+    if entries:
+        first = entries[0]
+        return (
+            first.get("artist")
+            or first.get("album_artist")
+            or first.get("creator")
+            or first.get("uploader")
+            or ""
+        )
+    return ""
+
+
 def archive_single_release(
     release_url: str,
     ia_prefix: str,
@@ -53,9 +68,17 @@ def archive_single_release(
     """
     info = extract_info(release_url)
     album_title = info.get("album") or info.get("title", "unknown")
-    artist = info.get("uploader") or info.get("artist", "unknown")
+    artist = (
+        info.get("artist")
+        or info.get("album_artist")
+        or info.get("creator")
+        or info.get("uploader")
+        or _artist_from_entries(info)
+        or "unknown"
+    )
 
-    ia_identifier = build_ia_identifier(ia_prefix, label_slug, slugify(artist))
+    suffix = f"{slugify(artist)}-{slugify(album_title)}"[:80]
+    ia_identifier = build_ia_identifier(ia_prefix, label_slug, suffix)
     album_dir = output_dir / ia_identifier
 
     if skip_existing and list(album_dir.glob("*.mp3")):
